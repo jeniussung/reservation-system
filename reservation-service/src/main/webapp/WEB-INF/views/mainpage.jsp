@@ -14,13 +14,20 @@
   <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
   <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
 
+
   <script id="entry-template" type="text/x-handlebars-template">
-    <li class="item">
+    <li class="item" data-product={{id}}>
      <a href="#" class="item_book">
-      <div class="item_preview"> <img alt="{{name}}" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170111_225/1484116579024rNkXW_JPEG/2016_%B9%C2%C1%F6%C4%C3_%C0%CE_%B4%F5_%C7%CF%C0%CC%C3%F7_%C6%F7%BD%BA%C5%CD%2820MB%29.jpg?type=l591_945"><span class="img_border"></span> </div>
+       <div class="item_preview">
+           <img alt="{{name}}" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170111_225/1484116579024rNkXW_JPEG/2016_%B9%C2%C1%F6%C4%C3_%C0%CE_%B4%F5_%C7%CF%C0%CC%C3%F7_%C6%F7%BD%BA%C5%CD%2820MB%29.jpg?type=l591_945">
+           <span class="img_border"></span>
+       </div>
        <div class="event_txt">
-         <h4 class="event_txt_tit"> <span>{{name}}</span> <small class="sm">{{place}}</small> </h4>
-         <p class="event_txt_dsc">{{desc}}</p>
+           <h4 class="event_txt_tit">
+               <span>{{name}}</span>
+               <small class="sm">{{place}}</small>
+           </h4>
+           <p class="event_txt_dsc">{{desc}}</p>
        </div>
      </a>
     </li>
@@ -28,17 +35,15 @@
 
   <script id="category-template" type="text/x-handlebars-template">
    <li class="item" data-category={{id}}>
-    <a class="anchor"> <span>{{name}}</span> </a>
+    <a href="#" class="anchor"> <span>{{name}}</span> </a>
    </li>
   </script>
 
   <script id="category-last-template" type="text/x-handlebars-template">
    <li class="item" data-category={{id}}>
-    <a class="anchor last"> <span>{{name}}</span> </a>
+    <a href="#" class="anchor last"> <span>{{name}}</span> </a>
    </li>
   </script>
-
- <script type="text/javascript" src="/resources/js/mainpage.js"></script>
 
 </head>
 
@@ -75,19 +80,10 @@
                             <div class="container_visual" >
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
                                 <ul  class="visual_img">
-                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
-                                                <p class="event_txt_adr"></p>
-                                                <p class="event_txt_dsc"></p>
-                                            </div>
-                                        </a>
-                                    </li>
                                     <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
                                         <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
                                             <div class="event_txt">
-                                                <h4 class="event_txt_tit">뮤지컬-김종욱찾기 네이버 예약</h4>
+                                                <h4 class="event_txt_tit">44뮤지컬-김종욱찾기 네이버 예약</h4>
                                                 <p class="event_txt_adr">대학로 쁘띠첼씨어터</p>
                                                 <p class="event_txt_dsc">네이버 예매시, 손크림/발크림(중 래덤)을 드립니다</p>
                                             </div>
@@ -96,7 +92,43 @@
                                     <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
                                         <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
                                             <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
+                                                <h4 class="event_txt_tit">111</h4>
+                                                <p class="event_txt_adr"></p>
+                                                <p class="event_txt_dsc"></p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
+                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+                                            <div class="event_txt">
+                                                <h4 class="event_txt_tit">22뮤지컬-김종욱찾기 네이버 예약</h4>
+                                                <p class="event_txt_adr">대학로 쁘띠첼씨어터</p>
+                                                <p class="event_txt_dsc">네이버 예매시, 손크림/발크림(중 래덤)을 드립니다</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
+                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+                                            <div class="event_txt">
+                                                <h4 class="event_txt_tit">333</h4>
+                                                <p class="event_txt_adr"></p>
+                                                <p class="event_txt_dsc"></p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
+                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+                                            <div class="event_txt">
+                                                <h4 class="event_txt_tit">44뮤지컬-김종욱찾기 네이버 예약</h4>
+                                                <p class="event_txt_adr">대학로 쁘띠첼씨어터</p>
+                                                <p class="event_txt_dsc">네이버 예매시, 손크림/발크림(중 래덤)을 드립니다</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
+                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+                                            <div class="event_txt">
+                                                <h4 class="event_txt_tit">111</h4>
                                                 <p class="event_txt_adr"></p>
                                                 <p class="event_txt_dsc"></p>
                                             </div>
@@ -151,6 +183,8 @@
         </div>
     </footer>
 
+    <script type="text/javascript" src = "/resources/js/mainpage.js">
+    </script>
 </body>
 
 </html>

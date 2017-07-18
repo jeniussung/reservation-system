@@ -11,15 +11,84 @@
 </head>
 <body>
 
-    <script type="text/javascript">
-foo();
+<script type="text/javascript">
+//foo();
 
-(function(){
-    var foo = function() {
-        alert('foo');
-    };
+
+    var foo = (function(){
+
+        var hey = 3;
+
+        function aledo(){
+            alert('aldo');
+        }
+
+        function clhey(){$(document).on('click','#aa',function(){alert(hey++)});};
+
+        clhey();
+        
+        return {
+            hi : 'hi',
+            addHey : function addhi(){hey++;},
+            showHey : function showhi(){alert(hey);},
+            aledo : function ale(){aledo();}
+        }
+    })();
+
+    //foo.aledo();
+    foo.addHey();
+    foo.addHey();
+    foo.addHey();
+    foo.showHey();
+
+(showName = function (name) {
+  console.log(name || "No Name")
+  }
+); // No Name
+
+showName("Rich"); // Rich
+
+showName(); // No Name
+
+var haha = (function () {
+    var firstName = 'Richard';
+    var hi = 1;
+
+    function init () {
+        //doStuff (firstName);
+        alert(firstName);
+        // code to start the application
     }
-);
+
+    function doStuff () {
+        // Do stuff here
+        alert(hi);
+    }
+
+    function doMoreStuff () {
+        // Do more stuff here
+    }
+    // Start the applicatio
+
+    return {
+        addvar : 3,
+
+    //    addfunc : $(document).on('click','#aa',function(){alert(hi++)}),
+
+        ab : function ab()
+        {
+            alert('a');
+        }
+    }
+})();
+
+//alert(haha.addvar);
+haha.ab();
+
+//haha.doStuff();
+//haha.addfunc();
+//alert(haha.addvar);
+
 
 
 
@@ -27,4 +96,5 @@ foo();
     </script>
 
 </body>
+<div id = 'aa'>test</div>
 </html>

@@ -2,16 +2,16 @@ package kr.or.connect.reservation.dto;
 
 public class Product {
 	int id;
-	int category_id;
+	int categoryId;
 	String name;
 	String description;
-	String place_name;
-	String sales_start;
-	String sales_end;
-	int sales_flag;
+	String placeName;
+	String salesStart;
+	String salesEnd;
+	int salesFlag;
 	String event;
-	String create_date;
-	String modify_date;
+	String createDate;
+	String modifyDate;
 	
 	public int getId() {
 		return id;
@@ -19,17 +19,11 @@ public class Product {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getPlace_name() {
-		return place_name;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setPlace_name(String place_name) {
-		this.place_name = place_name;
-	}
-	public int getCategory_id() {
-		return category_id;
-	}
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 	public String getName() {
 		return name;
@@ -43,23 +37,29 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getSales_start() {
-		return sales_start;
+	public String getPlaceName() {
+		return placeName;
 	}
-	public void setSales_start(String sales_start) {
-		this.sales_start = sales_start;
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
-	public String getSales_end() {
-		return sales_end;
+	public String getSalesStart() {
+		return salesStart;
 	}
-	public void setSales_end(String sales_end) {
-		this.sales_end = sales_end;
+	public void setSalesStart(String salesStart) {
+		this.salesStart = salesStart;
 	}
-	public int getSales_flag() {
-		return sales_flag;
+	public String getSalesEnd() {
+		return salesEnd;
 	}
-	public void setSales_flag(int sales_flag) {
-		this.sales_flag = sales_flag;
+	public void setSalesEnd(String salesEnd) {
+		this.salesEnd = salesEnd;
+	}
+	public int getSalesFlag() {
+		return salesFlag;
+	}
+	public void setSalesFlag(int salesFlag) {
+		this.salesFlag = salesFlag;
 	}
 	public String getEvent() {
 		return event;
@@ -67,25 +67,18 @@ public class Product {
 	public void setEvent(String event) {
 		this.event = event;
 	}
-	public String getCreate_date() {
-		return create_date;
+	public String getCreateDate() {
+		return createDate;
 	}
-	public void setCreate_date(String create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
-	public String getModify_date() {
-		return modify_date;
+	public String getModifyDate() {
+		return modifyDate;
 	}
-	public void setModify_date(String modify_date) {
-		this.modify_date = modify_date;
-	}
-	
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", category_id=" + category_id + ", name=" + name + ", description=" + description
-				+ ", place_name=" + place_name + ", sales_start=" + sales_start + ", sales_end=" + sales_end
-				+ ", sales_flag=" + sales_flag + ", event=" + event + ", create_date=" + create_date + ", modify_date="
-				+ modify_date + "]";
+	public void setModifyDate(String modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 	
+		
 }
