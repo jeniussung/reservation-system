@@ -91,7 +91,7 @@ var SlideImage = (function (){
                 //  if(curLiPosition < -1000)
                     // return false;
                 //  if(curLiPosition == 0 || curLiPosition < 0 || curLiPosition < -1000)
-                     $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
+                //     $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
 
                 e.preventDefault( );
             }
@@ -455,7 +455,7 @@ var ShowDetailImage = (function (){
         num = 1;
         isOpen = 0;
         $('.detail_img li').remove();
-        $('#photoviwer').fadeOut();   
+        $('#photoviwer').fadeOut();
     })
 
     $(document).on('click','.pbtn',function(){
