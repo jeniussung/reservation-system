@@ -3,6 +3,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -68,6 +72,28 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	
 	   }
 	    
+	    public String generateState()
+	    {
+	        SecureRandom random = new SecureRandom();
+	        return new BigInteger(130, random).toString(32);
+	    }
+
+	    @GetMapping("nlogin")
+	    public String goNlogin(HttpServletRequest request){
+	    	
+	    		String state = generateState();
+		    	HttpSession session = request.getSession();
+	    	    	session.setAttribute("state", state);
+	    	    	
+	    	    	try {
+	    	    			 String encodeResult = URLEncoder.encode("://localhost:8080/reserve", "UTF-8");
+					 return "redirect:https://nid.naver.com/oauth2.0/authorize?client_id=ealZ_klxUlkCLBWYXd1P&response_type=code&redirect_uri=http"+encodeResult+"&"+"state="+state;
+				} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+						return "nlogin";
+				}
+	    }
+	    
 	    @GetMapping("loginform")
 	    public String loginform(HttpServletRequest request) {
 	       
@@ -91,6 +117,44 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	    public String getReview() {
 	       
 	    	   return "review";
+	   }
+	    
+	    @GetMapping("reserve")
+	    public String getReserve(HttpServletRequest request) {
+	    	
+	    		String state = request.getParameter("state");
+	    		
+	    		HttpSession session = request.getSession();
+	    				
+	    		String storedState = (String) session.getAttribute("state");
+
+	    		if( !state.equals( storedState ) ) {
+	    			System.out.println("fail");
+	    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
+	    		} else {
+	    			System.out.println("ok");
+	    		    //Return RESPONSE_SUCCESS; //200 success
+	    			return "reserve";
+	    		}
+	   }
+	    
+	    @GetMapping("reserve/hi")
+	    public String getReserveHi(HttpServletRequest request) {
+
+	    	String state = request.getParameter("state");
+    		
+    		HttpSession session = request.getSession();
+    				
+    		String storedState = (String) session.getAttribute("state");
+	    	
+	    	if( !state.equals( storedState ) ) {
+    			System.out.println("fail");
+    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
+    		} else {
+    			System.out.println("ok");
+    		    //Return RESPONSE_SUCCESS; //200 success
+    			return "review";
+    		}
 	   }
         
         @GetMapping("files")

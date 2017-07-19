@@ -12,6 +12,7 @@
     var source;
     var template;
 
+
     if(auto) set_interval = setInterval(autoRightMove, 2000);
 
     $( ".visual_img" ).css({ "left": "-="+slide_width+"px" });
@@ -39,7 +40,7 @@
 
              if(num!=slide_count)
              {
-               $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
+               $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "normal" );
               num++;
 
              }
@@ -66,7 +67,7 @@
 
             if(num!=1)
             {
-                 $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "slow" );
+                 $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "normal" );
 
                  num--;
             }
@@ -95,16 +96,7 @@
           }
 
           function autoRightMove(){
-/*
-              if(num>slide_count-1){
 
-                num = 0;
-              }
-
-              $( ".visual_img" ).animate({'left': -(num*slide_width)+'px' },'slow');
-
-              num++;
-*/
             if($( ".visual_img").is(":animated"))
                 return false;
 
@@ -131,27 +123,8 @@
 
                getMorelistCategory(cur_display_num,cat_num);
              }
-
-/*
-             var category = $('.lst_event_box').eq(0).find('.event_txt_tit').eq(0).text(); // 현재 공연 정보 카테고리
-             category = category.split(' ');
-             category = category[1];
-             //console.log(category);
-
-             var cat = $('.section_event_tab ul li').find('.active').text(); // 선택한 카테고리
-             cat = cat.split(' ');
-             cat = cat[1];
-
-             if(category == cat)
-             console.log("same");
-             else {
-               console.log("dif");
-             }
-
-             var d = $('.section_event_tab ul li').find('.last').text();
-             console.log(d);
-*/
            });
+
            $(function(){
                $(window).scroll(function(){
                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -193,10 +166,7 @@
       $('.section_event_tab ul li').children().removeClass('active'); //
 
       $(this).children().addClass('anchor active'); //
-/*
-      $('.lst_event_box li').removeClass('item');
-      $('.lst_event_box li').addClass('dimm_dark');
-*/
+
       $('.lst_event_box li').remove();
 
       cur_display_num = 0;

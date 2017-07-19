@@ -82,9 +82,6 @@ var SlideImage = (function (){
 
             if ( Math.abs( drag_dist ) > Math.abs( scroll_dist )) {
 
-                // ... move slide element
-                //if(Math.abs(move_dx)<5)
-
                  if($( ".visual_img").is(":animated"))
                      return false;
 
@@ -199,6 +196,8 @@ var GetTopInformation = (function (){
           contentType:"application/json; charset=UTF-8",
           dataType:"json",
           success: function(data) {
+
+                    console.log(data.length);
 
                   addImageLi(data); // 이미지 삽입
 
@@ -439,20 +438,20 @@ var ShowDetailImage = (function (){
     var commentId = $(this).closest('li').data('comment');
     var soruce = $("#commentImage-template").html();
     var template = Handlebars.compile(soruce);
-    var num = 1;
+    var cur_num = 1;
     var slide_width;
     var slide_count;
     var isOpen = 0;
 
     $(document).on('click','.thumb_area',function(){
-
+        
         var commentId = $(this).closest('li').data('comment');
         addDetailImageAjax(commentId);
 
     })
 
     $(document).on('click','.btn-r .cbtn',function(){
-        num = 1;
+
         isOpen = 0;
         $('.detail_img li').remove();
         $('#photoviwer').fadeOut();
@@ -460,17 +459,17 @@ var ShowDetailImage = (function (){
 
     $(document).on('click','.pbtn',function(){
 
-        if(num!=1){
+        if(cur_num!=1){
          $( ".detail_img" ).animate({ "left": "+="+slide_width+"px" }, "slow" );
-         num--;
+         cur_num--;
         }
     });
 
     $(document).on('click','.nbtn',function(){
 
-        if(num!=slide_count){
+        if(cur_num!=slide_count){
          $( ".detail_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
-          num++;
+          cur_num++;
          }
     });
 
@@ -486,8 +485,8 @@ var ShowDetailImage = (function (){
                     if(isOpen==0){
                         for(var i = 0 ; i < data.length ; i++){
                             console.log(data[i].fileId)
-                            addCommentLi(data[i].fileId);
                         }
+                        addCommentLi(data);
                     }
 
                     layerOpen('photoviwer');
@@ -496,10 +495,10 @@ var ShowDetailImage = (function (){
             });
         }
 
-    function addCommentLi(fileId)
+    function addCommentLi(data)
     {
 
-        var context = {fileId : fileId};
+        var context = {fileData : data};
         var html    = template(context);
 
         $('.detail_img').show();
@@ -514,7 +513,7 @@ var ShowDetailImage = (function (){
         isOpen = 1;
         slide_width = $('.detail_img > li').outerWidth();
         slide_count = $('.detail_img > li').length;
-
+        console.log('scount : '+slide_count);
         var temp = $('#' + el);
 
         temp.fadeIn();

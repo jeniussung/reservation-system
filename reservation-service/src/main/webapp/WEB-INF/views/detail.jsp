@@ -65,9 +65,11 @@
 </script>
 
 <script id="commentImage-template" type="text/x-handlebars-template">
+{{#each fileData}}
 <li class="detail_list" style="width: 414px;" style="height: 414px; ">
     <img alt="코멘트 사진" class="detail_img_thumb" src="/files/{{fileId}}">
 </li>
+{{/each}}
 </script>
 
 <body>

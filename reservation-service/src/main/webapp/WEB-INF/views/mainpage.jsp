@@ -13,6 +13,7 @@
 
   <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
   <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
 
   <script id="entry-template" type="text/x-handlebars-template">
@@ -55,7 +56,9 @@
                     <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                     <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                 </h1>
-                <a href="/login" class="btn_my"> <span title="내 예약">MY</span> </a>
+                <%-- href="/nlogin" --%>
+                <%-- id="naver_id_login" --%>
+                <a href="/nlogin" class="btn_my"> <span title="내 예약">MY</span> </a>
             </header>
         </div>
         <hr>

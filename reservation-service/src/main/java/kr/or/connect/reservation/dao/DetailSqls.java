@@ -12,7 +12,7 @@ public class DetailSqls {
 											+ "FROM product "
 											+ "INNER JOIN "
 											+ "display_info ON product.id = product_id WHERE product_id = :id)dis_info "
-											+ "ON product_image.product_id = dis_info.product_id WHERE product_image.type = 1)p_file ON file.id = p_file.file_id";
+											+ "ON product_image.product_id = dis_info.product_id)p_file ON file.id = p_file.file_id";
 	
 	final static String SELECT_FILE_ADDR = "SELECT save_file_name FROM file WHERE id = :id";
 	
