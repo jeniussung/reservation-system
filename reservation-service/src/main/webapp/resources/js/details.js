@@ -2,8 +2,7 @@
 
 var id;
 
-// var num = 0;
-var GetId = (function (){
+var GetProductId = (function (){
     var querystring = new Array;
     var qS;
     var returnValue;
@@ -26,7 +25,7 @@ var GetId = (function (){
             return returnValue;
         },
 
-        getString : function getString(){
+        getProductId : function getProductId(){
             querystring = String (document.location).split ('/')
             returnValue = querystring[querystring.length-1];
             return returnValue;
@@ -34,7 +33,7 @@ var GetId = (function (){
     }
 })();
 
-id = GetId.getString();
+id = GetProductId.getProductId();
 
 var SlideImage = (function (){
 
@@ -62,8 +61,6 @@ var SlideImage = (function (){
          $('.figure_pagination > span:first').text(--curImgnum);
          $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "slow" );
         //  $('.visual_img').goBefore(slide_width);
-         //hi();
-        //  hi.hire();
          num--;
         }
     })
@@ -86,8 +83,6 @@ var SlideImage = (function (){
             touch_start_y = e.touches[ 0 ].pageY;
         }
 
-        console.log($('.visual_img').position());
-
     }, false );
 
     el.addEventListener( 'touchmove', function( e ) {
@@ -101,9 +96,6 @@ var SlideImage = (function (){
             scroll_dist = e.touches[ 0 ].pageY - touch_start_y;
             move_dx = ( drag_dist / cur_dist ) * 100;
             move_sum+=move_dx;
-
-            console.log(move_dx);
-            console.log(move_sum);
 
             if ( Math.abs( drag_dist ) > Math.abs( scroll_dist )) {
 
@@ -126,8 +118,6 @@ var SlideImage = (function (){
     }, false );
 
     el.addEventListener( 'touchend', function( e ) {
-
-    console.log(move_sum);
 
         if ( e.type === 'touchend' && e.touches.length === 0 ) {
 
@@ -211,7 +201,7 @@ var getCurrentDate = (function(){
     }
 })();
 
-var GetTop = (function (){
+var GetTopInformation = (function (){
 
     var source;
     var template;
@@ -229,17 +219,6 @@ var GetTop = (function (){
 
                   addImageLi(data); // 이미지 삽입
 
-                  /*
-                  for(var i in data){
-                    if (data[i].file_name===null){
-                    //    addImageLi(data[i].name,"/resources/noimg_main.gif");
-                    }else{
-                    //    addImageLi(data[i].name,data[i].file_name);
-                    }
-                  }
-                  */
-                  console.log(data.length);
-
                   title = data[0].name;
 
                   SlideImage.setCount(); // 이미지 갯수 갱신
@@ -254,27 +233,14 @@ var GetTop = (function (){
 
                   addEvent(data[0].event.replace(/\n/gi,'<br>')); // 이벤트 정보 삽입
 
-                   GetMap.getmap('서울특별시 구로구 공원로 6가길');
-                //    GetMap.getPlace(data[0].name, 'ㅁㄴㅇㄹ', 'ㅁㄴㅇㄹ', 'ㅁㄴㅇㄹ', '0101');
+                  GetMap.getmap(data[0].placeStreet);
+                  GetMap.getPlace(data[0].name, data[0].placeStreet, data[0].placeLot, data[0].placeName, data[0].tel);
            }
         });
     }
 
     function addImageLi(data)
     {
-        /*
-        soruce = $("#image-template").html();
-        template = Handlebars.compile(soruce);
-
-        var context = {name: name , file_name: file_name};
-        var html    = template(context);
-
-        $('.visual_img').show();
-        var $element_ul = parent.$('.visual_img');
-
-        $(html).appendTo($element_ul);
-        */
-
         soruce = $("#image-template").html();
         template = Handlebars.compile(soruce);
 
@@ -285,7 +251,6 @@ var GetTop = (function (){
         var $element_ul = parent.$('.visual_img');
 
         $(html).appendTo($element_ul);
-
     }
 
     function addGroupBtn(homepage, tel, email){
@@ -354,8 +319,6 @@ var GetUserComment = (function (){
           dataType:"json",
           success: function(data) {
 
-              console.log(data[0].imgCount);
-
               if(data.length === 0){
               }else{
 
@@ -376,7 +339,7 @@ var GetUserComment = (function (){
 
                   for(var i in data){
                     date = data[i].createDate.split(' ');
-                    addCommentLi(data[i].id, GetTop.getTitle(), data[i].imgCount, data[i].fileId, data[i].comment, data[i].score, data[i].nickname, date[0]);
+                    addCommentLi(data[i].id, GetTopInformation.getTitle(), data[i].imgCount, data[i].fileId, data[i].comment.replace(/\n/gi,'<br>'), data[i].score, data[i].nickname, date[0]);
                     if(i==2)
                         break;
                   } // for
@@ -488,60 +451,153 @@ var GetMap = (function(){
 
 })();
 
-$(document).on('click','.thumb_area',function(){
-    console.log($(this).closest('li').data('comment'));
+var ShowDetailImage = (function (){
 
-    layer_open('layer1');
-    // alert('jhi');
-    // $('#photoviwer').removeClass('hide');
-    // $('.photocontent').removeClass('hide');
-})
+    var commentId = $(this).closest('li').data('comment');
+    var soruce = $("#commentImage-template").html();
+    var template = Handlebars.compile(soruce);
+    var num = 1;
+    var slide_width;
+    var slide_count;
+    var isOpen = 0;
 
-function layer_open(el){
-    var temp = $('#' + el);     //레이어의 id를 temp변수에 저장
-    var bg = temp.prev().hasClass('bg');    //dimmed 레이어를 감지하기 위한 boolean 변수
+    $(document).on('click','.thumb_area',function(){
 
-    if(bg){
-        $('.layer').fadeIn();
-    }else{
-        temp.fadeIn();  //bg 클래스가 없으면 일반레이어로 실행한다.
+        var commentId = $(this).closest('li').data('comment');
+        addDetailImageAjax(commentId);
+
+    })
+
+    $(document).on('click','.btn-r .cbtn',function(){
+
+        $('.detail_img li').remove();
+        num = 1;
+        isOpen = 0;
+
+        $('#photoviwer').fadeOut();     //'닫기'버튼을 클릭하면 레이어가 사라진다.
+
+    })
+
+    $(document).on('click','.pbtn',function(){
+
+        if(num!=1){
+         $( ".detail_img" ).animate({ "left": "+="+slide_width+"px" }, "slow" );
+         num--;
+        }
+    });
+
+    $(document).on('click','.nbtn',function(){
+
+        if(num!=slide_count){
+         $( ".detail_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
+          num++;
+         }
+    });
+
+    function addDetailImageAjax(commentId){
+
+        $.ajax({
+          url: "./image/"+commentId,
+          type: "GET",
+          contentType:"application/json; charset=UTF-8",
+          dataType:"json",
+          success: function(data) {
+
+                    if(isOpen==0){
+                        for(var i = 0 ; i < data.length ; i++){
+                            addCommentLi(data[i].fileId);
+                        }
+                    }
+
+                    layerOpen('photoviwer');
+
+                }
+            });
+        }
+
+    function addCommentLi(fileId)
+    {
+
+        var context = {fileId : fileId};
+        var html    = template(context);
+
+        $('.detail_img').show();
+
+        var $element_ul = parent.$('.detail_img');
+
+        $(html).appendTo($element_ul);
     }
 
-    if (temp.outerHeight() < $(document).height() )
-        temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
-    else
-        temp.css('top', '0px');
 
-    if (temp.outerWidth() < $(document).width() )
-        temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
-    else
-        temp.css('left', '0px');
+    function layerOpen(el){
+        isOpen = 1;
+        slide_width = $('.detail_img > li').outerWidth();
+        slide_count = $('.detail_img > li').length;
 
-    temp.find('a.cbtn').click(function(e){
+        var temp = $('#' + el);
 
-    if(bg){
-        $('.layer').fadeOut();
-    }else{
-        temp.fadeOut();     //'닫기'버튼을 클릭하면 레이어가 사라진다.
+        temp.fadeIn();
+
+        if (temp.outerHeight() < $(document).height()){
+            temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+        }
+        else{
+            temp.css('top', '0px');
+        }
+
+        if (temp.outerWidth() < $(document).width() ){
+            temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+        }
+        else{
+            temp.css('left', '0px');
+        }
     }
+})();
 
-    e.preventDefault();
+var DetailBottomContent = (function (){
+
+    addBottomContent(id);
+
+    function addBottomContent(productId){
+
+        $.ajax({
+          url: "./content/"+productId,
+          type: "GET",
+          contentType:"application/json; charset=UTF-8",
+          dataType:"json",
+          success: function(data) {
+                    $('.detail_info_group > li > .in_dsc').text(data.content.replace(/\n/gi,'<br>'));
+                }
+            });
+        }
+
+})();
+
+var LazyLoad = (function(){
+
+    var src_image = $('.detail_info_lst').eq(2).find('.in_img_group .img_thumb').data('lazy-image');
+
+    var lazyTarget = $('.detail_info_lst').get(2);
+
+    window.addEventListener('scroll',function(){
+
+        if(isInViewport(lazyTarget))
+        {
+             $('.detail_info_lst').eq(2).find('.in_img_group .img_thumb').attr('src',src_image);
+        }
 
     });
 
-    $('.layer .bg').click(function(e){
-        $('.layer').fadeOut();
-        e.preventDefault();
-    });
-}
-//getMap.getmap();
+    function isInViewport(el){
+        var rect = el.getBoundingClientRect();
 
-
-
-
-//sconsole.log(id);
-
-//$('.dsc').text("asdf"); // 상세 정보 텍스트 바꾸기
-//$('.event_info > div').text("asdf"); // 이벤트 정보 텍스 바꾸기
+        return (
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+         );
+    }
+})();
 
 })();

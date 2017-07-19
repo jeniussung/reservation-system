@@ -64,6 +64,12 @@
     </li>
 </script>
 
+<script id="commentImage-template" type="text/x-handlebars-template">
+<li class="detail_list" style="width: 414px;" style="height: 414px; ">
+    <img alt="코멘트 사진" class="detail_img_thumb" src="/files/{{fileId}}">
+</li>
+</script>
+
 <body>
 
     <div id="container">
@@ -190,7 +196,7 @@
                                 <span class="join_count"><em class="green">52건</em> 등록</span>
                             </div>
                             <ul class="list_short_review">
-                                <li class="list_item" data-comment = "1">
+                                <%-- <li class="list_item" data-comment = "1">
                                     <div>
                                         <div class="review_area">
                                             <div class="thumb_area">
@@ -226,7 +232,7 @@
                                             <div class="review_info"> <span class="grade">4.0</span> <span class="name">xero****</span> <span class="date">2017.3.4. 방문</span> </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> --%>
                             </ul>
                         </div>
                         <p class="guide"> <i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span> </p>
@@ -262,7 +268,7 @@
                                     </li>
                                     <li class="detail_info_lst"> <strong class="in_tit">[공연정보]</strong>
                                         <ul class="in_img_group">
-                                            <li class="in_img_lst"> <img alt="" class="img_thumb" data-lazy-image="https://ssl.phinf.net/naverbooking/20170131_255/1485825099482NmYMe_JPEG/%B0%F8%BF%AC%C1%A4%BA%B8.jpg?type=a1000"> </li>
+                                            <li class="in_img_lst"> <img alt="" src="" class="img_thumb" data-lazy-image="https://ssl.phinf.net/naverbooking/20170131_255/1485825099482NmYMe_JPEG/%B0%F8%BF%AC%C1%A4%BA%B8.jpg?type=a1000"> </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -297,7 +303,7 @@
                             </div>
 							<!-- [D] 모바일 브라우저에서 접근 시 column2 추가와 btn_navigation 요소 추가 -->
                             <div class="bottom_common_path column2">
-                                <a href="#" class="btn_path"> <i class="fn fn-path-find2"></i> <span>길찾기</span> </a>
+                                <a href="http://map.naver.com/" class="btn_path"> <i class="fn fn-path-find2"></i> <span>길찾기</span> </a>
 								<a hewf="#" class="btn_navigation before"> <i class="fn fn-navigation2"></i> <span>내비게이션</span> </a>
                             </div>
                         </div>
@@ -316,79 +322,27 @@
         </div>
     </footer>
 
-    <div id="photoviwer" class = "hide">
-        <div class = "photocontent hide" style="height:370px;">
-             안녕하세요 늑대털쓴양입니다.<br>
-             <a href=""><b>팝업강좌 바로가기</b></a>
-          </div>
-          <div>
-            <div id="close" style="width:100px; margin:auto;">close</div>
-          </div>
-    </div>
-
-
-<div id="layer1" class="pop-layer">
+<div id="photoviwer" class="pop-layer">
     <div class="pop-container">
             <div class="pop-conts">
                 <%--  --%>
-                <p class="ctxt mb20">Thank you.<br>
-                    Your registration was submitted successfully.<br>
-                    Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
-                    Hope to see you soon!
-                </p>
+                <%-- <p class="ctxt mb20">Detail Image.<br> --%>
+                    <%-- <div class="detail_container_visual" style="width: 414px;"> --%>
+                    <ul class="detail_img">
+                        <%-- <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li>
+                        <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li>
+                        <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li> --%>
+                    </ul>
+                    <%-- </div> --%>
+                <%-- </p> --%>
 
                 <div class="btn-r">
+                    <a href="#" class="pbtn">이전</a>
+                    <a href="#" class="nbtn">다음</a>
                     <a href="#" class="cbtn">Close</a>
                 </div>
-            </div>
-    </div>
-</div>
 
-<div class="group_visual hide">
-    <div>
-        <div class="container_visual" style="width: 414px;">
-            <ul class="visual_img">
-                <li class="item" style="width: 414px;" style="height: 414px; "> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"> <span class="img_bg"></span>
-                    <div class="visual_txt" style="">
-                        <div class="visual_txt_inn">
-                            <h2 class="visual_txt_tit"> <span>뮤지컬 로미오와 줄리엣</span> </h2>
-                            <p class="visual_txt_dsc"></p>
-                        </div>
-                    </div>
-                </li>
-                <li class="item" style="width: 414px;" style="height: 414px; "> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"> <span class="img_bg"></span>
-                    <div class="visual_txt">
-                        <div class="visual_txt_inn">
-                            <h2 class="visual_txt_tit"> <span>뮤지컬 로미오와 줄리엣</span> </h2>
-                            <p class="visual_txt_dsc"></p>
-                        </div>
-                    </div>
-                </li>
-                <li class="item" style="width: 414px;" style="height: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"> <span class="img_bg"></span>
-                    <div class="visual_txt">
-                        <div class="visual_txt_inn">
-                            <h2 class="visual_txt_tit"> <span>뮤지컬 로미오와 줄리엣</span> </h2>
-                            <p class="visual_txt_dsc"></p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="prev">
-            <div class="prev_inn">
-                <a href="#" class="btn_prev" title="이전">
-                    <!-- [D] 첫 이미지 이면 off 클래스 추가 -->
-                    <i class="spr_book2 ico_arr6_lt off"></i>
-                </a>
             </div>
-        </div>
-        <div class="nxt">
-            <div class="nxt_inn">
-                <a href="#" class="btn_nxt" title="다음">
-                    <i class="spr_book2 ico_arr6_rt"></i>
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 

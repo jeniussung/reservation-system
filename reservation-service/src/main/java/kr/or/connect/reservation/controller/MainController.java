@@ -34,13 +34,6 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 		
 		private String baseDir = "/Users/seongjihyeon/Desktop" + File.separator + "serverfile" + File.separator;
 		
-		@GetMapping("map")
-	    public String testMap(){
-	    	
-	        return "testmap";
-	     
-	    }
-		
 	    @GetMapping
 	    public String mainpage(){
 	    	
@@ -169,7 +162,7 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
             response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
             response.setHeader("Content-Transfer-Encoding", "binary");
             response.setHeader("Content-Type", contentType);
-            response.setHeader("Content-Length", ""+ fileSize);
+            //response.setHeader("Content-Length", ""+ fileSize);
             response.setHeader("Pragma", "no-cache;");
             response.setHeader("Expires", "-1;");
 
@@ -203,5 +196,12 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	    @GetMapping("test")
 	    public String test(){
 	        return "test2";
+	    }
+	    
+	    @GetMapping("map")
+	    public String testMap(){
+	    	
+	        return "testmap";
+	     
 	    }
 	}

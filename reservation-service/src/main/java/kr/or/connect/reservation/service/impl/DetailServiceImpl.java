@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.DetailDao;
 import kr.or.connect.reservation.dto.CommentImage;
+import kr.or.connect.reservation.dto.DetailBottom;
 import kr.or.connect.reservation.dto.DetailTop;
 import kr.or.connect.reservation.dto.ImgFile;
 import kr.or.connect.reservation.dto.UserComment;
@@ -40,5 +41,11 @@ public class DetailServiceImpl implements DetailService {
 	public Collection<CommentImage> getUserCommentImage(Integer id) {
 		// TODO Auto-generated method stub
 		return detailDao.selectCommentImg(id);
+	}
+
+	@Override
+	public DetailBottom getDetailContent(Integer id) {
+		// TODO Auto-generated method stub
+		return detailDao.selectDetailContent(id);
 	}
 }

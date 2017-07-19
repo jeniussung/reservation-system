@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.CommentImage;
+import kr.or.connect.reservation.dto.DetailBottom;
 import kr.or.connect.reservation.dto.DetailTop;
 import kr.or.connect.reservation.dto.ImgFile;
 import kr.or.connect.reservation.dto.Product;
@@ -78,5 +79,15 @@ public class DetailDao {
     		}
     }
     
-
+    public DetailBottom selectDetailContent(Integer id) {
+    	try {    		
+    		    RowMapper<DetailBottom> rowMapper = BeanPropertyRowMapper.newInstance(DetailBottom.class);
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("id", id);
+            return jdbc.queryForObject(DetailSqls.SELEECT_DETAIL_BOTTOM_CONTENT, params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
+    		}catch(EmptyResultDataAccessException e)
+    		{
+    			return null;
+    		}
+    }
 }

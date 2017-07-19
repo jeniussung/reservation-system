@@ -16,19 +16,38 @@
     font-style: normal
 }
 
-/**/
-#photoviwer{
- width:100%; height:100%; background:#3d3d3d; color:#fff;
- position:absolute; top:10px; left:100px; text-align:center;
- border:2px solid #000;
-  }
-
-.pop-layer {display:none; position: absolute; top: 50%; left: 50%; width: 410px; height:auto;  background-color:#fff; border: 5px solid #3571B5; z-index: 10;}
-.pop-layer .pop-container {padding: 20px 25px;}
+/*
+레이어 팝업 css
+*/
+.pop-layer {background-position: center; overflow: hidden; display:none; position: absolute; top: 50%; left: 50%; width: 410px; height:auto;  background-color:#fff; border: 5px solid #1EDC00; }
+/*.pop-layer .pop-container { padding: 20px 25px;}*/
 .pop-layer p.ctxt {color: #666; line-height: 25px;}
 .pop-layer .btn-r {width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:right;}
-a.cbtn {display:inline-block; height:25px; padding:0 14px 0; border:1px solid #304a8a; background-color:#3f5a9d; font-size:13px; color:#fff; line-height:25px;}
-a.cbtn:hover {border: 1px solid #091940; background-color:#1f326a; color:#fff;}
+a.cbtn {display:inline-block; height:25px; padding:0 14px 0; border:3px solid #1EDC00; background-color:#1EDC00; font-size:13px; color:#fff; line-height:25px; margin-right: 10px}
+a.cbtn:hover {border: 1px solid #1EBE00; background-color:#1EBE00; color:#fff;}
+a.pbtn {display:inline-block; height:25px; padding:0 14px 0; border:3px solid #1EDC00; background-color:#1EDC00; font-size:13px; color:#fff; line-height:25px; margin-left: 20px}
+a.nbtn {display:inline-block; height:25px; padding:0 14px 0; border:3px solid #1EDC00; background-color:#1EDC00; font-size:13px; color:#fff; line-height:25px; margin-right: 60px}
+
+.detail_img{
+    position: relative;
+    min-height: 210px;
+    font: 0/0 a;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.detail_list{
+    overflow-x: hidden;
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: top;
+}
+
+.detail_img_thumb{
+    width: 100%;
+    vertical-align: top
+}
 /**/
 
 .fn {

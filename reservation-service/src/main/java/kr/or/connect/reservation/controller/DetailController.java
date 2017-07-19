@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.CommentImage;
+import kr.or.connect.reservation.dto.DetailBottom;
 import kr.or.connect.reservation.dto.DetailTop;
 import kr.or.connect.reservation.dto.UserComment;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
@@ -36,6 +37,12 @@ public class DetailController {
 	public Collection<CommentImage> getCommentImage(@PathVariable Integer id)
 	{
 		return detailServiceImpl.getUserCommentImage(id);
+	}
+	
+	@GetMapping("/content/{id}")
+	public DetailBottom getDetailBottomContent(@PathVariable Integer id)
+	{
+		return detailServiceImpl.getDetailContent(id);
 	}
 
 }

@@ -1,5 +1,5 @@
 (function (){
-console.log('common load');
+// console.log('common load');
 
 var CommonModule = {
     onload : function () { console.log('common loaded!'); },

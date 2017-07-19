@@ -2,19 +2,22 @@ package kr.or.connect.reservation.dto;
 
 public class CommentImage {
 	
-	int commentId;
-	int saveFileName;
+	Integer commentId;
+	Integer fileId;
 	
-	public int getCommentId() {
+	public Integer getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(int commentId) {
+	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
-	}	
-	public int getSaveFileName() {
-		return saveFileName;
 	}
-	public void setSaveFileName(int saveFileName) {
-		this.saveFileName = saveFileName;
+	public Integer getFileId() {
+		return fileId;
 	}
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+	
+	
+	
 }
