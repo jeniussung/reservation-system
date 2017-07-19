@@ -456,7 +456,6 @@ var ShowDetailImage = (function (){
         isOpen = 0;
         $('.detail_img li').remove();
         $('#photoviwer').fadeOut();     //'닫기'버튼을 클릭하면 레이어가 사라진다.
-
     })
 
     $(document).on('click','.pbtn',function(){
