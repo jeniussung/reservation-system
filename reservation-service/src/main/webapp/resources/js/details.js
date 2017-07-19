@@ -197,8 +197,6 @@ var GetTopInformation = (function (){
           dataType:"json",
           success: function(data) {
 
-                    console.log(data.length);
-
                   addImageLi(data); // 이미지 삽입
 
                   title = data[0].name;
@@ -444,7 +442,7 @@ var ShowDetailImage = (function (){
     var isOpen = 0;
 
     $(document).on('click','.thumb_area',function(){
-        
+
         var commentId = $(this).closest('li').data('comment');
         addDetailImageAjax(commentId);
 
@@ -483,9 +481,6 @@ var ShowDetailImage = (function (){
           success: function(data) {
 
                     if(isOpen==0){
-                        for(var i = 0 ; i < data.length ; i++){
-                            console.log(data[i].fileId)
-                        }
                         addCommentLi(data);
                     }
 
@@ -513,7 +508,6 @@ var ShowDetailImage = (function (){
         isOpen = 1;
         slide_width = $('.detail_img > li').outerWidth();
         slide_count = $('.detail_img > li').length;
-        console.log('scount : '+slide_count);
         var temp = $('#' + el);
 
         temp.fadeIn();
