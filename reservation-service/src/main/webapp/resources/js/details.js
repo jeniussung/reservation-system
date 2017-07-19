@@ -91,7 +91,7 @@ var SlideImage = (function (){
                 //  if(curLiPosition < -1000)
                     // return false;
                 //  if(curLiPosition == 0 || curLiPosition < 0 || curLiPosition < -1000)
-                //     $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
+                     $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
 
                 e.preventDefault( );
             }

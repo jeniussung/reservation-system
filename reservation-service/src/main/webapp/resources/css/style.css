@@ -19,7 +19,7 @@
 /*
 레이어 팝업 css
 */
-.pop-layer {background-position: center; overflow: hidden; display:none; position: absolute; top: 50%; left: 50%; width: 410px; height:auto;  background-color:#fff; border: 5px solid #1EDC00; }
+.pop-layer {background-position: center; overflow: hidden; display:none; position: absolute; top: 50%; left: 50%; width: 410px; height:auto;  background-color:#fff; border: 5px solid #1EDC00; z-index: 9000}
 /*.pop-layer .pop-container { padding: 20px 25px;}*/
 .pop-layer p.ctxt {color: #666; line-height: 25px;}
 .pop-layer .btn-r {width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:right;}
