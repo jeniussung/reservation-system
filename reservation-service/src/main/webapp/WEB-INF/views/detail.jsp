@@ -278,8 +278,8 @@
                     <!-- [D] 오시는길 외 다른 탭 선택 시 detail_location에 hide 추가 -->
                     <div class="detail_location hide">
                         <div class="box_store_info no_topline">
-                            <a class="store_location" title="지도웹으로 연결" style="width:100%;height:300px">
-                                <div id="map" class="store_map img_thumb" alt="map" style="width:100%;height:300px;"></div>
+                            <a href="http://map.naver.com/" class="store_location" title="지도웹으로 연결" style="width:100%;height:300px">
+                                <div  id="map" class="store_map img_thumb" alt="map" style="width:100%;height:300px;"></div>
                                 <%-- <div  style="width:100%;height:300px;"></div> --%>
                                 <span class="img_border"></span>
                                 <span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>

@@ -8,23 +8,6 @@ var GetProductId = (function (){
     var returnValue;
 
     return {
-
-        getQueryString : function getQueryString(pName)
-        {
-            qS = String (document.location).split ('?')[1];
-            if (!qS) return false;
-            qS = qS. split ('&');
-            for (var i = 0 ; i < qS.length; i++)
-            {
-                var o = qS[i].split('=');
-                if (pName == o[0])
-                {
-                    returnValue = o[1]
-                }
-            }
-            return returnValue;
-        },
-
         getProductId : function getProductId(){
             querystring = String (document.location).split ('/')
             returnValue = querystring[querystring.length-1];
@@ -469,11 +452,9 @@ var ShowDetailImage = (function (){
     })
 
     $(document).on('click','.btn-r .cbtn',function(){
-
-        $('.detail_img li').remove();
         num = 1;
         isOpen = 0;
-
+        $('.detail_img li').remove();
         $('#photoviwer').fadeOut();     //'닫기'버튼을 클릭하면 레이어가 사라진다.
 
     })
@@ -505,6 +486,7 @@ var ShowDetailImage = (function (){
 
                     if(isOpen==0){
                         for(var i = 0 ; i < data.length ; i++){
+                            console.log(data[i].fileId)
                             addCommentLi(data[i].fileId);
                         }
                     }
