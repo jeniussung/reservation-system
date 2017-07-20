@@ -9,6 +9,8 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.connect.reservation.dto.ImgFile;
 import kr.or.connect.reservation.dto.User;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
+import kr.or.connect.reservation.service.impl.NaverLoginServiceImpl;
+import kr.or.connect.reservation.service.impl.UserServiceImpl;
 
 	@Controller
 	@RequestMapping("/")
@@ -36,7 +40,19 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 		@Autowired
 		DetailServiceImpl detailServiceImpl;
 		
+		@Autowired
+		NaverLoginServiceImpl naverLoginServiceImpl;
+		
+		@Autowired
+		UserServiceImpl userServiceImpl;
+		
 		private String baseDir = "/Users/seongjihyeon/Desktop" + File.separator + "serverfile" + File.separator;
+		private String NAVER_LOGIN_URL = "https://nid.naver.com/oauth2.0/authorize?client_id=ealZ_klxUlkCLBWYXd1P&response_type=code&redirect_uri=http";
+		
+		@GetMapping("index")
+	    public String index(){
+	        return "index";
+	    }
 		
 	    @GetMapping
 	    public String mainpage(){
@@ -50,6 +66,59 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	    		///{name}  @PathVariable String name, Model model
 	        return "detail";
 	     
+	    }
+	    
+	    @GetMapping("nlogin")
+	    public String goNlogin(HttpServletRequest request){
+	    	
+	    		String state = naverLoginServiceImpl.generateState();
+	    		
+		    	HttpSession session = request.getSession();
+		    	
+	    	    	session.setAttribute("state", state);
+	    	    	
+	    	    	try {
+	    	    			 String encodeURL = URLEncoder.encode("://localhost:8080/callback", "UTF-8");
+	    	    			 
+					 return "redirect:"+NAVER_LOGIN_URL +encodeURL+"&state="+state;
+				} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+						return "redirect:/nlogin";
+				}
+	    }
+	    
+	    @GetMapping("callback")
+	    public String callback(HttpServletRequest request){
+	    	
+		    	String state = request.getParameter("state"); 
+	    		String code = request.getParameter("code");
+	    		
+	    		HttpSession session = request.getSession();
+	    		String storedState = (String) session.getAttribute("state");
+	    		
+	    		String url = (String)session.getAttribute("URL");		
+	    		
+	    		if( !state.equals( storedState ) ) {
+	    			System.out.println("fail");
+	    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
+	    		} else {
+	    			System.out.println("ok");
+	    			HashMap<String,Object> accessResult = naverLoginServiceImpl.getAcessToken(state, code);
+		    		HashMap<String, String> profile = naverLoginServiceImpl.getProfile((String) accessResult.get("access_token"));
+		    		
+		    		if(profile == null) // 회원정보 받아오지 못하면 로그인 페이지로 리다이렉트, 접근 토큰은 1회성이기 때문.
+		    		{
+		    			return "redirect:/nlogin";
+		    		}
+		    		
+		    		User user = naverLoginServiceImpl.getUserDto(profile);
+		    		
+		    		userServiceImpl.addUser(user); // 디비에 저장
+		    		
+		    		session.setAttribute("user_id", profile.get("id")); // 아이디 세션에 저장
+		    		
+		    		return url;
+	    		}
 	    }
 	    
 	    @GetMapping("login")
@@ -72,28 +141,6 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	
 	   }
 	    
-	    public String generateState()
-	    {
-	        SecureRandom random = new SecureRandom();
-	        return new BigInteger(130, random).toString(32);
-	    }
-
-	    @GetMapping("nlogin")
-	    public String goNlogin(HttpServletRequest request){
-	    	
-	    		String state = generateState();
-		    	HttpSession session = request.getSession();
-	    	    	session.setAttribute("state", state);
-	    	    	
-	    	    	try {
-	    	    			 String encodeResult = URLEncoder.encode("://localhost:8080/reserve", "UTF-8");
-					 return "redirect:https://nid.naver.com/oauth2.0/authorize?client_id=ealZ_klxUlkCLBWYXd1P&response_type=code&redirect_uri=http"+encodeResult+"&"+"state="+state;
-				} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-						return "nlogin";
-				}
-	    }
-	    
 	    @GetMapping("loginform")
 	    public String loginform(HttpServletRequest request) {
 	       
@@ -101,7 +148,7 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	       
 	       User user = new User();
 	       
-	       user.setIslogin(1);
+//	       user.setIslogin(1);
 	    	
 	    	 if(session.getAttribute("loginIsOk")==null)
 	    	 {
@@ -119,42 +166,13 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 	    	   return "review";
 	   }
 	    
-	    @GetMapping("reserve")
+	    @GetMapping("myreservation")
 	    public String getReserve(HttpServletRequest request) {
-	    	
-	    		String state = request.getParameter("state");
 	    		
 	    		HttpSession session = request.getSession();
-	    				
-	    		String storedState = (String) session.getAttribute("state");
-
-	    		if( !state.equals( storedState ) ) {
-	    			System.out.println("fail");
-	    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
-	    		} else {
-	    			System.out.println("ok");
-	    		    //Return RESPONSE_SUCCESS; //200 success
-	    			return "reserve";
-	    		}
-	   }
-	    
-	    @GetMapping("reserve/hi")
-	    public String getReserveHi(HttpServletRequest request) {
-
-	    	String state = request.getParameter("state");
-    		
-    		HttpSession session = request.getSession();
-    				
-    		String storedState = (String) session.getAttribute("state");
+	    		session.setAttribute("URL","myreservation");
 	    	
-	    	if( !state.equals( storedState ) ) {
-    			System.out.println("fail");
-    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
-    		} else {
-    			System.out.println("ok");
-    		    //Return RESPONSE_SUCCESS; //200 success
-    			return "review";
-    		}
+	    		return "redirect:/nlogin";
 	   }
         
         @GetMapping("files")
@@ -251,11 +269,6 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
             }
 
         }
-	    
-	    @GetMapping("index")
-	    public String index(){
-	        return "index";
-	    }
 	    
 	    @GetMapping("test")
 	    public String test(){

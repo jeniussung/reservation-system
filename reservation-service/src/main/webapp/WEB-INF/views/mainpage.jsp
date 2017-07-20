@@ -58,7 +58,7 @@
                 </h1>
                 <%-- href="/nlogin" --%>
                 <%-- id="naver_id_login" --%>
-                <a href="/nlogin" class="btn_my"> <span title="내 예약">MY</span> </a>
+                <a href="/myreservation" class="btn_my"> <span title="내 예약">MY</span> </a>
             </header>
         </div>
         <hr>
