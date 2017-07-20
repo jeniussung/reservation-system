@@ -111,14 +111,18 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    			return "redirect:/nlogin";
 		    		}
 		    		
-		    		User user = naverLoginServiceImpl.getUserDto(profile);
+		    		User user = userServiceImpl.getUser(profile.get("id"));
 		    		
-		    		userServiceImpl.addUser(user); // 디비에 저장
+		    		if(user == null) {
+		    			User userProfile = naverLoginServiceImpl.getUserDto(profile);
+		    			userServiceImpl.addUser(userProfile); // 디비에 저장
+		    		}
 		    		
 		    		session.setAttribute("user_id", profile.get("id")); // 아이디 세션에 저장
 		    		
 		    		return url;
 	    		}
+	    		
 	    }
 	    
 	    @GetMapping("login")

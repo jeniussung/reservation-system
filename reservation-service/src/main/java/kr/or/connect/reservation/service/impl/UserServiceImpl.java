@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.insert(user);
 	}
 
+	@Override
+	public User getUser(String id) {
+		// TODO Auto-generated method stub
+		return userDao.SelectUser(id);
+	}
 }
