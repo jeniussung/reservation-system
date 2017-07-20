@@ -553,14 +553,15 @@ var LazyLoad = (function(){
 
     var lazyTarget = $('.detail_info_lst').get(2);
 
-    window.addEventListener('scroll',function(){
+
+    $(window).scroll(function(){
 
         if(isInViewport(lazyTarget))
         {
              $('.detail_info_lst').eq(2).find('.in_img_group .img_thumb').attr('src',src_image);
         }
 
-    });
+    })
 
     function isInViewport(el){
         var rect = el.getBoundingClientRect();

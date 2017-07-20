@@ -12,7 +12,6 @@
     var source;
     var template;
 
-
     if(auto) set_interval = setInterval(autoRightMove, 2000);
 
     $( ".visual_img" ).css({ "left": "-="+slide_width+"px" });

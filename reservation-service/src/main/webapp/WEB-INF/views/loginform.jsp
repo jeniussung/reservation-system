@@ -9,6 +9,6 @@
  로그인 버튼을 눌러주세요.
  <a href = "/loginform"> <input = "/loginform" type="button" class="put" value="로그인"> </a>
  <br>
-  <div id="naver_id_login"></div>
+ 
 </body>
 </html>

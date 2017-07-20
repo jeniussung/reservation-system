@@ -26,7 +26,7 @@
         function clhey(){$(document).on('click','#aa',function(){alert(hey++)});};
 
         clhey();
-        
+
         return {
             hi : 'hi',
             addHey : function addhi(){hey++;},
@@ -36,10 +36,96 @@
     })();
 
     //foo.aledo();
-    foo.addHey();
-    foo.addHey();
-    foo.addHey();
-    foo.showHey();
+
+//    foo.showHey();
+
+    var hoo = (function(){
+
+        var hey = 3;
+
+        function aledo(){
+            alert('aldo');
+        }
+
+        function clhey(){$(document).on('click','#aa',function(){alert(hey++)});};
+
+        clhey();
+
+        return function(){
+            return{
+            hi : 'hi',
+            addHey : function addhi(){hey++;},
+            showHey : function showhi(){alert(hey);},
+            aledo : function ale(){aledo();}
+            }
+        }
+    })();
+
+    hoo().addHey();
+    hoo().addHey();
+    hoo().showHey();
+
+
+    var coo = (function(){
+
+        var hey = 3;
+
+        function aledo(){
+            alert('aldo');
+        }
+
+        function clhey(){$(document).on('click','#aa',function(){alert(hey++)});};
+
+        clhey();
+
+        return function(){
+            return{
+            hi : 'hi',
+            addHey : function addhi(){hey++;},
+            showHey : function showhi(){alert(hey);},
+            aledo : function ale(){aledo();}
+            }
+        }
+    })();
+
+    var coc = coo();
+    coc.showHey();
+
+    var Person = (function(){
+    var a = 1;
+
+	return function(name,age){
+        var cd = name;
+        var se = age;
+
+		return {
+			intro : function() {
+				console.log(name,age);
+			},
+			addage : function(count){
+				age += count;
+			},
+            addA : function(){
+                ++cd;
+            },
+            showA  :function(){
+                console.log(cd);
+            },
+		};
+	}
+
+})();
+
+
+var a = Person(2,4);
+a.addA();
+a.addA();
+var b = Person(4,6);
+b.addA();
+a.showA();
+b.showA();
+
+
 
 (showName = function (name) {
   console.log(name || "No Name")
@@ -83,7 +169,7 @@ var haha = (function () {
 })();
 
 //alert(haha.addvar);
-haha.ab();
+// haha.ab();
 
 //haha.doStuff();
 //haha.addfunc();
