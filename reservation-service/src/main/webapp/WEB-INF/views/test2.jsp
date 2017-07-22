@@ -63,7 +63,7 @@
 
     hoo().addHey();
     hoo().addHey();
-    hoo().showHey();
+    //hoo().showHey();
 
 
     var coo = (function(){
@@ -89,7 +89,7 @@
     })();
 
     var coc = coo();
-    coc.showHey();
+    // coc.showHey();
 
     var Person = (function(){
     var a = 1;
@@ -122,8 +122,8 @@ a.addA();
 a.addA();
 var b = Person(4,6);
 b.addA();
-a.showA();
-b.showA();
+// a.showA();
+// b.showA();
 
 
 
@@ -175,7 +175,31 @@ var haha = (function () {
 //haha.addfunc();
 //alert(haha.addvar);
 
+function Person1() {
+  this.eyes = 2;
+  this.nose = 1;
+  this.a = function (){
+      this.eyes += 1;
+  };
+}
+var kim  = new Person1();
+var park = new Person1();
+kim.a();
+kim.a();
+console.log(kim.eyes);  // => 2
+console.log(kim.nose);  // => 1
+console.log(park.eyes); // => 2
+console.log(park.nose); // => 1
 
+
+function Person2() {}
+Person2.prototype.eyes = 2;
+Person2.prototype.nose = 1;
+Person2.prototype.eyes = 4;
+var kim  = new Person2();
+var park = new Person2();
+console.log(kim.eyes); // => 2
+console.log(park.eyes); // => 2
 
 
 

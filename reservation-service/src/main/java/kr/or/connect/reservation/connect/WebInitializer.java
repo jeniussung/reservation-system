@@ -15,7 +15,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebInitializer implements WebApplicationInitializer {
-    private static final String CONFIG_LOCATION = "kr.or.connect.reservation";
+    private static final String CONFIG_LOCATION = "kr.or.connect.reservation.connect";
     private static final String MAPPING_URL = "/";
 
     public WebInitializer(){

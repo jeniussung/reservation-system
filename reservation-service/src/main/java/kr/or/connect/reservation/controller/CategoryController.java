@@ -52,7 +52,6 @@ public class CategoryController {
             }
         }
     
-    
     @GetMapping
 	Collection<Category> readList() {
 		return categoryService.getAll();

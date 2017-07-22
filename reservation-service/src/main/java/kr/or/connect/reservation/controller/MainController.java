@@ -120,50 +120,27 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    		
 		    		session.setAttribute("user_id", profile.get("id")); // 아이디 세션에 저장
 		    		
+		    		HashMap<String, Object> reaccess = naverLoginServiceImpl.reGetAcessToken((String) accessResult.get("refresh_token"));
+		    		HashMap<String, Object>	remove = naverLoginServiceImpl.removeToken((String) reaccess.get("access_token"));
+		    		
+		    		System.out.println(remove);
+		    		
 		    		return url;
 	    		}
 	    		
 	    }
 	    
-	    @GetMapping("login")
-	    public String login(HttpServletRequest request) {
-	    	
-	    	 HttpSession session = request.getSession();
-	    	 
-	    	 if(session.getAttribute("loginIsOk")!=null)
-	    	 {
-	    		 
-	    	     session.removeAttribute("loginIsOk"); // 일단 자동으로 로그아웃 되도록 구현하였습니다.
-	    	     
-	    	     return "myreservation";
-	    	     
-	    	 }
-		    	 else
-	    	 {
-	    		 return "loginform";
-	    	 }
+	    @GetMapping("logout")
+	    public String logout(HttpServletRequest request) {
+	    		
+	    		HttpSession session = request.getSession();
+	    		
+	    		session.removeAttribute("user_id");
+	    		
+	    		return "mainpage";
+	    }
+	    
 	
-	   }
-	    
-	    @GetMapping("loginform")
-	    public String loginform(HttpServletRequest request) {
-	       
-	    	   HttpSession session = request.getSession();
-	       
-	       User user = new User();
-	       
-//	       user.setIslogin(1);
-	    	
-	    	 if(session.getAttribute("loginIsOk")==null)
-	    	 {
-	    		 
-	    		 session.setAttribute("loginIsOk", user);
-	    		 
-	    	 }
-	       
-	    	   return "mainpage";
-	   }
-	    
 	    @GetMapping("reviews")
 	    public String getReview() {
 	       
@@ -173,10 +150,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    @GetMapping("myreservation")
 	    public String getReserve(HttpServletRequest request) {
 	    		
-	    		HttpSession session = request.getSession();
-	    		session.setAttribute("URL","myreservation");
-	    	
-	    		return "redirect:/nlogin";
+	    		return "myreservation";
 	   }
         
         @GetMapping("files")
