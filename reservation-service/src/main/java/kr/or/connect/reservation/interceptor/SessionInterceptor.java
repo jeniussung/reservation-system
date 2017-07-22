@@ -19,7 +19,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter  {
 		if(session.getAttribute("user_id")!=null) {
 			System.out.println(session.getAttribute("user_id"));
 			session.setAttribute("URL","myreservation");
-//			session.removeAttribute("user_id");
 			return true;
 			
 		}else {

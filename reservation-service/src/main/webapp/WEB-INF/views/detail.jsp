@@ -19,8 +19,8 @@
 
 <script id="image-template" type="text/x-handlebars-template">
     {{#each imgda}}
-    {{#if saveFileName}}
-    <li class="item" style="width: 414px;" style="height: 414px;"> <img alt="" class="img_thumb" src="{{saveFileName}}"> <span class="img_bg"></span>
+    {{#if fileId}}
+    <li class="item" style="width: 414px;" style="height: 414px;"> <img alt="" class="img_thumb" src="/files/{{fileId}}"> <span class="img_bg"></span>
     {{else}}
     <li class="item" style="width: 414px;" style="height: 414px;"> <img alt="" class="img_thumb" src="/resources/noimg_main.gif"> <span class="img_bg"></span>
     {{/if}}
@@ -107,7 +107,7 @@
                         <div>
                             <div class="container_visual" style="width: 414px;">
                                 <ul class="visual_img">
-                                    <li class="item" style="width: 414px;" style="height: 414px; "> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"> <span class="img_bg"></span>
+                                     <%-- <li class="item" style="width: 414px;" style="height: 414px; "> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"> <span class="img_bg"></span>
                                         <div class="visual_txt" style="">
                                             <div class="visual_txt_inn">
                                                 <h2 class="visual_txt_tit"> <span>뮤지컬 로미오와 줄리엣</span> </h2>
@@ -130,7 +130,7 @@
                                                 <p class="visual_txt_dsc"></p>
                                             </div>
                                         </div>
-                                    </li>
+                                    </li> --%>
                                 </ul>
                             </div>
                             <div class="prev">

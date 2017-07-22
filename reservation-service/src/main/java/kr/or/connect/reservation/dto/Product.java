@@ -12,7 +12,14 @@ public class Product {
 	String event;
 	String createDate;
 	String modifyDate;
+	int fileId;
 	
+	public int getFileId() {
+		return fileId;
+	}
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
 	public int getId() {
 		return id;
 	}

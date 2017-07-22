@@ -20,7 +20,7 @@
     <li class="item" data-product={{id}}>
      <a href="#" class="item_book">
        <div class="item_preview">
-           <img alt="{{name}}" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170111_225/1484116579024rNkXW_JPEG/2016_%B9%C2%C1%F6%C4%C3_%C0%CE_%B4%F5_%C7%CF%C0%CC%C3%F7_%C6%F7%BD%BA%C5%CD%2820MB%29.jpg?type=l591_945">
+           <img alt="{{name}}" class="img_thumb" src="/files/{{fileId}}">
            <span class="img_border"></span>
        </div>
        <div class="event_txt">

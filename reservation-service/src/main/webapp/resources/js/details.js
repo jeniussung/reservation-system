@@ -159,7 +159,7 @@ var SlideImage = (function (){
             return slide_count;
         }
     }
-})();
+});
 
 var getCurrentDate = (function(){
 
@@ -187,6 +187,7 @@ var GetTopInformation = (function (){
     var template;
     var title;
 
+
     getTopAjax(id);
 
     function getTopAjax(id){
@@ -196,14 +197,18 @@ var GetTopInformation = (function (){
           contentType:"application/json; charset=UTF-8",
           dataType:"json",
           success: function(data) {
+                for(var i in data)
+                console.log(data[i].fileId);
 
                   addImageLi(data); // 이미지 삽입
 
+                  var slideImage = SlideImage();
+
                   title = data[0].name;
 
-                  SlideImage.setCount(); // 이미지 갯수 갱신
+                  slideImage.setCount(); // 이미지 갯수 갱신
 
-                  $('.figure_pagination .off > span').text(SlideImage.getCount()); // 이미지 갯수 반영
+                  $('.figure_pagination .off > span').text(slideImage.getCount()); // 이미지 갯수 반영
 
                   $('.dsc').text(data[0].description); // 공연 설명 삽입
 

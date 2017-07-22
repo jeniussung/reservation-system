@@ -242,11 +242,12 @@
            template = Handlebars.compile(source);
 
            for(var i in data.product){
+             console.log(data.product[i].fileId);
              if(i%2==0){
-              leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id);
+              leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);
              }
              else {
-              rightUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id);
+              rightUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);
              }
            }
 
@@ -270,13 +271,13 @@
            template = Handlebars.compile(source);
 
            for(var i in data.product){
-
+             console.log(data.product[i].fileId);
              if(i%2==0){
 
-                 leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id);
+                 leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);
              }else {
 
-                 rightUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id);
+                 rightUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);
              }
            }
 
@@ -293,9 +294,9 @@
         $('.pink').text(num+'개');
       }
 
-      function rightUlAddLi(name,place,desc,id){
+      function rightUlAddLi(name,place,desc,id,fileId){
 
-        var context = {name: name , place: place, desc: desc, id: id};
+        var context = {name: name , place: place, desc: desc, id: id, fileId:fileId};
         var html    = template(context);
 
         $("#right_ul").show();
@@ -305,9 +306,9 @@
 
       }
 
-      function leftUlAddLi(name,place,desc,id){
+      function leftUlAddLi(name,place,desc,id,fileId){
 
-        var context = {name: name , place: place, desc: desc, id: id};
+        var context = {name: name , place: place, desc: desc, id: id, fileId:fileId};
         var html    = template(context);
 
         $("#left_ul").show();

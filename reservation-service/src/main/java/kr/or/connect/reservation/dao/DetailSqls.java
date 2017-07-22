@@ -2,17 +2,17 @@ package kr.or.connect.reservation.dao;
 
 public class DetailSqls {	
 	
-	final static String SELECT_DETAIL_TOP = "SELECT file.id AS file_id, p_file.product_id, category_id, name, description, sales_start, sales_end, sales_flag, event, observation_time, display_start, display_end, place_name, place_lot, place_street, tel, homepage, email, save_file_name "
+	final static String SELECT_DETAIL_TOP = "SELECT file.id AS file_id, p_file.product_id, category_id, name, description, sales_start, sales_end, sales_flag, event, observation_time, display_start, display_end, place_name, place_lot, place_street, tel, homepage, email, save_file_name, type "
 											+ "FROM file "
 											+ "RIGHT OUTER JOIN "
-											+ "(SELECT  dis_info.product_id, category_id, name, description, sales_start, sales_end, sales_flag, event, observation_time, display_start, display_end, place_name, place_lot, place_street, tel, homepage, email, file_id "
+											+ "(SELECT type, dis_info.product_id, category_id, name, description, sales_start, sales_end, sales_flag, event, observation_time, display_start, display_end, place_name, place_lot, place_street, tel, homepage, email, file_id "
 											+ "FROM product_image "
 											+ "RIGHT OUTER JOIN "
 											+ "(SELECT product_id, category_id, name, description, sales_start, sales_end, sales_flag, event, observation_time, display_start, display_end, place_name, place_lot, place_street, tel, homepage, email  "
 											+ "FROM product "
-											+ "INNER JOIN "
+											+ "RIGHT OUTER JOIN "
 											+ "display_info ON product.id = product_id WHERE product_id = :id)dis_info "
-											+ "ON product_image.product_id = dis_info.product_id WHERE type = 1)p_file ON file.id = p_file.file_id";
+											+ "ON product_image.product_id = dis_info.product_id)p_file ON file.id = p_file.file_id ORDER BY type desc";
 	
 	final static String SELECT_FILE_ADDR = "SELECT save_file_name FROM file WHERE id = :id";
 	
