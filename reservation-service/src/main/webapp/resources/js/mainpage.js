@@ -145,19 +145,13 @@
         var curpage
         var url = './details/';
 
-        return {
-            goPage : function goPage(){
-
-                $(document).on('click','.lst_event_box li',function(){
-                    //curpage = $(this).find('.event_txt_tit > span').text();
-                    curpage = $(this).data('product');
-                    document.location.href = url+curpage;
-                });
-            }
-        }
+        $(document).on('click','.lst_event_box li',function(){
+            //curpage = $(this).find('.event_txt_tit > span').text();
+            curpage = $(this).data('product');
+            document.location.href = url+curpage;
+        });
+        
     })();
-
-    goDetail.goPage();
 
 
     $(document).on('click', ".section_event_tab ul li" ,function(){
@@ -242,7 +236,6 @@
            template = Handlebars.compile(source);
 
            for(var i in data.product){
-             console.log(data.product[i].fileId);
              if(i%2==0){
               leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);
              }
@@ -271,7 +264,7 @@
            template = Handlebars.compile(source);
 
            for(var i in data.product){
-             console.log(data.product[i].fileId);
+
              if(i%2==0){
 
                  leftUlAddLi(data.product[i].name,data.product[i].place_name,data.product[i].description,data.product[i].id,data.product[i].fileId);

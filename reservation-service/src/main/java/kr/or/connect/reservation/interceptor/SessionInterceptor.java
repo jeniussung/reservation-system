@@ -17,15 +17,12 @@ public class SessionInterceptor extends HandlerInterceptorAdapter  {
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute("user_id")!=null) {
-			System.out.println(session.getAttribute("user_id"));
 			session.setAttribute("URL","myreservation");
 			return true;
 			
 		}else {
 			session.setAttribute("URL","myreservation");
-			System.out.println("key null");
 			response.sendRedirect("/nlogin");
-			
 		}
 		
 		return super.preHandle(request, response, handler);

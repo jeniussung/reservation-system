@@ -28,7 +28,4 @@ public class ProductSqls {
     											+ "ON product.id = product_id WHERE product.category_id = :category_id)pro "
     											+ "ON pro.id = product_image.product_id WHERE type = 2 ORDER BY pro.id LIMIT :start, 10";
     		
-//    		"select product.id, category_id, name, description, place_name, sales_start, sales_end, sales_flag, event, product.create_date, product.modify_date  "
-//    												+ "from product inner join display_info "
-//    												+ "on product.id = product_id where product.category_id = :category_id order by id limit :start, 10";
 }

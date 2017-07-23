@@ -197,8 +197,6 @@ var GetTopInformation = (function (){
           contentType:"application/json; charset=UTF-8",
           dataType:"json",
           success: function(data) {
-                for(var i in data)
-                console.log(data[i].fileId);
 
                   addImageLi(data); // 이미지 삽입
 
@@ -210,7 +208,7 @@ var GetTopInformation = (function (){
 
                   $('.figure_pagination .off > span').text(slideImage.getCount()); // 이미지 갯수 반영
 
-                  $('.dsc').text(data[0].description); // 공연 설명 삽입
+                  $('.dsc').html(data[0].description+'<br>'+"- 공연 장소 : "+data[0].placeName+'<br>'+"- 관람 시간 : "+data[0].observationTime+'<br>'); // 공연 설명 삽입
 
                   addGroupBtn(data[0].homepage, data[0].tel, data[0].email); // 그룹 버튼 추가
 
@@ -264,7 +262,6 @@ var GetTopInformation = (function (){
                 $('.bk_btn > span').text('판매기간 종료');
             }
             else{
-                console.log('예매 가능');
             }
         }
 
@@ -578,6 +575,25 @@ var LazyLoad = (function(){
             rect.left <= (window.innerWidth || document.documentElement.clientWidth)
          );
     }
+})();
+
+var GoReserve = (function (){
+    var cur;
+    var url = '/reserve/';
+
+    $(document).on('click','.bk_btn',function (){
+
+         cur = $('.bk_btn > span').text();
+
+         if(cur==='예매하기'){
+             console.log(cur);
+
+             document.location.href = url+id;
+         }else{
+             console.log(cur);
+         }
+    });
+
 })();
 
 })();

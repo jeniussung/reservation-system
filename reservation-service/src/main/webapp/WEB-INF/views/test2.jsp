@@ -240,19 +240,20 @@ function wer(){
     //     console.log(this.a);
     // }
 };
-wer.prototype.b =2;
-wer.prototype.c;
-wer.prototype.d = function dd(){
-    this.b++;
-}
-wer.prototype.e = function we(){
-    console.log(this.b);
-}
+ wer.prototype.b =2;
+ wer.prototype.c =4;
+ wer.prototype.d = function dd(){
+     b++;
+ }
+// wer.prototype.e = function we(){
+//     console.log(this.b);
+// }
 var kim = new wer();
 var park = new wer();
 console.log(kim);
-kim.d();
-kim.d();
+// kim.d();
+// kim.d();
+// kim.d();
 // console.log(kim.b);
 // console.log(park.b);
 // wer.prototype.b = 4;
@@ -269,25 +270,47 @@ kim.d();
 // console.log(wer.prototype);
 
 
-function Rectangle(){
-}
-Rectangle.prototype = new eg.Component();
-Rectangle.prototype.constructor = Rectangle;
-Rectangle.prototype.some = function(){
-console.log("a"); }
+// function Rectangle(){
+// }
+// Rectangle.prototype = new eg.Component();
+// Rectangle.prototype.constructor = Rectangle;
+// Rectangle.prototype.some = function(){
+// console.log("a"); }
+//
+// var rt = new Rectangle();
+//
+// console.log(Rectangle.prototype);
+//
+// rt.some();
+//
+// rt.on("click",function(){ // 이벤트 등록
+// console.log("aa"); });
+//
+//  rt.trigger("click");
+
+
+var Rectangle = $.extend(eg.Component,{
+        init : function(){},
+        some : function(){
+            this.trigger("hi",{"a":1})
+        }
+    });
 
 var rt = new Rectangle();
 
-console.log(Rectangle.prototype);
 
-rt.some();
+function callback(e){
+    console.log("hi", e);
+     rt.off(callback);
+}
 
-rt.on("click",function(){ // 이벤트 등록
-console.log("aa"); });
+rt.on("hi",callback);
 
- rt.trigger("click");
- rt.trigger("click");
- rt.trigger("click");
+
+var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+// /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+console.log(regExp.exec('010-332-2323'));
 
 </script>
 

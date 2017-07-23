@@ -9,7 +9,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
+    <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/lib/component.min.js"></script>
 </head>
+
+<script id="price-template" type="text/x-handlebars-template">
+    <div class="qty">
+        <div class="count_control">
+            <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
+            <div class="clearfix">
+                <a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a> <input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
+                <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                </a>
+            </div>
+            <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
+            <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
+        </div>
+        <div class="qty_info_icon"> <strong class="product_amount"> <span>{{priceType}}</span> </strong> <strong class="product_price"> <span class="price">{{price}}</span> <span class="price_type">원</span> </strong> <em class="product_dsc">{{discountPrice}}원 ({{discountRate}}% 할인가)</em> </div>
+    </div>
+</script>
 
 <body>
     <div id="container">
@@ -34,7 +53,10 @@
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="https://ssl.phinf.net/naverbooking/20170217_264/1487312141947lTddT_JPEG/%B3%D7%C0%CC%B9%F6.jpg?type=ff1242_816"> <span class="img_bg"></span>
                                 <div class="preview_txt">
-                                    <h2 class="preview_txt_tit">클림트 인사이드</h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> </div>
+                                    <h2 class="preview_txt_tit">클림트 인사이드</h2>
+                                    <em class="preview_txt_dsc">₩12,000 ~ </em>
+                                    <em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -57,7 +79,7 @@
                 </div>
                 <div class="section_booking_ticket">
                     <div class="ticket_body">
-                        <div class="qty">
+                        <%-- <div class="qty">
                             <div class="count_control">
                                 <!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
                                 <div class="clearfix">
@@ -74,7 +96,7 @@
                             <div class="count_control">
                                 <div class="clearfix">
                                     <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="10" readonly title="수량">
-                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                                    <a href="#" class="btn_plus_minus spr_book2 ico_plus3 disabled" title="더하기">
                                     </a>
                                 </div>
                                 <div class="individual_price on_color"><span class="total_price">123,000</span><span class="price_type">원</span></div>
@@ -103,7 +125,7 @@
                             </div>
                             <div class="qty_info_icon"> <strong class="product_amount"> <span>청소년</span> </strong> <strong class="product_price"> <span class="price">8,500</span> <span class="price_type">원</span> </strong> <em class="product_dsc">8,500원 (15% 할인가)</em> </div>
                         </div>
-                    </div>
+                    </div> --%>
                 </div>
                 <div class="section_booking_form">
                     <div class="booking_form_wrap">
@@ -165,8 +187,10 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
-</body>
 
+</body>
+    <script type="text/javascript" src="/resources/js/common.js"></script>
+    <script type="text/javascript" src="/resources/js/reserve.js"></script>
 </html>
 
 </html>

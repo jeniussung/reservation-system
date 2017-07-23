@@ -55,17 +55,13 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    }
 		
 	    @GetMapping
-	    public String mainpage(){
-	    	
+	    public String mainPage(){
 	        return "mainpage";
-	     
 	    }
 	    
 	    @GetMapping("details/{id}")
-	    public String detailpage(){
-	    		///{name}  @PathVariable String name, Model model
+	    public String detailPage(){
 	        return "detail";
-	     
 	    }
 	    
 	    @GetMapping("nlogin")
@@ -100,7 +96,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    		
 	    		if( !state.equals( storedState ) ) {
 	    			System.out.println("fail");
-	    		    return "RESPONSE_UNAUTHORIZED"; //401 unauthorized
+	    		    return "mainpage"; //401 unauthorized
 	    		} else {
 	    			System.out.println("ok");
 	    			HashMap<String,Object> accessResult = naverLoginServiceImpl.getAcessToken(state, code);
@@ -145,6 +141,12 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    public String getReview() {
 	       
 	    	   return "review";
+	   }
+	    
+	    @GetMapping("reserve/{id}")
+	    public String getReserve() {
+	       
+	    	   return "reserve";
 	   }
 	    
 	    @GetMapping("myreservation")

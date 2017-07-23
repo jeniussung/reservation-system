@@ -12,7 +12,6 @@
 
     <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
-
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eyic9Dq0EOsvUuWK7SHA&submodules=geocoder"></script>
 </head>
 
