@@ -210,14 +210,16 @@ var GetTopInformation = (function (){
 
                   $('.dsc').html(data[0].description+'<br>'+"- 공연 장소 : "+data[0].placeName+'<br>'+"- 관람 시간 : "+data[0].observationTime+'<br>'); // 공연 설명 삽입
 
-                  addGroupBtn(data[0].homepage, data[0].tel, data[0].email); // 그룹 버튼 추가
+                  addGroupBtn(data[0].homepage, data[0].tel, data[0].email, data[0].placeStreet); // 그룹 버튼 추가
 
                   changeBkBtn(data[0].saleFlag, data[0].salesEnd); // 예매 가능 여부 체크 후 예매하기 버튼 변경
 
                   addEvent(data[0].event.replace(/\n/gi,'<br>')); // 이벤트 정보 삽입
 
-                  GetMap.getmap(data[0].placeStreet);
-                  GetMap.getPlace(data[0].name, data[0].placeStreet, data[0].placeLot, data[0].placeName, data[0].tel);
+                  GetMap.showMap(data[0].placeStreet);
+                  GetMap.setPlace(data[0].name, data[0].placeStreet, data[0].placeLot, data[0].placeName, data[0].tel);
+
+
            }
         });
     }
@@ -236,11 +238,11 @@ var GetTopInformation = (function (){
         $(html).appendTo($element_ul);
     }
 
-    function addGroupBtn(homepage, tel, email){
+    function addGroupBtn(homepage, tel, email, placeStreet){
         soruce = $("#groupbtn-template").html();
         template = Handlebars.compile(soruce);
 
-        var context = {homepage: homepage , tel: tel, email: email};
+        var context = {homepage: homepage , tel: tel, email: email, placeStreet : placeStreet};
         var html    = template(context);
 
         $('.group_btn_goto').show();
@@ -389,7 +391,7 @@ var GetMap = (function(){
 
     return {
 
-    getmap : function getmap(place){
+    showMap : function showMap(place){
         myaddress = place;
 
         naver.maps.Service.geocode({address: myaddress}, function(status, response) {
@@ -421,13 +423,15 @@ var GetMap = (function(){
         });
     },
 
-     getPlace : function getPlace(store_name, store_addr_bold, addr_old_detail, addr_detail, store_tel){
+     setPlace : function setPlace(store_name, store_addr_bold, addr_old_detail, addr_detail, store_tel){
          $('.store_name').text(store_name);
          $('.store_addr_bold').text(store_addr_bold);
          $('.addr_old_detail').text(addr_old_detail);
          $('.addr_detail').text(addr_detail);
          $('.store_tel').text(store_tel);
          $('.store_tel').attr("href",'tel:'+store_tel);
+         $('.btn_path').attr("href","http://map.naver.com?query="+store_addr_bold);
+         $('.store_location').attr("href","http://map.naver.com?query="+store_addr_bold);
      }
     }
 

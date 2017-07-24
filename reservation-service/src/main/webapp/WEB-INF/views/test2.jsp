@@ -269,48 +269,67 @@ console.log(kim);
 // console.log(cwe.b);
 // console.log(wer.prototype);
 
+var rectangle = (function (){
 
-// function Rectangle(){
-// }
-// Rectangle.prototype = new eg.Component();
-// Rectangle.prototype.constructor = Rectangle;
-// Rectangle.prototype.some = function(){
-// console.log("a"); }
-//
-// var rt = new Rectangle();
-//
-// console.log(Rectangle.prototype);
-//
-// rt.some();
-//
-// rt.on("click",function(){ // 이벤트 등록
-// console.log("aa"); });
-//
-//  rt.trigger("click");
-
-
-var Rectangle = $.extend(eg.Component,{
-        init : function(){},
-        some : function(){
-            this.trigger("hi",{"a":1})
-        }
-    });
-
-var rt = new Rectangle();
-
-
-function callback(e){
-    console.log("hi", e);
-     rt.off(callback);
+function Rectangle(){
+}
+Rectangle.prototype = new eg.Component();
+Rectangle.prototype.constructor = Rectangle;
+Rectangle.prototype.some = function(){
+// console.log("a");
+this.trigger("click");
 }
 
-rt.on("hi",callback);
+Rectangle.prototype.some_2 = function(){
+    this.trigger("hi");
+}
+     return Rectangle;
+})();
+
+var rt = new rectangle();
+
+rt.on("click",function(){ // 이벤트 등록
+    console.log("aa");
+});
+rt.on("hi",function(){ // 이벤트 등록
+    console.log("hi");
+});
+
+rt.some();
+rt.some_2();
+
+ // rt.trigger("click");
 
 
-var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
-// /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
-console.log(regExp.exec('010-332-2323'));
+// var rectangle = $.extend(eg.Component,{
+//         // init : function(){},
+//         // some : function(){
+//         //      this.trigger("hi",{"a":1})
+//         // }
+//     });
+//
+// var rt = new rectangle();
+//
+// function callback(e){
+//     console.log("aa");
+//     // console.log("hi", e);
+//      rt.off(callback);
+// }
+//
+// function callback_2(e){
+//     console.log("ab");
+//     // console.log("hi", e);
+//      rt.off(callback);
+// }
+//
+// rt.on("hi",callback);
+
+
+var regExp = /^01[0-1]{1}\d{3,4}\d{4}$/;
+ /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+console.log(regExp.exec('010332332323'));
 
 </script>
 

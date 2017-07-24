@@ -107,6 +107,8 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    			return "redirect:/nlogin";
 		    		}
 		    		
+		    		System.out.println(profile);
+		    		
 		    		User user = userServiceImpl.getUser(profile.get("id"));
 		    		
 		    		if(user == null) {

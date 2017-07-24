@@ -240,16 +240,16 @@ public class NaverLoginServiceImpl {
 	}
 	
 	public User getUserDto(HashMap<String, String> profile) {
+		user.setUsername(profile.get("name"));
 		user.setAdmin_flag(1);
 		user.setCreate_date(getCurentTime());
 		user.setEmail(profile.get("email"));
 		user.setSns_id(profile.get("id"));
 		user.setModify_date(getCurentTime());
 		user.setNickname(profile.get("nickname"));
-		user.setSns_profile(profile.get("profile_imgae"));
+		user.setSns_profile(profile.get("profile_image"));
 		user.setSns_type("naver");
 		user.setTel("010-010-0000");
-		user.setUsername("gg");
 		return user;
 	}
 	

@@ -38,7 +38,7 @@
         <a class="btn_goto_home" title="홈페이지" href="{{homepage}}" target="siteUrl"> <i class="fn fn-home1"></i> </a>
         <a class="btn_goto_tel" title="전화" href="tel:{{tel}}"> <i class="fn fn-call1"></i> </a>
         <a class="btn_goto_mail" title="이메일" href="mailto:{{email}}"> <i class="fn fn-mail1"></i> </a>
-        <a href="http://map.naver.com/" class="btn_goto_path" title="길찾기"> <i class="fn fn-path-find1"></i> </a>
+        <a href="http://map.naver.com?query={{placeStreet}}" class="btn_goto_path" title="길찾기"> <i class="fn fn-path-find1"></i> </a>
         <a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
     </div>
 </script>

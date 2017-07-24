@@ -46,9 +46,10 @@ var selectParamAjax = (function (){
     }
 })();
 
-var commaPrice = (function (){
+var addCommaPrice = (function (){
 
     return function(price){
+
         var reverse="";
         var commaMoney=""
         var money =price+"";
@@ -58,6 +59,7 @@ var commaPrice = (function (){
             for(var i = 0 ; i <= money.length ; i++){
 
                 if(i%3==0 && i!=0){
+
                     reverse += ',';
                 }
 
@@ -65,6 +67,7 @@ var commaPrice = (function (){
             }
 
             for(var i = 0 ; i < reverse.length ;i++){
+
                 commaMoney += reverse.charAt(reverse.length-1-i);
             }
 
@@ -73,4 +76,51 @@ var commaPrice = (function (){
             return price;
         }
     }
+})();
+
+var removeCommaPrice = (function(){
+
+    return function(price){
+
+        var curPrice="";
+
+        for(var i = 0; i < price.length ; i++){
+            if(price.charAt(i) !== ',')
+                curPrice += price.charAt(i);
+        }
+
+         curPrice *= 1;
+
+        return curPrice;
+    }
+})();
+
+var Observer = (function (){
+
+    function Observer(){};
+
+    Observer.prototype = new eg.Component();
+    Observer.prototype.constructor = Observer;
+
+    Observer.prototype.pricePlus = function(ele){
+        this.trigger("pricePlus",{ele : ele});
+    }
+
+    Observer.prototype.priceMinus = function(ele){
+        this.trigger("priceMinus", {ele : ele});
+    }
+
+    Observer.prototype.ticketPlus = function(ele){
+        this.trigger("ticketPlus",{ele : ele});
+    }
+
+    Observer.prototype.ticketMinus = function(ele){
+        this.trigger("ticketMinus",{ele : ele});
+    }
+
+    Observer.prototype.validate = function(){
+        this.trigger("validate");
+    }
+
+    return Observer;
 })();
