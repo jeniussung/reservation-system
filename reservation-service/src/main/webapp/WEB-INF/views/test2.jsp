@@ -33,6 +33,36 @@ var PPP = (function (){
 
 })();
 
+var Phone = (function (){
+
+    return function(name,num){
+
+        var name = name;
+        var num = num;
+
+        return {
+            showName : function (){
+                console.log(name);
+            },
+            showNum : function (){
+                console.log(num);
+            }
+        }
+    }
+})();
+
+var p1 = Phone('sung','124');
+var p2 = Phone('Park','333');
+p1.showName();
+p2.showName();
+
+function awew(){
+
+}
+awew.prototype.c =5;
+var ddd = new awew();
+console.log(ddd.c);
+
 
 var abab = PPP(23,3);
 console.log(abab);

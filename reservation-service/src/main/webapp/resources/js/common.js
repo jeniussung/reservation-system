@@ -124,3 +124,25 @@ var Observer = (function (){
 
     return Observer;
 })();
+
+var Flicking = (function (){
+
+    function Flicking(){};
+
+    Flicking.prototype = new eg.Component();
+    Flicking.prototype.constructor = Flicking;
+
+    Flicking.prototype.flickingStart = function(e){
+        this.trigger("flickingStart",{e:e});
+    }
+
+    Flicking.prototype.flickingMove = function(e){
+        this.trigger("flickingMove",{e:e});
+    }
+
+    Flicking.prototype.flickingEnd = function(e){
+        this.trigger("flickingEnd",{e:e});
+    }
+
+    return Flicking;
+})();

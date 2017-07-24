@@ -19,7 +19,6 @@ var GetProductId = (function (){
 id = GetProductId.getProductId();
 
 var SlideImage = (function (){
-
     var curImgnum = 1;
     var num = 1;
     var slide_width = $('.visual_img > li').outerWidth();
@@ -34,6 +33,8 @@ var SlideImage = (function (){
     var move_sum = 0;
     var el = $('.visual_img').get(0);
     var curLiPosition;
+
+    var ee = new Flicking();
 
     $(document).on('click','.btn_prev',function(){
 
@@ -60,80 +61,65 @@ var SlideImage = (function (){
 
     })
 
-    el.addEventListener( 'touchstart', function( e ) {
-        if ( e.type === 'touchstart' && e.touches.length === 1 ) {
-            touch_start_x = e.touches[ 0 ].pageX;
-            touch_start_y = e.touches[ 0 ].pageY;
+    ee.on('flickingStart',function(e){
+        if ( e.e.type === 'touchstart' && e.e.touches.length === 1 ) {
+            touch_start_x = e.e.touches[ 0 ].pageX;
+            touch_start_y = e.e.touches[ 0 ].pageY;
         }
+    })
 
-    }, false );
-
-    el.addEventListener( 'touchmove', function( e ) {
+    ee.on('flickingMove',function(e){
         var drag_dist = 0;
         var scroll_dist = 0;
         curLiPosition = $('.visual_img').position().left;
 
-        if ( e.type === 'touchmove' && e.touches.length === 1 ) {
-
-            drag_dist = e.touches[ 0 ].pageX - touch_start_x;
-            scroll_dist = e.touches[ 0 ].pageY - touch_start_y;
+        if ( e.e.type === 'touchmove' && e.e.touches.length === 1 ) {
+            drag_dist = e.e.touches[ 0 ].pageX - touch_start_x;
+            scroll_dist = e.e.touches[ 0 ].pageY - touch_start_y;
             move_dx = ( drag_dist / cur_dist ) * 100;
             move_sum+=move_dx;
 
-            if ( Math.abs( drag_dist ) > Math.abs( scroll_dist )) {
+            console.log(move_dx);
 
-                 if($( ".visual_img").is(":animated"))
-                     return false;
+            if ( Math.abs( drag_dist ) > Math.abs( scroll_dist )) {
+                $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
 
                 //  if(curLiPosition < -1000)
                     // return false;
                 //  if(curLiPosition == 0 || curLiPosition < 0 || curLiPosition < -1000)
-                     $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
-
-                e.preventDefault( );
+                e.e.preventDefault( );
             }
-
-
         }
-    }, false );
+    })
 
-    el.addEventListener( 'touchend', function( e ) {
-
-        if ( e.type === 'touchend' && e.touches.length === 0 ) {
-
+    ee.on('flickingEnd',function(e){
+        if ( e.e.type === 'touchend' && e.e.touches.length === 0 ) {
             if ( Math.abs( move_dx ) > 8) {
-
-                if(move_sum > 0){
-
-                    if($( ".visual_img").is(":animated"))
+                if (move_sum > 0){
+                    if($( ".visual_img").is(":animated")){
                         return false;
+                    }
 
-                    if(num!=1){
+                    if (num!=1){
                         $('.figure_pagination > span:first').text(--curImgnum);
                         $( ".visual_img" ).animate({ "left": "+="+(cur_dist-move_sum)+"px" }, "slow" );
                         num--;
                     }
-
-                }else{
-
-                    if($( ".visual_img").is(":animated"))
+                } else{
+                    if ($( ".visual_img").is(":animated")){
                         return false;
+                    }
 
-                        if(num!=slide_count){
-                            $('.figure_pagination > span:first').text(++curImgnum);
-                            $( ".visual_img" ).animate({ "left": "-="+(cur_dist+move_sum)+"px" }, "slow" );
-                            num++;
-                        }
-
+                    if (num!=slide_count){
+                        $('.figure_pagination > span:first').text(++curImgnum);
+                        $( ".visual_img" ).animate({ "left": "-="+(cur_dist+move_sum)+"px" }, "slow" );
+                        num++;
+                    }
                 }
-
-                // $('.figure_pagination > span:first').text(++curImgnum);
-
-                // ... move slide element to Next or Prev slide
             } else {
-
-                if($( ".visual_img").is(":animated"))
+                if($( ".visual_img").is(":animated")){
                     return false;
+                }
 
                 curLiPosition = $('.visual_img').position().left;
 
@@ -147,8 +133,20 @@ var SlideImage = (function (){
             move_dx = 0;
             move_sum = 0;
 
-            e.preventDefault( );
+            e.e.preventDefault( );
         }
+    })
+
+    el.addEventListener( 'touchstart', function(e) {
+        ee.flickingStart(e);
+    }, false );
+
+    el.addEventListener( 'touchmove', function( e ) {
+        ee.flickingMove(e);
+    }, false );
+
+    el.addEventListener( 'touchend', function( e ) {
+        ee.flickingEnd(e);
     }, false );
 
     return {
