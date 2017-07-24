@@ -326,16 +326,9 @@
 <div id="photoviwer" class="pop-layer">
     <div class="pop-container">
             <div class="pop-conts">
-                <%--  --%>
-                <%-- <p class="ctxt mb20">Detail Image.<br> --%>
-                    <%-- <div class="detail_container_visual" style="width: 414px;"> --%>
                     <ul class="detail_img">
-                        <%-- <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li>
-                        <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li>
-                        <li class="detail_list" style="width: 414px;" style="height: 414px; "> <img alt="" class="detail_img_thumb" src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=ff1242_1242"></span></li> --%>
+
                     </ul>
-                    <%-- </div> --%>
-                <%-- </p> --%>
 
                 <div class="btn-r">
                     <a href="#" class="pbtn">이전</a>
@@ -348,6 +341,5 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript" src="/resources/js/details.js"></script>
 </html>

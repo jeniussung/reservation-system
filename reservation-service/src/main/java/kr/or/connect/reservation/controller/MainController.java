@@ -76,7 +76,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    	    	try {
 	    	    			 String encodeURL = URLEncoder.encode("://localhost:8080/callback", "UTF-8");
 	    	    			 
-					 return "redirect:"+NAVER_LOGIN_URL +encodeURL+"&state="+state;
+					 return "redirect:"+NAVER_LOGIN_URL +encodeURL+"&state="+state+"&auth_type=reauthenticate";
 				} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
 						return "redirect:/nlogin";
@@ -107,7 +107,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    			return "redirect:/nlogin";
 		    		}
 		    		
-		    		System.out.println(profile);
+//		    		System.out.println(profile);
 		    		
 		    		User user = userServiceImpl.getUser(profile.get("id"));
 		    		
@@ -117,11 +117,8 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    		}
 		    		
 		    		session.setAttribute("user_id", profile.get("id")); // 아이디 세션에 저장
-		    		
-		    		HashMap<String, Object> reaccess = naverLoginServiceImpl.reGetAcessToken((String) accessResult.get("refresh_token"));
-		    		HashMap<String, Object>	remove = naverLoginServiceImpl.removeToken((String) reaccess.get("access_token"));
-		    		
-		    		System.out.println(remove);
+		    		session.setAttribute("name", profile.get("name"));
+		    		session.setAttribute("email", profile.get("email"));
 		    		
 		    		return url;
 	    		}
@@ -134,6 +131,8 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    		HttpSession session = request.getSession();
 	    		
 	    		session.removeAttribute("user_id");
+	    		session.removeAttribute("name");
+	    		session.removeAttribute("email");
 	    		
 	    		return "mainpage";
 	    }
@@ -153,7 +152,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    
 	    @GetMapping("myreservation")
 	    public String getReserve(HttpServletRequest request) {
-	    		
+	    	
 	    		return "myreservation";
 	   }
         

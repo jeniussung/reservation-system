@@ -218,8 +218,6 @@ var GetTopInformation = (function (){
 
                   GetMap.showMap(data[0].placeStreet);
                   GetMap.setPlace(data[0].name, data[0].placeStreet, data[0].placeLot, data[0].placeName, data[0].tel);
-
-
            }
         });
     }

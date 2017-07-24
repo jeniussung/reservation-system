@@ -61,7 +61,7 @@
         <div class="ct">
             <div class="ct_wrap">
                 <div class="top_title">
-                    <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
+                    <a href="javascript:history.back();" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
                     <h2><span class="title">클림트 인사이드</span></h2>
                 </div>
                 <div class="group_visual">
@@ -150,13 +150,13 @@
                             <div class="agreement_nessasary help_txt"> <span class="spr_book ico_nessasary"></span> <span>필수입력</span> </div>
                             <form class="form_horizontal">
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
-                                    <div class="inline_control"> <input type="text" name="name" id="name" class="text" value="네이버" maxlength="17"> </div>
+                                    <div class="inline_control"> <input type="text" name="name" id="name" class="text" value="" placeholder="이름을 입력해주세요." maxlength="17"> </div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="tel"> <span class="spr_book ico_nessasary">필수</span> <span>연락처</span> </label>
-                                    <div class="inline_control"> <input type="tel" name="tel" id="tel" class="tel" value="01012345678" placeholder="휴대폰 입력 시 예매내역 문자발송"> </div>
+                                    <div class="inline_control"> <input type="tel" name="tel" id="tel" class="tel" value="" placeholder="휴대폰 입력 시 예매내역 문자발송"> </div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="email">  <span>이메일</span> </label>
-                                    <div class="inline_control"> <input type="email" name="email" id="email" class="email" value="navercorp@naver.com" maxlength="50"> </div>
+                                    <div class="inline_control"> <input type="email" name="email" id="email" class="email" value="" placeholder="이메일 입력 시 예매내역 메일발송" maxlength="50"> </div>
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
