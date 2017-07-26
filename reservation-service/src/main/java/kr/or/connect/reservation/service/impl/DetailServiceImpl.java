@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.DetailDao;
-import kr.or.connect.reservation.dto.CommentImage;
-import kr.or.connect.reservation.dto.DetailBottom;
-import kr.or.connect.reservation.dto.DetailTop;
-import kr.or.connect.reservation.dto.ImgFile;
-import kr.or.connect.reservation.dto.UserComment;
+import kr.or.connect.reservation.domain.CommentImage;
+import kr.or.connect.reservation.domain.DetailBottom;
+import kr.or.connect.reservation.domain.DetailTop;
+import kr.or.connect.reservation.domain.ImgFile;
+import kr.or.connect.reservation.domain.UserComment;
 import kr.or.connect.reservation.service.DetailService;
 
 @Service

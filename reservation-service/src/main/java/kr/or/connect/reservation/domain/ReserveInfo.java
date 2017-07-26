@@ -1,14 +1,14 @@
-package kr.or.connect.reservation.dto;
+package kr.or.connect.reservation.domain;
 
 import java.math.BigDecimal;
 
 public class ReserveInfo {
 	int productId;
-	String name;
-	String event; 
 	int priceType;
 	int price; 
 	int fileId;
+	String name;
+	String event;
 	BigDecimal discountRate; 
 	String observationTime; 
 	String displayStart; 

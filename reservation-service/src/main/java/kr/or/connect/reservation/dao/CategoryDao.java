@@ -1,7 +1,7 @@
 package kr.or.connect.reservation.dao;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import kr.or.connect.reservation.dao.sqls.CategorySqls;
+import kr.or.connect.reservation.dao.sqls.ProductSqls;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservation.dto.Category;
+import kr.or.connect.reservation.domain.Category;
 
 import javax.sql.DataSource;
 

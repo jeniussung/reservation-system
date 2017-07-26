@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import kr.or.connect.reservation.dao.sqls.UserSqls;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,9 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservation.dto.Category;
-import kr.or.connect.reservation.dto.DetailBottom;
-import kr.or.connect.reservation.dto.User;
+import kr.or.connect.reservation.domain.User;
 
 @Repository
 public class UserDao {

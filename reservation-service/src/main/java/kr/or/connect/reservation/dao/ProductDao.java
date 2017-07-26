@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import kr.or.connect.reservation.dao.sqls.ProductSqls;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,8 +15,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservation.dto.Category;
-import kr.or.connect.reservation.dto.Product;
+import kr.or.connect.reservation.domain.Product;
+
+import static kr.or.connect.reservation.dao.sqls.ProductSqls.*;
 
 @Repository
 public class ProductDao {
@@ -37,7 +39,7 @@ public class ProductDao {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("start", start);
         params.put("category_id", id);
-        return jdbc.query(ProductSqls.SELECT_CATEGORY_ID,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
+        return jdbc.query(SELECT_CATEGORY_ID,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
 		}catch(EmptyResultDataAccessException e)
 		{
 			return null;

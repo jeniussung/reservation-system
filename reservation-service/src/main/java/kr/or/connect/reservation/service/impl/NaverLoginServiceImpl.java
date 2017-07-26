@@ -23,7 +23,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.or.connect.reservation.dto.User;
+import kr.or.connect.reservation.domain.User;
 
 @Service
 public class NaverLoginServiceImpl {

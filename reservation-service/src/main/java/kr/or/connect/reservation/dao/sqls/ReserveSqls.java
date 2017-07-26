@@ -1,8 +1,8 @@
-package kr.or.connect.reservation.dao;
+package kr.or.connect.reservation.dao.sqls;
 
 public class ReserveSqls {
-	
-	final static public String SELECT_RESERVE_INFO = "SELECT info.product_id, name, event, price_type, price, discount_rate, observation_time, display_start, display_end, place_name, file_id "
+
+	public final static String SELECT_RESERVE_INFO = "SELECT info.product_id, name, event, price_type, price, discount_rate, observation_time, display_start, display_end, place_name, file_id "
 													+ "FROM product_image "
 													+ "INNER JOIN "
 													+ "(SELECT display_info.product_id, name, event, price_type, price, discount_rate, observation_time, display_start, display_end, place_name "

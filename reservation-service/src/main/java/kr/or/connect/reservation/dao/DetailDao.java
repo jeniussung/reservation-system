@@ -6,19 +6,18 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import kr.or.connect.reservation.dao.sqls.DetailSqls;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservation.dto.CommentImage;
-import kr.or.connect.reservation.dto.DetailBottom;
-import kr.or.connect.reservation.dto.DetailTop;
-import kr.or.connect.reservation.dto.ImgFile;
-import kr.or.connect.reservation.dto.Product;
-import kr.or.connect.reservation.dto.UserComment;
+import kr.or.connect.reservation.domain.CommentImage;
+import kr.or.connect.reservation.domain.DetailBottom;
+import kr.or.connect.reservation.domain.DetailTop;
+import kr.or.connect.reservation.domain.ImgFile;
+import kr.or.connect.reservation.domain.UserComment;
 
 @Repository
 public class DetailDao {

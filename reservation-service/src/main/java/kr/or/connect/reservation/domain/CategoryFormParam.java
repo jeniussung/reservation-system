@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.dto;
+package kr.or.connect.reservation.domain;
 
 public class CategoryFormParam {
     private String name;

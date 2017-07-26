@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.ReserveDao;
-import kr.or.connect.reservation.dto.ReserveInfo;
+import kr.or.connect.reservation.domain.ReserveInfo;
 import kr.or.connect.reservation.service.ReserveService;
 
 @Service

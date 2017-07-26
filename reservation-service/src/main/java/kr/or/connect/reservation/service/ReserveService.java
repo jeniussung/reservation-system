@@ -5,11 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.connect.reservation.dto.ReserveInfo;
+import kr.or.connect.reservation.domain.ReserveInfo;
 
 
 public interface ReserveService {
-	
-	public List<ReserveInfo> getReserveInfo(Integer id);
-	public Map<String, Object> getInfo(HttpServletRequest request);
+	List<ReserveInfo> getReserveInfo(Integer id);
+	Map<String, Object> getInfo(HttpServletRequest request);
+
 }

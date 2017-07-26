@@ -2,12 +2,11 @@ package kr.or.connect.reservation.service;
 
 import java.util.Collection;
 
-import kr.or.connect.reservation.dto.CommentImage;
-import kr.or.connect.reservation.dto.DetailBottom;
-import kr.or.connect.reservation.dto.DetailTop;
-import kr.or.connect.reservation.dto.ImgFile;
-import kr.or.connect.reservation.dto.Product;
-import kr.or.connect.reservation.dto.UserComment;
+import kr.or.connect.reservation.domain.CommentImage;
+import kr.or.connect.reservation.domain.DetailBottom;
+import kr.or.connect.reservation.domain.DetailTop;
+import kr.or.connect.reservation.domain.ImgFile;
+import kr.or.connect.reservation.domain.UserComment;
 
 public interface DetailService {
 	
