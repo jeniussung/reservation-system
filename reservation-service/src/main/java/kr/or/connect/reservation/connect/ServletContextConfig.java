@@ -47,7 +47,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     @Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// TODO Auto-generated method stub
-    		registry.addInterceptor(sessionInterceptor).addPathPatterns("/myreservation");
+    		registry.addInterceptor(sessionInterceptor).addPathPatterns("/myreservation").addPathPatterns("/reserve");
     	
 		super.addInterceptors(registry);
 	}

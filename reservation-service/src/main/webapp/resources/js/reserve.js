@@ -62,6 +62,7 @@
             var ee = new Observer();
 
             ee.on("pricePlus",function(e){
+
                 $(e.ele).closest('.clearfix').find('.ico_minus3').removeClass("disabled");
                 $(e.ele).closest('.clearfix').find('.count_control_input').removeClass("disabled");
 

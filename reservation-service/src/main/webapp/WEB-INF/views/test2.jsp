@@ -301,65 +301,118 @@ console.log(kim);
 
 var rectangle = (function (){
 
-function Rectangle(){
-}
-Rectangle.prototype = new eg.Component();
-Rectangle.prototype.constructor = Rectangle;
-Rectangle.prototype.some = function(){
-// console.log("a");
-this.trigger("click");
+function Rectangle(a){
+    this.ddd = a;
+    this.ab = 6;
+    this.cd = this.ab;
 }
 
-Rectangle.prototype.some_2 = function(){
-    this.trigger("hi");
+Rectangle.prototype = new eg.Component();
+Rectangle.prototype.constructor = Rectangle;
+
+Rectangle.prototype.go = function(){
+    this.ddd += 55;
+ console.log("move!!");
+  console.log(this.ddd);
+  console.log(this.cd);
 }
+
+Rectangle.prototype.init = function(){
+    this.on("move",this.go);
+}
+
+
+Rectangle.prototype.move = function(){
+    this.trigger("move");
+}
+
+Rectangle.prototype.clear = function(){
+    this.off("move",this.go);
+}
+
+
      return Rectangle;
 })();
 
-var rt = new rectangle();
+var rt = new rectangle(34);
+var rs = new rectangle(24);
 
-rt.on("click",function(){ // 이벤트 등록
-    console.log("aa");
-});
-rt.on("hi",function(){ // 이벤트 등록
-    console.log("hi");
-});
+rt.init();
+rt.move();
+rt.move();
+rt.move();
+rt.clear();
 
-rt.some();
-rt.some_2();
+   rs.init();
+ rs.move();
+rs.move();
+rs.move();
+
+// rt.on("click",function(){ // 이벤트 등록
+//     console.log("aa");
+// });
+// rt.on("hi",);
+//
+// // rt.some();
+// // rt.some_2();
+//
+// rt.trigger("hi");
 
  // rt.trigger("click");
 
 
 
-// var rectangle = $.extend(eg.Component,{
-//         // init : function(){},
-//         // some : function(){
-//         //      this.trigger("hi",{"a":1})
-//         // }
-//     });
-//
-// var rt = new rectangle();
-//
-// function callback(e){
-//     console.log("aa");
-//     // console.log("hi", e);
-//      rt.off(callback);
-// }
-//
-// function callback_2(e){
-//     console.log("ab");
-//     // console.log("hi", e);
-//      rt.off(callback);
-// }
-//
-// rt.on("hi",callback);
+var rectangle = $.extend(eg.Component,{
+        // init : function(){},
+        // some : function(){
+        //      this.trigger("hi",{"a":1})
+        // }
+    });
+
+var rt = new rectangle();
+
+function callback(e){
+    console.log("aa");
+    // console.log("hi", e);
+     rt.off(callback);
+}
+
+function callback_2(e){
+    console.log("ab");
+    // console.log("hi", e);
+     rt.off(callback);
+}
+
+rt.on("hi",callback);
 
 
 var regExp = /^01[0-1]{1}\d{3,4}\d{4}$/;
  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
 console.log(regExp.exec('010332332323'));
+
+class Some extends eg.Component {
+  // var aa = 5;
+
+  hi() {
+    alert("hi");
+    //  console.log(aa);
+ }
+
+  init() {
+    //this.once("hi", this.hi);
+    this.on("hi",this.hi);
+  }
+
+}
+
+var some = new Some();
+
+
+ some.init();
+ some.trigger("hi");
+// // fire alert("hi");
+// some.trigger("hi");
 
 </script>
 

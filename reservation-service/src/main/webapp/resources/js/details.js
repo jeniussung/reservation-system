@@ -3,13 +3,13 @@
 var id;
 
 var GetProductId = (function (){
-    var querystring = new Array;
+    var querystring = [];
     var qS;
     var returnValue;
 
     return {
         getProductId : function getProductId(){
-            querystring = String (document.location).split ('/')
+            querystring = document.location.toString().split ('/')
             returnValue = querystring[querystring.length-1];
             return returnValue;
         }
@@ -33,8 +33,6 @@ var SlideImage = (function (){
     var move_sum = 0;
     var el = $('.visual_img').get(0);
     var curLiPosition;
-
-    var ee = new Flicking();
 
     $(document).on('click','.btn_prev',function(){
 
@@ -61,92 +59,23 @@ var SlideImage = (function (){
 
     })
 
-    ee.on('flickingStart',function(e){
-        if ( e.e.type === 'touchstart' && e.e.touches.length === 1 ) {
-            touch_start_x = e.e.touches[ 0 ].pageX;
-            touch_start_y = e.e.touches[ 0 ].pageY;
-        }
-    })
 
-    ee.on('flickingMove',function(e){
-        var drag_dist = 0;
-        var scroll_dist = 0;
-        curLiPosition = $('.visual_img').position().left;
-
-        if ( e.e.type === 'touchmove' && e.e.touches.length === 1 ) {
-            drag_dist = e.e.touches[ 0 ].pageX - touch_start_x;
-            scroll_dist = e.e.touches[ 0 ].pageY - touch_start_y;
-            move_dx = ( drag_dist / cur_dist ) * 100;
-            move_sum+=move_dx;
-
-            console.log(move_dx);
-
-            if ( Math.abs( drag_dist ) > Math.abs( scroll_dist )) {
-                $( ".visual_img" ).css({ "left": "+="+move_dx+"px" });
-
-                //  if(curLiPosition < -1000)
-                    // return false;
-                //  if(curLiPosition == 0 || curLiPosition < 0 || curLiPosition < -1000)
-                e.e.preventDefault( );
-            }
-        }
-    })
-
-    ee.on('flickingEnd',function(e){
-        if ( e.e.type === 'touchend' && e.e.touches.length === 0 ) {
-            if ( Math.abs( move_dx ) > 8) {
-                if (move_sum > 0){
-                    if($( ".visual_img").is(":animated")){
-                        return false;
-                    }
-
-                    if (num!=1){
-                        $('.figure_pagination > span:first').text(--curImgnum);
-                        $( ".visual_img" ).animate({ "left": "+="+(cur_dist-move_sum)+"px" }, "slow" );
-                        num--;
-                    }
-                } else{
-                    if ($( ".visual_img").is(":animated")){
-                        return false;
-                    }
-
-                    if (num!=slide_count){
-                        $('.figure_pagination > span:first').text(++curImgnum);
-                        $( ".visual_img" ).animate({ "left": "-="+(cur_dist+move_sum)+"px" }, "slow" );
-                        num++;
-                    }
-                }
-            } else {
-                if($( ".visual_img").is(":animated")){
-                    return false;
-                }
-
-                curLiPosition = $('.visual_img').position().left;
-
-                $( ".visual_img" ).animate({ "left": "-="+(curLiPosition+((num-1)*cur_dist))+"px" }, "fast" );
-            }
-
-            touch_start_y = 0;
-            touch_start_x = 0;
-            move_x = 0;
-            move_y = 0;
-            move_dx = 0;
-            move_sum = 0;
-
-            e.e.preventDefault( );
-        }
-    })
+    /*
+        플리킹 컴포넌트 구현 적용
+    */
+    var ee = new Flicking($('.visual_img > li'));
+    ee.init();
 
     el.addEventListener( 'touchstart', function(e) {
-        ee.flickingStart(e);
+        ee.startFlicking(e);
     }, false );
 
     el.addEventListener( 'touchmove', function( e ) {
-        ee.flickingMove(e);
+        ee.moveFlicking(e);
     }, false );
 
     el.addEventListener( 'touchend', function( e ) {
-        ee.flickingEnd(e);
+        ee.endFlicking(e);
     }, false );
 
     return {
@@ -488,6 +417,8 @@ var ShowDetailImage = (function (){
 
                     layerOpen('photoviwer');
 
+                    addFlickingComponent();
+
                 }
             });
         }
@@ -528,6 +459,27 @@ var ShowDetailImage = (function (){
             temp.css('left', '0px');
         }
     }
+
+    /*
+        플리킹 컴포넌트 구현 적용
+    */
+    function addFlickingComponent(){
+        var ele = $('.detail_img').get(0);
+        var ee = new Flicking($('.detail_img > li'));
+
+        ele.addEventListener('touchstart', function(e) {
+            ee.startFlicking(e);
+        }, false );
+
+        ele.addEventListener('touchmove', function( e ) {
+            ee.moveFlicking(e);
+        }, false );
+
+        ele.addEventListener( 'touchend', function( e ) {
+            ee.endFlicking(e);
+        }, false );
+    }
+
 })();
 
 var DetailBottomContent = (function (){

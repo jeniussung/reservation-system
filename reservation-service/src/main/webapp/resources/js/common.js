@@ -25,7 +25,7 @@ var GetProductId = (function (){
 
         return {
             getProductId : function getProductId(){
-                querystring = String (location).split ('/')
+                querystring = location.toString().split ('/')
                 returnValue = querystring[querystring.length-1];
                 return returnValue;
             }
@@ -127,21 +127,152 @@ var Observer = (function (){
 
 var Flicking = (function (){
 
-    function Flicking(){};
+    function Flicking(ele){
+        this.ele = ele;
+        this.num = 1;
+        this.slide_width = this.ele.outerWidth();
+        this.slide_count = this.ele.length;
+        this.touch_start_y = 0;
+        this.touch_start_x = 0;
+        this.save_x = 0;
+        this.save_y = 0;
+        this.move_dx = 0;
+        this.cur_dist = this.slide_width;
+        this.move_sum = 0;
+        this.curLiPosition;
+    };
 
     Flicking.prototype = new eg.Component();
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function(e){
-        this.trigger("flickingStart",{e:e});
+        if ( e.e.type === 'touchstart' && e.e.touches.length === 1 ) {
+            this.touch_start_x = e.e.touches[ 0 ].pageX;
+            this.touch_start_y = e.e.touches[ 0 ].pageY;
+        }
     }
 
     Flicking.prototype.flickingMove = function(e){
-        this.trigger("flickingMove",{e:e});
+        var drag_dist = 0;
+        var scroll_dist = 0;
+        this.curLiPosition = this.ele.closest("ul").position().left;
+
+        if ( e.e.type === 'touchmove' && e.e.touches.length === 1 ) {
+            drag_dist = e.e.touches[ 0 ].pageX - this.touch_start_x;
+            scroll_dist = e.e.touches[ 0 ].pageY - this.touch_start_y;
+            this.move_dx = ( drag_dist / this.cur_dist ) * 100;
+            this.move_sum+=this.move_dx;
+
+            if(this.ele.closest("ul").is(":animated")){
+                this.save_x = 0;
+                this.touch_start_y = 0;
+                this.touch_start_x = 0;
+                this.move_dx = 0;
+                this.move_sum = 0;
+
+                return false;
+            }
+
+            if ( Math.abs(drag_dist ) > Math.abs( scroll_dist )) {
+                  if(this.curLiPosition > 0){
+                     this.save_x =  1;
+                  } else {
+                    if(Math.abs(this.move_sum) < this.cur_dist){
+                        this.ele.closest("ul").css({ "left": "+="+this.move_dx+"px" });
+                    }else{
+                        this.save_x =  1;
+                    }
+                }
+                e.e.preventDefault( );
+            }
+        }
+
     }
 
     Flicking.prototype.flickingEnd = function(e){
-        this.trigger("flickingEnd",{e:e});
+        if ( e.e.type === 'touchend' && e.e.touches.length === 0 ) {
+            if ( Math.abs( this.move_dx ) > 8) {
+
+                if(this.save_x > 0){
+                     this.curLiPosition = this.ele.closest("ul").position().left;
+                     this.ele.closest("ul").animate({ "left": "-="+(this.curLiPosition+((this.num-1)*this.cur_dist))+"px" }, "fast" );
+
+                    this.save_x = 0;
+                    this.touch_start_y = 0;
+                    this.touch_start_x = 0;
+                    this.move_dx = 0;
+                    this.move_sum = 0;
+
+                    return false;
+                }
+
+                if (this.move_sum > 0){
+
+                    if(this.ele.closest("ul").is(":animated")){
+                        return false;
+                    }
+
+                    if (this.num!=1){
+                        //$('.figure_pagination > span:first').text(--curImgnum);
+                        this.ele.closest("ul").animate({ "left": "+="+(this.cur_dist-this.move_sum)+"px" }, "slow" );
+                        this.num--;
+                    }
+                } else{
+                    if (this.ele.closest("ul").is(":animated")){
+                        return false;
+                    }
+
+                    if (this.num != this.slide_count){
+                        // $('.figure_pagination > span:first').text(++curImgnum);
+                        this.ele.closest("ul").animate({ "left": "-="+(this.cur_dist+this.move_sum)+"px" }, "slow" );
+                        this.num++;
+                    }else{
+                        this.curLiPosition = this.ele.closest("ul").position().left;
+                        this.ele.closest("ul").animate({ "left": "-="+(this.curLiPosition+((this.num-1)*this.cur_dist))+"px" }, "fast" );
+                    }
+                }
+            } else {
+                if(this.ele.closest("ul").is(":animated")){
+                    return false;
+                }
+
+                this.curLiPosition = this.ele.closest("ul").position().left;
+
+                this.ele.closest("ul").animate({ "left": "-="+(this.curLiPosition+((this.num-1)*this.cur_dist))+"px" }, "fast" );
+            }
+
+            this.touch_start_y = 0;
+            this.touch_start_x = 0;
+            this.move_dx = 0;
+            this.move_sum = 0;
+
+            e.e.preventDefault( );
+        }
+
+    }
+
+    Flicking.prototype.init = function(e){
+        this.on('flickingStart',this.flickingStart);
+        this.on('flickingMove',this.flickingMove);
+        this.on('flickingEnd',this.flickingEnd);
+    }
+
+    Flicking.prototype.off = function(){
+        this.off('flickingStart',flickingStart(e));
+        this.off('flickingMove',flickingMove(e));
+        this.off('flickingEnd',flickingEnd(e));
+    }
+
+    Flicking.prototype.startFlicking = function(e){
+        this.trigger("flickingStart", {e : e});
+    }
+
+    Flicking.prototype.moveFlicking = function(e){
+        this.trigger("flickingMove", {e : e});
+    }
+
+    Flicking.prototype.endFlicking = function(e){
+        this.trigger("flickingEnd", {e : e});
     }
 
     return Flicking;
