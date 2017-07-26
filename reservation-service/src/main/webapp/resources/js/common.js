@@ -41,10 +41,21 @@ var selectParamAjax = (function (){
           type: "GET",
           contentType:"application/json; charset=UTF-8",
           dataType:"json",
-          success: wantFunction
+           success: wantFunction
         });
     }
 })();
+
+var AjaxProm = (function (option){
+
+    return $.ajax({
+          url: option.url,
+          type: option.type,
+          contentType:"application/json; charset=UTF-8",
+          dataType:"json"
+        });
+});
+
 
 var addCommaPrice = (function (){
 
@@ -130,7 +141,7 @@ var Flicking = (function (){
     function Flicking(ele){
         this.ele = ele;
         this.num = 1;
-        this.slide_width = this.ele.outerWidth();
+        this.slide_width = $(this.ele).outerWidth();
         this.slide_count = this.ele.length;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -146,6 +157,7 @@ var Flicking = (function (){
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function(e){
+        console.log("start");
         if ( e.e.type === 'touchstart' && e.e.touches.length === 1 ) {
             this.touch_start_x = e.e.touches[ 0 ].pageX;
             this.touch_start_y = e.e.touches[ 0 ].pageY;
@@ -153,6 +165,7 @@ var Flicking = (function (){
     }
 
     Flicking.prototype.flickingMove = function(e){
+        console.log("start");
         var drag_dist = 0;
         var scroll_dist = 0;
         this.curLiPosition = this.ele.closest("ul").position().left;
@@ -251,11 +264,29 @@ var Flicking = (function (){
 
     }
 
-    Flicking.prototype.init = function(e){
-        this.on('flickingStart',this.flickingStart);
-        this.on('flickingMove',this.flickingMove);
-        this.on('flickingEnd',this.flickingEnd);
-    }
+    Flicking.prototype.init = function(el){
+        // this.on('flickingStart',this.flickingStart);
+        // this.on('flickingMove',this.flickingMove);
+        // this.on('flickingEnd',this.flickingEnd);
+
+        el.addEventListener('touchstart', function(e) {
+            // this.startFlicking(e);
+            console.log(this);
+            this.trigger("flickingStart", {e : e});
+        }.bind(this), false );
+
+        el.addEventListener('touchmove', function( e ) {
+            // this.moveFlicking(e);
+            console.log(this);
+            Flicking.prototype.trigger("flickingMove", {ev : e});
+        }.bind(this), false );
+
+        el.addEventListener('touchend', function( e ) {
+            // this.endFlicking(e);
+            console.log(this);
+            Flicking.prototype.trigger("flickingEnd", {e : e});
+        }.bind(this), false );
+    };
 
     Flicking.prototype.off = function(){
         this.off('flickingStart',flickingStart(e));

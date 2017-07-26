@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class User {
-	int id;
+	long id;
 	String username;
 	String email;
 	String tel;
@@ -16,10 +16,10 @@ public class User {
 	String create_date;
 	String modify_date;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getUsername() {

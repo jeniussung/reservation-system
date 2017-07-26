@@ -63,20 +63,26 @@ var SlideImage = (function (){
     /*
         플리킹 컴포넌트 구현 적용
     */
-    var ee = new Flicking($('.visual_img > li'));
-    ee.init();
+    $('.visual_img > li');
+    var ee = new Flicking($('.visual_img >li'));
 
-    el.addEventListener( 'touchstart', function(e) {
-        ee.startFlicking(e);
-    }, false );
+    ee.init($('.visual_img').get(0));
 
-    el.addEventListener( 'touchmove', function( e ) {
-        ee.moveFlicking(e);
-    }, false );
+    ee.on('flickingStart',this.flickingStart);
+    ee.on('flickingMove',this.flickingMove);
+    ee.on('flickingEnd',this.flickingEnd);
 
-    el.addEventListener( 'touchend', function( e ) {
-        ee.endFlicking(e);
-    }, false );
+    // el.addEventListener( 'touchstart', function(e) {
+    //     ee.startFlicking(e);
+    // }, false );
+    //
+    // el.addEventListener( 'touchmove', function( e ) {
+    //     ee.moveFlicking(e);
+    // }, false );
+    //
+    // el.addEventListener( 'touchend', function( e ) {
+    //     ee.endFlicking(e);
+    // }, false );
 
     return {
         setCount : function(){

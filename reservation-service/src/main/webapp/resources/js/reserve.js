@@ -227,6 +227,12 @@
         $(document).on('click','.bk_btn',function(){
             if ($(this).closest('.bk_btn_wrap').hasClass("disable") === true) {
                 console.log("cat't go")
+// {url : './top/'+id, type : "GET"}
+                var ajaxCallback = AjaxProm({url : './top/'+id, type : "GET"});
+                ajaxCallback.then(function(data){
+                        console.log(data);
+                });
+
             } else {
                 console.log("can go")
             }

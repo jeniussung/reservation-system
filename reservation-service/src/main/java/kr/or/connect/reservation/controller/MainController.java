@@ -108,11 +108,12 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    		}
 		    		
 		    		
-		    		User user = userServiceImpl.getUser(profile.get("id"));
+		    		User userProfile = userServiceImpl.getUser(profile.get("id"));
 		    		
-		    		if(user == null) {
-		    			User userProfile = naverLoginServiceImpl.getUserDto(profile);
-		    			userServiceImpl.addUser(userProfile); // 디비에 저장
+		    		if(userProfile == null) {
+		    			userProfile = naverLoginServiceImpl.getUserDto(profile);
+		    			long id = userServiceImpl.addUser(userProfile); // 디비에 저장
+		    			userProfile.setId(id);
 		    		}
 		    		
 		    		session.setAttribute("user_id", profile.get("id")); // 아이디 세션에 저장
