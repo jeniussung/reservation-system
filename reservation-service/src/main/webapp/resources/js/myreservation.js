@@ -7,9 +7,25 @@
 
         // });
 
+        var TAP_TYPE = {al : '전체', exp : '이용예정', fin : "이용완료", cancel : "취소·환불"};
+        var soruce = $("#article-template").html();
+        var template = Handlebars.compile(soruce);
+
         $('.summary_board li').on('click',function(){
             $('.summary_board li').find('.link_summary_board').removeClass('on');
             $(this).find('.link_summary_board').addClass('on');
+
+            var type = $(this).find('.tit').text();
+
+            if (type === TAP_TYPE.al){
+                console.log(type)
+            } else if ( type === TAP_TYPE.exp){
+                console.log(type)
+            } else if ( type === TAP_TYPE.fin){
+                console.log(type)
+            } else if ( type === TAP_TYPE.cancle){
+                console.log(type)
+            }
         })
 
         function changeTabNum(option){
@@ -27,7 +43,17 @@
             $('.card').eq(0).remove();
         }
 
-        removeCard(4);
+        function allArticle(root){
+            var context = {};
+            var html = template(context);
+
+            $(root).show();
+
+            var $element_ul = parent.$(root);
+
+            $(html).appendTo($element_ul);
+        }
+
 
     })();
 
