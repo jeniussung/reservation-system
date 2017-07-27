@@ -1,9 +1,8 @@
 package kr.or.connect.reservation.service;
 
 import java.util.Collection;
-import java.util.List;
 
-import kr.or.connect.reservation.dto.Category;
+import kr.or.connect.reservation.domain.Category;
 
 public interface CategoryService {
 	public Category get(Long id);

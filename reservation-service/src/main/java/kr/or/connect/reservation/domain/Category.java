@@ -1,4 +1,5 @@
-package kr.or.connect.reservation.dto;
+package kr.or.connect.reservation.domain;
+
 
 public class Category {
     private long id;

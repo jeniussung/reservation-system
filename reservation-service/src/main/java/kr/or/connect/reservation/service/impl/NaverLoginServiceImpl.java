@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -23,21 +22,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.or.connect.reservation.dto.User;
+import kr.or.connect.reservation.domain.User;
 
 @Service
 public class NaverLoginServiceImpl {
-	
-	@Autowired
-	User user;
-	
+
 	String GET_TOKEON_URL = "https://nid.naver.com/oauth2.0/token?client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&grant_type=authorization_code&state=";
 	String REMOVE_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&access_token=";
 	String REACCESS_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&refresh_token=";
 	String PROVIDER = "&service_provider=NAVER"; 
 	
 	
-	public HashMap<String, Object> getAcessToken(String token, String code){
+	public Map<String, Object> getAcessToken(String token, String code){
         try {
 	            String apiURL = GET_TOKEON_URL+token+"&code="+code;
 	            URL url = new URL(apiURL);
@@ -70,7 +66,7 @@ public class NaverLoginServiceImpl {
         }
 	}
 	
-	public HashMap<String, Object> reGetAcessToken(String token){
+	public Map<String, Object> reGetAcessToken(String token){
         try {
         			String accessToken = URLEncoder.encode(token, "UTF-8");
 	            String apiURL = REACCESS_TOKEN_URL + accessToken;
@@ -186,11 +182,11 @@ public class NaverLoginServiceImpl {
 	        return new BigInteger(130, random).toString(32);
 	    }
 	
-	public HashMap<String, Object> jsonToMap(String json){
+	public Map<String, Object> jsonToMap(String json){
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		try {
 			return map = mapper.readValue(json, new TypeReference<Map<String, String>>(){});
@@ -232,7 +228,7 @@ public class NaverLoginServiceImpl {
 		} 	
 	}
 	
-	public String getCurentTime() {
+	public String getCurrentTime() {
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss", Locale.KOREA );
 		Date currentTime = new Date ();
 		String mTime = mSimpleDateFormat.format ( currentTime );
@@ -240,12 +236,13 @@ public class NaverLoginServiceImpl {
 	}
 	
 	public User getUserDto(HashMap<String, String> profile) {
+		User user = new User();
 		user.setUsername(profile.get("name"));
 		user.setAdmin_flag(1);
-		user.setCreate_date(getCurentTime());
+		user.setCreate_date(getCurrentTime());
 		user.setEmail(profile.get("email"));
 		user.setSns_id(profile.get("id"));
-		user.setModify_date(getCurentTime());
+		user.setModify_date(getCurrentTime());
 		user.setNickname(profile.get("nickname"));
 		user.setSns_profile(profile.get("profile_image"));
 		user.setSns_type("naver");
