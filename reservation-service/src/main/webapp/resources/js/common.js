@@ -166,6 +166,7 @@ var Flicking = (function (){
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function(e){
+        console.log("start");
         if ( e.type === 'touchstart' && e.touches.length === 1 ) {
             this.touch_start_x = e.touches[ 0 ].pageX;
             this.touch_start_y = e.touches[ 0 ].pageY;
@@ -173,6 +174,7 @@ var Flicking = (function (){
     }
 
     Flicking.prototype.flickingMove = function(e){
+        console.log("start");
         var drag_dist = 0;
         var scroll_dist = 0;
         this.curLiPosition = this.ele.closest("ul").position().left;
@@ -191,22 +193,21 @@ var Flicking = (function (){
                 this.move_sum = 0;
 
                 return false;
-            }
-
-            if ( Math.abs(drag_dist ) > Math.abs( scroll_dist )) {
-                  if(this.curLiPosition > 0){
-                     this.save_x =  1;
-                  } else {
-                    if(Math.abs(this.move_sum) < this.cur_dist){
-                        this.ele.closest("ul").css({ "left": "+="+this.move_dx+"px" });
-                    }else{
-                        this.save_x =  1;
-                    }
-                }
-                e.preventDefault( );
-            }
         }
 
+        if ( Math.abs(drag_dist ) > Math.abs( scroll_dist )) {
+              if(this.curLiPosition > 0){
+                 this.save_x =  1;
+              } else {
+                if(Math.abs(this.move_sum) < this.cur_dist){
+                    this.ele.closest("ul").css({ "left": "+="+this.move_dx+"px" });
+                }else{
+                    this.save_x =  1;
+                }
+            }
+            e.preventDefault();
+        }
+      }
     }
 
     Flicking.prototype.flickingEnd = function(e){
@@ -235,7 +236,6 @@ var Flicking = (function (){
                     if (this.num!=1){
                         //$('.figure_pagination > span:first').text(--curImgnum);
                         this.ele.closest("ul").animate({ "left": "+="+(this.cur_dist-this.move_sum)+"px" }, "slow" );
-
                         this.num--;
                     }
                 } else{
@@ -244,6 +244,7 @@ var Flicking = (function (){
                     }
 
                     if (this.num != this.slide_count){
+                        // $('.figure_pagination > span:first').text(++curImgnum);
                         this.ele.closest("ul").animate({ "left": "-="+(this.cur_dist+this.move_sum)+"px" }, "slow" );
                         this.num++;
                     }else{
@@ -267,12 +268,12 @@ var Flicking = (function (){
             this.move_sum = 0;
 
             e.preventDefault( );
+
         }
 
     }
 
     Flicking.prototype.init = function(el,topFlickingEnd){
-
         $(document).on('click','.btn_prev',function(){
 
             if(this.num !==  1)
@@ -298,6 +299,7 @@ var Flicking = (function (){
                 //  $('.figure_pagination > span:first').text(++curImgnum);
                  this.num++;
             }
+
             this.trigger(topFlickingEnd, {curDisplayNum : this.num});
         }.bind(this))
 
@@ -306,12 +308,13 @@ var Flicking = (function (){
         }.bind(this), false );
 
         el.addEventListener('touchmove', function( e ) {
-            this.flickingMove(e);
+            this.flickingMove(e)
         }.bind(this), false );
 
         el.addEventListener('touchend', function( e ) {
             this.flickingEnd(e);
-            this.trigger(topFlickingEnd, {curDisplayNum : this.num, textEle : '.visual_txt_inn'});
+
+            this.trigger(topFlickingEnd, {curDisplayNum : this.num});
         }.bind(this), false );
     };
 

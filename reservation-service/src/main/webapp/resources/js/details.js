@@ -21,6 +21,8 @@ id = GetProductId.getProductId();
 var SlideImage = (function (){
     var slide_width = $('.visual_img > li').outerWidth();
     var slide_count = $('.visual_img > li').length;
+    var cur_dist = slide_width;
+    var el = $('.visual_img').get(0);
     var curImgnum = 1;
     var num = 1;
     var touch_start_y = 0;
@@ -28,24 +30,23 @@ var SlideImage = (function (){
     var save_x = 0;
     var save_y = 0;
     var move_dx = 0;
-    var cur_dist = slide_width;
     var move_sum = 0;
-    var el = $('.visual_img').get(0);
     var curLiPosition;
 
     /*
         플리킹 컴포넌트 구현 적용
     */
-    var ee = new Flicking($('.visual_img >li'),$('.visual_txt_inn'));
+    var ee = new Flicking($('.visual_img >li'));
 
     ee.init($('.visual_img').get(0),'topFlickingEnd');
 
     ee.on('topFlickingEnd',function (curNum){
         $('.figure_pagination > span:first').text(curNum.curDisplayNum);
+
         if(curNum.curDisplayNum == 1){
-            $(curNum.textEle).eq(0).css('display','')
+            $('.visual_txt_inn').eq(0).css('display','')
         }else{
-                $(curNum.textEle).css('display','none');
+            $('.visual_txt_inn').css('display','none');
         }
     });
 
@@ -437,6 +438,7 @@ var ShowDetailImage = (function (){
     function addFlickingComponent(){
         var ele = $('.detail_img').get(0);
         var ee = new Flicking($('.detail_img > li'));
+
         ee.init(ele);
     }
 
