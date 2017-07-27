@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.connect.reservation.domain.CommentImage;
-import kr.or.connect.reservation.domain.DetailBottom;
-import kr.or.connect.reservation.domain.DetailTop;
-import kr.or.connect.reservation.domain.UserComment;
+import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.DetailBottom;
+import kr.or.connect.reservation.domain.dto.DetailTop;
+import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 
 @RestController
@@ -28,7 +28,7 @@ public class DetailController {
 	}
 	
 	@GetMapping("/comment/{id}")
-	public Collection<UserComment> getUserComment(@PathVariable Integer id)
+	public Collection<UserCommentDto> getUserComment(@PathVariable Integer id)
 	{
 		return detailServiceImpl.getUserComment(id);
 	}

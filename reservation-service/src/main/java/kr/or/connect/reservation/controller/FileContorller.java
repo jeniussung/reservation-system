@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.controller;
 
-import kr.or.connect.reservation.domain.ImgFile;
+import kr.or.connect.reservation.domain.dto.ImgFile;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

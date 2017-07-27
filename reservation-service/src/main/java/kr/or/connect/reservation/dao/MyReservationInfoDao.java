@@ -1,7 +1,6 @@
 package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.domain.MyReservationInfo;
-import kr.or.connect.reservation.domain.ProductPrice;
 import kr.or.connect.reservation.domain.dto.MyReservationInfoDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;

@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.domain;
 
+
 public class Category {
     private long id;
     private String name;

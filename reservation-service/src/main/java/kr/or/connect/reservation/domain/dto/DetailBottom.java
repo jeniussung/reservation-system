@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.domain;
+package kr.or.connect.reservation.domain.dto;
 
 public class DetailBottom {
 	String content;

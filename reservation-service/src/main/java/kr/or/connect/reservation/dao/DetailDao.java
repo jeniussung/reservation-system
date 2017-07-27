@@ -13,11 +13,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.or.connect.reservation.domain.CommentImage;
-import kr.or.connect.reservation.domain.DetailBottom;
-import kr.or.connect.reservation.domain.DetailTop;
-import kr.or.connect.reservation.domain.ImgFile;
-import kr.or.connect.reservation.domain.UserComment;
+import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.DetailBottom;
+import kr.or.connect.reservation.domain.dto.DetailTop;
+import kr.or.connect.reservation.domain.dto.ImgFile;
+import kr.or.connect.reservation.domain.dto.UserCommentDto;
 
 @Repository
 public class DetailDao {
@@ -54,9 +54,9 @@ public class DetailDao {
     		}
     }
     
-    public List<UserComment> selectComment(Integer id){
+    public List<UserCommentDto> selectComment(Integer id){
     	try {    		
-    		    RowMapper<UserComment> rowMapper = BeanPropertyRowMapper.newInstance(UserComment.class);
+    		    RowMapper<UserCommentDto> rowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("id", id);
             return jdbc.query(DetailSqls.SELECT_COMMENT_INFO,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.

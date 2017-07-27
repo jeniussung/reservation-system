@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.DetailDao;
-import kr.or.connect.reservation.domain.CommentImage;
-import kr.or.connect.reservation.domain.DetailBottom;
-import kr.or.connect.reservation.domain.DetailTop;
-import kr.or.connect.reservation.domain.ImgFile;
-import kr.or.connect.reservation.domain.UserComment;
+import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.DetailBottom;
+import kr.or.connect.reservation.domain.dto.DetailTop;
+import kr.or.connect.reservation.domain.dto.ImgFile;
+import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import kr.or.connect.reservation.service.DetailService;
 
 @Service
@@ -32,7 +32,7 @@ public class DetailServiceImpl implements DetailService {
 	}
 
 	@Override
-	public Collection<UserComment> getUserComment(Integer id) {
+	public Collection<UserCommentDto> getUserComment(Integer id) {
 		// TODO Auto-generated method stub
 		return detailDao.selectComment(id);
 	}
