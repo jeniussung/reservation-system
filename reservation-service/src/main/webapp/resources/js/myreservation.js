@@ -35,6 +35,8 @@
             $('.summary_board .figure').eq(3).text(option.cancel);
         }
 
+        console.log("asdf");
+        
         changeTabNum({all : 1, expe: 3, fin :5, cancel : 7});
 
         function removeCard(type)
