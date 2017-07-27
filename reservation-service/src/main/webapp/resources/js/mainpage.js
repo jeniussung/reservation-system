@@ -150,7 +150,7 @@
             curpage = $(this).data('product');
             document.location.href = url+curpage;
         });
-        
+
     })();
 
 
@@ -167,13 +167,10 @@
       cat_num = $(this).data('category');
 
       if(cat_num == 0){
-
         getMorelistAll(cur_display_num);
       }else{
-
         getMorelistCategory(cur_display_num,cat_num);
       }
-
     });
 
     function getList(){

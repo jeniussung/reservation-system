@@ -19,11 +19,10 @@ var GetProductId = (function (){
 id = GetProductId.getProductId();
 
 var SlideImage = (function (){
-    var curImgnum = 1;
-    var num = 1;
     var slide_width = $('.visual_img > li').outerWidth();
     var slide_count = $('.visual_img > li').length;
-
+    var curImgnum = 1;
+    var num = 1;
     var touch_start_y = 0;
     var touch_start_x = 0;
     var save_x = 0;
@@ -34,58 +33,21 @@ var SlideImage = (function (){
     var el = $('.visual_img').get(0);
     var curLiPosition;
 
-    $(document).on('click','.btn_prev',function(){
-
-        if(num !==  1)
-        {
-             $('.visual_txt_inn').css('display','none');
-             $('.figure_pagination > span:first').text(--curImgnum);
-             $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "slow" );
-
-            if(num === 2){
-                $('.visual_txt_inn').eq(0).css('display','');
-            }
-
-            num--;
-         }
-    })
-
-    $(document).on('click','.btn_nxt',function(){
-        $('.visual_txt_inn').css('display','none');
-
-        if(num!=slide_count)
-        {
-             $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
-             $('.figure_pagination > span:first').text(++curImgnum);
-             num++;
-        }
-
-    })
-
-
     /*
         플리킹 컴포넌트 구현 적용
     */
-    $('.visual_img > li');
-    var ee = new Flicking($('.visual_img >li'));
+    var ee = new Flicking($('.visual_img >li'),$('.visual_txt_inn'));
 
-    ee.init($('.visual_img').get(0));
+    ee.init($('.visual_img').get(0),'topFlickingEnd');
 
-    ee.on('flickingStart',this.flickingStart);
-    ee.on('flickingMove',this.flickingMove);
-    ee.on('flickingEnd',this.flickingEnd);
-
-    // el.addEventListener( 'touchstart', function(e) {
-    //     ee.startFlicking(e);
-    // }, false );
-    //
-    // el.addEventListener( 'touchmove', function( e ) {
-    //     ee.moveFlicking(e);
-    // }, false );
-    //
-    // el.addEventListener( 'touchend', function( e ) {
-    //     ee.endFlicking(e);
-    // }, false );
+    ee.on('topFlickingEnd',function (curNum){
+        $('.figure_pagination > span:first').text(curNum.curDisplayNum);
+        if(curNum.curDisplayNum == 1){
+            $(curNum.textEle).eq(0).css('display','')
+        }else{
+                $(curNum.textEle).css('display','none');
+        }
+    });
 
     return {
         setCount : function(){
@@ -475,18 +437,7 @@ var ShowDetailImage = (function (){
     function addFlickingComponent(){
         var ele = $('.detail_img').get(0);
         var ee = new Flicking($('.detail_img > li'));
-
-        ele.addEventListener('touchstart', function(e) {
-            ee.startFlicking(e);
-        }, false );
-
-        ele.addEventListener('touchmove', function( e ) {
-            ee.moveFlicking(e);
-        }, false );
-
-        ele.addEventListener( 'touchend', function( e ) {
-            ee.endFlicking(e);
-        }, false );
+        ee.init(ele);
     }
 
 })();

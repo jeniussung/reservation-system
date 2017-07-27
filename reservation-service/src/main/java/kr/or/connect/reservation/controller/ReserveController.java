@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.ReserveInfo;
+import kr.or.connect.reservation.service.ReserveService;
 import kr.or.connect.reservation.service.impl.ReserveServiceImpl;
 
 @RestController
@@ -21,7 +22,7 @@ import kr.or.connect.reservation.service.impl.ReserveServiceImpl;
 public class ReserveController {
 	
 	@Autowired
-	ReserveServiceImpl reserveServieImpl;
+	ReserveService reserveServieImpl;
 	
 	@GetMapping("/top/{id}")
 	public List<ReserveInfo> getReserveInfo(@PathVariable Integer id, HttpServletRequest request) {
@@ -35,4 +36,6 @@ public class ReserveController {
 		
 		return reserveServieImpl.getInfo(request);
 	}
+	
+	
 }

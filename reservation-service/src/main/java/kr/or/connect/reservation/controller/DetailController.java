@@ -12,6 +12,7 @@ import kr.or.connect.reservation.dto.CommentImage;
 import kr.or.connect.reservation.dto.DetailBottom;
 import kr.or.connect.reservation.dto.DetailTop;
 import kr.or.connect.reservation.dto.UserComment;
+import kr.or.connect.reservation.service.DetailService;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 
 @RestController
@@ -19,7 +20,7 @@ import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 public class DetailController {
 	
 	@Autowired
-	DetailServiceImpl detailServiceImpl;
+	DetailService detailServiceImpl;
 	
 	@GetMapping("/top/{id}")
 	public Collection<DetailTop> getDetailTop(@PathVariable Integer id)

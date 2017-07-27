@@ -52,10 +52,19 @@ var AjaxProm = (function (option){
           url: option.url,
           type: option.type,
           contentType:"application/json; charset=UTF-8",
-          dataType:"json"
+          dataType:"json",
+          data:option.data
         });
 });
 
+var putParamAjax = (function (optoin){
+    return $.ajax({
+      url: option.url,
+      type: "PUT",
+      contentType:"application/json; charset=UTF-8",
+      dataType:"json",
+      data: JSON.stringify({"name":name, "id":id})});
+})
 
 var addCommaPrice = (function (){
 
@@ -157,22 +166,20 @@ var Flicking = (function (){
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function(e){
-        console.log("start");
-        if ( e.e.type === 'touchstart' && e.e.touches.length === 1 ) {
-            this.touch_start_x = e.e.touches[ 0 ].pageX;
-            this.touch_start_y = e.e.touches[ 0 ].pageY;
+        if ( e.type === 'touchstart' && e.touches.length === 1 ) {
+            this.touch_start_x = e.touches[ 0 ].pageX;
+            this.touch_start_y = e.touches[ 0 ].pageY;
         }
     }
 
     Flicking.prototype.flickingMove = function(e){
-        console.log("start");
         var drag_dist = 0;
         var scroll_dist = 0;
         this.curLiPosition = this.ele.closest("ul").position().left;
 
-        if ( e.e.type === 'touchmove' && e.e.touches.length === 1 ) {
-            drag_dist = e.e.touches[ 0 ].pageX - this.touch_start_x;
-            scroll_dist = e.e.touches[ 0 ].pageY - this.touch_start_y;
+        if ( e.type === 'touchmove' && e.touches.length === 1 ) {
+            drag_dist = e.touches[ 0 ].pageX - this.touch_start_x;
+            scroll_dist = e.touches[ 0 ].pageY - this.touch_start_y;
             this.move_dx = ( drag_dist / this.cur_dist ) * 100;
             this.move_sum+=this.move_dx;
 
@@ -196,14 +203,14 @@ var Flicking = (function (){
                         this.save_x =  1;
                     }
                 }
-                e.e.preventDefault( );
+                e.preventDefault( );
             }
         }
 
     }
 
     Flicking.prototype.flickingEnd = function(e){
-        if ( e.e.type === 'touchend' && e.e.touches.length === 0 ) {
+        if ( e.type === 'touchend' && e.touches.length === 0 ) {
             if ( Math.abs( this.move_dx ) > 8) {
 
                 if(this.save_x > 0){
@@ -228,6 +235,7 @@ var Flicking = (function (){
                     if (this.num!=1){
                         //$('.figure_pagination > span:first').text(--curImgnum);
                         this.ele.closest("ul").animate({ "left": "+="+(this.cur_dist-this.move_sum)+"px" }, "slow" );
+
                         this.num--;
                     }
                 } else{
@@ -236,7 +244,6 @@ var Flicking = (function (){
                     }
 
                     if (this.num != this.slide_count){
-                        // $('.figure_pagination > span:first').text(++curImgnum);
                         this.ele.closest("ul").animate({ "left": "-="+(this.cur_dist+this.move_sum)+"px" }, "slow" );
                         this.num++;
                     }else{
@@ -259,52 +266,54 @@ var Flicking = (function (){
             this.move_dx = 0;
             this.move_sum = 0;
 
-            e.e.preventDefault( );
+            e.preventDefault( );
         }
 
     }
 
-    Flicking.prototype.init = function(el){
-        // this.on('flickingStart',this.flickingStart);
-        // this.on('flickingMove',this.flickingMove);
-        // this.on('flickingEnd',this.flickingEnd);
+    Flicking.prototype.init = function(el,topFlickingEnd){
+
+        $(document).on('click','.btn_prev',function(){
+
+            if(this.num !==  1)
+            {
+                $( ".visual_img" ).animate({ "left": "+="+this.slide_width+"px" }, "slow" );
+
+                if(this.num === 2){
+                    $('.visual_txt_inn').eq(0).css('display','');
+                }
+
+                this.num--;
+             }
+
+             this.trigger(topFlickingEnd, {curDisplayNum : this.num});
+        }.bind(this))
+
+        $(document).on('click','.btn_nxt',function(){
+            $('.visual_txt_inn').css('display','none');
+
+            if(this.num!=this.slide_count)
+            {
+                 $( ".visual_img" ).animate({ "left": "-="+this.slide_width+"px" }, "slow" );
+                //  $('.figure_pagination > span:first').text(++curImgnum);
+                 this.num++;
+            }
+            this.trigger(topFlickingEnd, {curDisplayNum : this.num});
+        }.bind(this))
 
         el.addEventListener('touchstart', function(e) {
-            // this.startFlicking(e);
-            console.log(this);
-            this.trigger("flickingStart", {e : e});
+            this.flickingStart(e);
         }.bind(this), false );
 
         el.addEventListener('touchmove', function( e ) {
-            // this.moveFlicking(e);
-            console.log(this);
-            Flicking.prototype.trigger("flickingMove", {ev : e});
+            this.flickingMove(e);
         }.bind(this), false );
 
         el.addEventListener('touchend', function( e ) {
-            // this.endFlicking(e);
-            console.log(this);
-            Flicking.prototype.trigger("flickingEnd", {e : e});
+            this.flickingEnd(e);
+            this.trigger(topFlickingEnd, {curDisplayNum : this.num, textEle : '.visual_txt_inn'});
         }.bind(this), false );
     };
-
-    Flicking.prototype.off = function(){
-        this.off('flickingStart',flickingStart(e));
-        this.off('flickingMove',flickingMove(e));
-        this.off('flickingEnd',flickingEnd(e));
-    }
-
-    Flicking.prototype.startFlicking = function(e){
-        this.trigger("flickingStart", {e : e});
-    }
-
-    Flicking.prototype.moveFlicking = function(e){
-        this.trigger("flickingMove", {e : e});
-    }
-
-    Flicking.prototype.endFlicking = function(e){
-        this.trigger("flickingEnd", {e : e});
-    }
 
     return Flicking;
 })();

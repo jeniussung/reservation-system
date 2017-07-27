@@ -14,10 +14,6 @@
     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/lib/component.min.js"></script>
 
-    <%-- <script type="text/javascript">
-    var i = "<%=session.getAttribute("user_id")%>";
-
-    </script> --%>
 <script id="card-template" type="text/x-handlebars-template">
     <article class="card_item">
         <a href="#" class="link_booking_details">

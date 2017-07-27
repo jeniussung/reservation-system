@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.connect.reservation.dto.ImgFile;
 import kr.or.connect.reservation.dto.User;
+import kr.or.connect.reservation.service.DetailService;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 import kr.or.connect.reservation.service.impl.NaverLoginServiceImpl;
 import kr.or.connect.reservation.service.impl.UserServiceImpl;
@@ -38,7 +39,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	@RequestMapping("/")
 	public class MainController {
 		@Autowired
-		DetailServiceImpl detailServiceImpl;
+		DetailService detailServiceImpl;
 		
 		@Autowired
 		NaverLoginServiceImpl naverLoginServiceImpl;
