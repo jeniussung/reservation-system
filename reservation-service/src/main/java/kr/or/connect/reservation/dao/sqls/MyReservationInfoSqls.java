@@ -3,7 +3,9 @@ package kr.or.connect.reservation.dao.sqls;
 public class MyReservationInfoSqls {
 
     public static final String SELECT_BY_USER_ID =
-            "SELECT RI.id, RI.product_id, RI.user_id, RI.general_ticket_count, RI.youth_ticket_count, RI.child_ticket_count, RI.reservation_name, RI.reservation_tel, RI.reservation_type, RI.reservation_email," +
+
+            "SELECT RI.id, RI.product_id, RI.user_id, RI.general_ticket_count, RI.youth_ticket_count," +
+                    " RI.child_ticket_count, RI.reservation_name, RI.reservation_tel, RI.reservation_email, RI.reservation_type," +
                     " DI.observation_time, DI.display_start, DI.display_end, DI.place_name, P.name" +
                     " FROM reservation_info AS RI" +
                     " JOIN display_info AS DI" +

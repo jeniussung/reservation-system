@@ -55,8 +55,8 @@ public class MyReservationInfoServiceImpl implements MyReservationInfoService {
                 } else {
                     throw new IllegalArgumentException();
                 }
-                Double dicountRate = productPrice.getDiscountRate().doubleValue();
-                totalPrice += (productPrice.getPrice() * (1 - dicountRate)) * count;
+                Double discountRate = productPrice.getDiscountRate().doubleValue();
+                totalPrice += (productPrice.getPrice() * (1 - discountRate)) * count;
             }
 
             myReservationInfoDto.setTotalPrice(totalPrice.longValue());

@@ -19,15 +19,14 @@ import kr.or.connect.reservation.domain.ReserveInfo;
 public class ReserveDao {
 	
 		private NamedParameterJdbcTemplate jdbc;
-	    private SimpleJdbcInsert insertAction;
-	    private RowMapper<ReserveInfo> rowMapper = BeanPropertyRowMapper.newInstance(ReserveInfo.class); 
+	    private RowMapper<ReserveInfo> rowMapper = BeanPropertyRowMapper.newInstance(ReserveInfo.class);
 	    
 	    public ReserveDao(DataSource dataSource) {
 	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	    }
 	    
 	    public List<ReserveInfo> selectReserveInfo(Integer id){
-	    	 	Map<String, Object> params = new HashMap<String, Object>();
+	    	 	Map<String, Object> params = new HashMap<>();
 	        params.put("id", id);
 	        return jdbc.query(ReserveSqls.SELECT_RESERVE_INFO,params,rowMapper);
 	    }
