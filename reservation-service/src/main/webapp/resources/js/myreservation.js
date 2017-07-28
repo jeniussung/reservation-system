@@ -2,19 +2,89 @@
 
     var topTap = (function (){
 
-        // var ajaxCallback = AjaxProm({url : './top/'+id, type : "GET"});
-        // /ajaxCallback.then(function(data){
+        var id = 32;
 
-        // });
+        var cardSoruce = $("#card-template").html();
+        var cardTemplate = Handlebars.compile(cardSoruce);
 
-        var TAP_TYPE = {al : '전체', exp : '이용예정', fin : "이용완료", cancel : "취소·환불"};
-        var soruce = $("#card-template").html();
-        var template = Handlebars.compile(soruce);
+        var usedCardSource = $("#usedCard-template").html();
+        var usedCardTemplate = Handlebars.compile(usedCardSource);
 
-        changeTabNum({all : 1, expe: 3, fin :5, cancel : 7});
-        clickCancelBtn();
+        var canceledCardSource = $("#canceledCard-template").html();
+        var canceledCardTemplate = Handlebars.compile(canceledCardSource);
+
+        var cancelJsonData;
+        var cancelTargetDiv;
+        var TYPE_NUM = 4;
+        var TAP_TYPE = {
+            al : '전체',
+            exp : '이용예정',
+            fin : "이용완료",
+            cancel : "취소·환불"};
+
+        var TAP_ROOT = [$('.card').eq(0),$('.card').eq(1),$('.card').eq(2),$('.card').eq(3)];
+
+        var CARD_TYPE = {
+            reserveCancel : '예약 신청중',
+            reservedCancel : '예약 확정',
+            writeReview : '이용 완료',
+            canceldReservation : "취소된 예약"};
+
+        var TYPE_ROOT = [,
+        $('.card').eq(0).find('.link_booking_details').eq(0),
+        $('.card').eq(1).find('.link_booking_details').eq(0),
+        $('.card').eq(2).find('.link_booking_details').eq(0),
+        $('.card').eq(3).find('.link_booking_details').eq(0)];
+
+        var PRICE_TYPE = ['일반 : ','청소년 : ','어린이 : ', "합계 : "];
+
+        var TEMPLATE_TYPE = [,cardTemplate,cardTemplate,usedCardTemplate,canceledCardTemplate];
+
+        var CANCEL_BTN_TXT = '취소';
+
+        var getCardCallback = AjaxProm({url : '/api/myreservation/'+id, type : "GET"});
+        getCardCallback.then(function(data){
+
+            data.forEach(function(item){
+            	var reservationType = item.reservationType;
+                var start = item.displayStart.split(' ');
+                var end = item.displayEnd.split(' ');
+                var date = start[0] + ' ~ ' + end[0];
+                var generalTicketCount = item.generalTicketCount;
+                var youthTicketCount = item.youthTicketCount;
+                var childTicketCount = item.childTicketCount;
+                var totalCount = generalTicketCount + youthTicketCount + childTicketCount;
+
+            	addArticle(TYPE_ROOT[reservationType],TEMPLATE_TYPE[reservationType],
+                    {
+                        no : item.id,
+                        name : item.name,
+                        date : date,
+                        content : PRICE_TYPE[0] + generalTicketCount + ' ' + PRICE_TYPE[1] + youthTicketCount + ' ' + PRICE_TYPE[2] + childTicketCount + ' ' + PRICE_TYPE[3] + totalCount,
+                        product : item.name,
+                        company : item.placeName,
+                        price : item.totalPrice
+                    });
+            });
+
+            clickCancelBtn();
+        });
+
+        changeTabNum({
+            all : 1,
+            expe: 3,
+            fin :5,
+            cancel : 7});
+
         bindClickingTab();
-        // removeCard();
+
+        changeTabNum({
+            all : 1,
+            expe: 3,
+            fin :5,
+            cancel : 7});
+
+        bindLayerBtn('.popup_booking_wrapper');
 
         function bindClickingTab(){
             $('.summary_board li').on('click',function(){
@@ -24,13 +94,25 @@
                 var type = $(this).find('.tit').text();
 
                 if (type === TAP_TYPE.al){
-                    console.log(type)
+                    TAP_ROOT[0].css("display","");
+                    TAP_ROOT[1].css("display","");
+                    TAP_ROOT[2].css("display","");
+                    TAP_ROOT[3].css("display","");
                 } else if ( type === TAP_TYPE.exp){
-                    console.log(type)
+                    TAP_ROOT[0].css("display","");
+                    TAP_ROOT[1].css("display","");
+                    TAP_ROOT[2].css("display","none");
+                    TAP_ROOT[3].css("display","none");
                 } else if ( type === TAP_TYPE.fin){
-                    console.log(type)
+                    TAP_ROOT[0].css("display","none");
+                    TAP_ROOT[1].css("display","none");
+                    TAP_ROOT[2].css("display","");
+                    TAP_ROOT[3].css("display","none");
                 } else if ( type === TAP_TYPE.cancel){
-                    console.log(type)
+                    TAP_ROOT[0].css("display","none");
+                    TAP_ROOT[1].css("display","none");
+                    TAP_ROOT[2].css("display","none");
+                    TAP_ROOT[3].css("display","");
                 }
             });
         }
@@ -42,38 +124,86 @@
             $('.summary_board .figure').eq(3).text(option.cancel);
         }
 
-        changeTabNum({all : 1, expe: 3, fin :5, cancel : 7});
-
         function removeCard(type)
         {
             $('.card').eq(0).find('.card_item').remove();
             $('.card').eq(0).remove();
         }
 
-        function allArticle(root){
-            var context = {};
+        function addArticle(root,template,option){
+            // console.log(root);
+            var context = {
+                no : option.no,
+                name : option.name,
+                date : option.date,
+                content : option.content,
+                product : option.product,
+                company : option.company,
+                price :option.price};
+
             var html = template(context);
 
-            $(root).show();
+             root.show();
 
-            var $element_ul = parent.$(root);
+            var $element_ul = parent.root;
 
-            $(html).appendTo($element_ul);
+            root.after($(html));
         }
 
         function clickCancelBtn(){
             $('.card_item .booking_cancel').on('click',function(){
-                var id = $(this).closest('.card_detail').find('.booking_number').text();
-                var type = $(this).closest('.card').find('.link_booking_details .tit').text();
-                var jsonData = JSON.stringify({'id' : id, 'type' : type})
+                var btnTxt = $(this).find('button').text();
+                var id = $(this).closest('.card_detail').find('.booking_number span').text();
+                var name = $(this).closest('.card_detail').find('.tit').text();
+                var date = $(this).closest('.card_detail').find('ul li .item_dsc').eq(0).text();
+                var type = $(this).closest('.card').find('.link_booking_details .tit').eq(0).text();
+                cancelTargetDiv = $(this).closest('.card_item')
 
-                console.log(jsonData);
+                if (type === CARD_TYPE.reserveCancel){
+                    cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
+                    // $('.popup_booking_wrapper').data('id',id)
+                    layerOpen('.popup_booking_wrapper',name,date);
+                }else if(type === CARD_TYPE.reservedCancel){
+                    cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
+                    layerOpen('.popup_booking_wrapper',this);
+                }else{
 
-                // var ajaxCallback = AjaxProm({url : './top/'+id, type : "PUT", data : });
-                // ajaxCallback.then(function(data){
-                //
-                // });
+                }
             });
+        }
+
+        function layerOpen(el,name,date){
+            var temp = $(el);
+
+            temp.find('.pop_tit span').text(name);
+            temp.find('.pop_tit .sm').text(date);
+
+            temp.fadeIn();
+        }
+
+        function bindLayerBtn(layer){
+            $(layer).find('.btn_gray').on('click',function(){
+                $(layer).fadeOut();
+            })
+
+            $(layer).find('.popup_btn_close').on('click',function(){
+                $(layer).fadeOut();
+            })
+
+            $(layer).find('.popup_btn_close').on('click',function(){
+                $(layer).fadeOut();
+            })
+
+            $(layer).find('.btn_green').on('click',function(){
+                var ajaxCallback = AjaxProm({url : './api/myreservation', type : "PUT", data : cancelJsonData});
+                ajaxCallback.then(function(data){
+                    var clone = cancelTargetDiv.clone();
+                    cancelTargetDiv.remove();
+                    
+                    $('.card').eq(3).find('.link_booking_details').eq(0).after(clone);
+                    $(layer).fadeOut();
+                })
+            })
         }
 
     })();

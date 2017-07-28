@@ -3,17 +3,14 @@ package kr.or.connect.reservation.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import kr.or.connect.reservation.service.LoginService;
 import kr.or.connect.reservation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import kr.or.connect.reservation.domain.User;
 
 @Controller

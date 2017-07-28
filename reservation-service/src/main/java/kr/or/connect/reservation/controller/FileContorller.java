@@ -26,7 +26,6 @@ public class FileContorller {
 
     @Autowired
     DetailServiceImpl detailServiceImpl;
-
     //    @Value("${spring.resources.file-location}")
     private String baseDir = "/Users/odol/Documents/Boost/gavas/files/";
 

@@ -173,7 +173,6 @@ public class NaverLoginServiceImpl implements LoginService{
             return null;
         }
     }
-
     private String getCurrentTime() {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
         Date currentTime = new Date();
@@ -195,5 +194,4 @@ public class NaverLoginServiceImpl implements LoginService{
         user.setTel("010-010-0000");
         return user;
     }
-
 }

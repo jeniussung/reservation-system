@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import kr.or.connect.reservation.domain.ReserveInfo;
+import kr.or.connect.reservation.service.ReserveService;
 import kr.or.connect.reservation.service.impl.ReserveServiceImpl;
 
 @RestController
