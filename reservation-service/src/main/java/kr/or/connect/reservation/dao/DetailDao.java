@@ -21,72 +21,66 @@ import kr.or.connect.reservation.domain.dto.UserCommentDto;
 
 @Repository
 public class DetailDao {
-	
-	private NamedParameterJdbcTemplate jdbc; // sql 을 실행하기 위해 사용되는 객체
-    private RowMapper<DetailTop> rowMapper = BeanPropertyRowMapper.newInstance(DetailTop.class); // 칼럼 이름을 보통 user_name 과 같이 '_'를 활용하는데 자바는 낙타표기법을 사용한다 이것을 자동 맵핑한다.
 
-    // Spring은 생성자를 통하여 주입을 하게 된다. 빈을 따로 등록하지 않고 선언해서 사용했음.
-    
+    private NamedParameterJdbcTemplate jdbc;
+    private RowMapper<DetailTop> rowMapper = BeanPropertyRowMapper.newInstance(DetailTop.class);
+
+
     public DetailDao(DataSource dataSource) {
-        this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
+        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
-    
-    public List<DetailTop> selectDetailTop(Integer id){
-		try {    		
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", id);
-        return jdbc.query(DetailSqls.SELECT_DETAIL_TOP,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
-		}catch(EmptyResultDataAccessException e)
-		{
-			return null;
-		}
+
+    public List<DetailTop> selectDetailTop(Integer id) {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            return jdbc.query(DetailSqls.SELECT_DETAIL_TOP, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
-    
+
     public ImgFile selectFileAddr(Integer id) {
-    	try {    		
-    		    RowMapper<ImgFile> rowMapper = BeanPropertyRowMapper.newInstance(ImgFile.class);
-            Map<String, Object> params = new HashMap<String, Object>();
+        try {
+            RowMapper<ImgFile> rowMapper = BeanPropertyRowMapper.newInstance(ImgFile.class);
+            Map<String, Object> params = new HashMap<>();
             params.put("id", id);
-            return jdbc.queryForObject(DetailSqls.SELECT_FILE_ADDR, params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
-    		}catch(EmptyResultDataAccessException e)
-    		{
-    			return null;
-    		}
+            return jdbc.queryForObject(DetailSqls.SELECT_FILE_ADDR, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
-    
-    public List<UserCommentDto> selectComment(Integer id){
-    	try {    		
-    		    RowMapper<UserCommentDto> rowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
-            Map<String, Object> params = new HashMap<String, Object>();
+
+    public List<UserCommentDto> selectComment(Integer id) {
+        try {
+            RowMapper<UserCommentDto> rowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
+            Map<String, Object> params = new HashMap<>();
             params.put("id", id);
-            return jdbc.query(DetailSqls.SELECT_COMMENT_INFO,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
-    		}catch(EmptyResultDataAccessException e)
-    		{
-    			return null;
-    		}
+            return jdbc.query(DetailSqls.SELECT_COMMENT_INFO, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
-    
-    public List<CommentImage> selectCommentImg(Integer id){
-    	try {    		
-    		    RowMapper<CommentImage> rowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
-            Map<String, Object> params = new HashMap<String, Object>();
+
+    public List<CommentImage> selectCommentImg(Integer id) {
+        try {
+            RowMapper<CommentImage> rowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
+            Map<String, Object> params = new HashMap<>();
             params.put("id", id);
-            return jdbc.query(DetailSqls.SELECT_COMMENT_IMAGE,params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
-    		}catch(EmptyResultDataAccessException e)
-    		{
-    			return null;
-    		}
+            return jdbc.query(DetailSqls.SELECT_COMMENT_IMAGE, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
-    
+
     public DetailBottom selectDetailContent(Integer id) {
-    	try {    		
-    		    RowMapper<DetailBottom> rowMapper = BeanPropertyRowMapper.newInstance(DetailBottom.class);
-            Map<String, Object> params = new HashMap<String, Object>();
+        try {
+            RowMapper<DetailBottom> rowMapper = BeanPropertyRowMapper.newInstance(DetailBottom.class);
+            Map<String, Object> params = new HashMap<>();
             params.put("id", id);
-            return jdbc.queryForObject(DetailSqls.SELEECT_DETAIL_BOTTOM_CONTENT, params,rowMapper); //rowMapper는 컬름을 담을 때만 필요하다.
-    		}catch(EmptyResultDataAccessException e)
-    		{
-    			return null;
-    		}
+            return jdbc.queryForObject(DetailSqls.SELEECT_DETAIL_BOTTOM_CONTENT, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

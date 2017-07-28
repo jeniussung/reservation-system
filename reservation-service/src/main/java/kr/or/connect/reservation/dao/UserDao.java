@@ -19,30 +19,30 @@ import kr.or.connect.reservation.domain.User;
 
 @Repository
 public class UserDao {
-	private NamedParameterJdbcTemplate jdbc; // sql 을 실행하기 위해 사용되는 객체
-    private SimpleJdbcInsert insertAction; // insert 를 편리하게 하기 위한 객체
-    private RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(User.class); // 칼럼 이름을 보통 user_name 과 같이 '_'를 활용하는데 자바는 낙타표기법을 사용한다 이것을 자동 맵핑한다.
-    
+    private NamedParameterJdbcTemplate jdbc;
+    private SimpleJdbcInsert insertAction;
+    private RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(User.class);
+
     public UserDao(DataSource dataSource) {
-        this.jdbc = new NamedParameterJdbcTemplate(dataSource); // Datasource를 주입
-        this.insertAction = new SimpleJdbcInsert(dataSource)  // Datasource를 주입
-                .withTableName("users")   // table명을 지정
-                .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
+        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.insertAction = new SimpleJdbcInsert(dataSource)
+                .withTableName("users")
+                .usingGeneratedKeyColumns("id");
     }
-    
-    public long insert(User user){
+
+    public Integer insert(User user) {
         SqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        return insertAction.executeAndReturnKey(params).longValue();
+        return insertAction.executeAndReturnKey(params).intValue();
     }
-    
-    public User SelectUser(String id) {
-	    	try {
-	    		Map<String, Object> params = new HashMap<String, Object>();
-	        params.put("id", id);
-	        return jdbc.queryForObject(UserSqls.SELECT_ID, params, rowMapper);
-	    	}catch(EmptyResultDataAccessException e) {
-	    		return null;
-	    	}
+
+    public User selectUser(String id) {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            return jdbc.queryForObject(UserSqls.SELECT_ID, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }

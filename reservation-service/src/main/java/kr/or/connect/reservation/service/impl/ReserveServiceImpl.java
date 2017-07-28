@@ -32,7 +32,7 @@ public class ReserveServiceImpl implements ReserveService{
 	public Map<String, Object> getInfo(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		HashMap<String,Object> info = new HashMap<String,Object>();
+		Map<String,Object> info = new HashMap<>();
 		
 		if (session.getAttribute("user_id") != null) {
 			info.put("name", session.getAttribute("name"));
