@@ -27,34 +27,33 @@ public class FileContorller {
     @Autowired
     DetailServiceImpl detailServiceImpl;
 
-    @Value("${spring.resources.file-location}")
-    private String baseDir;
+    //    @Value("${spring.resources.file-location}")
+    private String baseDir = "/Users/odol/Documents/Boost/gavas/files/";
 
-    @GetMapping()
-    public ModelAndView fileform(){
+    @GetMapping
+    public ModelAndView fileForm() {
         return new ModelAndView("files");
     }
 
-    @PostMapping()
-    public String create(@RequestParam("title") String title, @RequestParam("file") MultipartFile[] files){
+    @PostMapping
+    public ModelAndView create(@RequestParam("title") String title, @RequestParam("file") MultipartFile[] files) {
 
-        if(files != null && files.length > 0){
+        if (files != null && files.length > 0) {
 
-            // windows 사용자라면 "c:\temp\년도\월\일" 형태의 문자열을 구한다.
             String formattedDate = baseDir + new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd").format(new Date());
             File f = new File(formattedDate);
-            if(!f.exists()){ // 파일이 존재하지 않는다면
-                f.mkdirs(); // 해당 디렉토리를 만든다. 하위폴더까지 한꺼번에 만든다.
+            if (!f.exists()) {
+                f.mkdirs();
             }
 
-            for(MultipartFile file : files) {
+            for (MultipartFile file : files) {
                 String contentType = file.getContentType();
                 String name = file.getName();
                 String originalFilename = file.getOriginalFilename();
                 long size = file.getSize();
 
-                String uuid = UUID.randomUUID().toString(); // 중복될 일이 거의 없다.
-                String saveFileName = formattedDate + File.separator + uuid; // 실제 저장되는 파일의 절대 경로
+                String uuid = UUID.randomUUID().toString();
+                String saveFileName = formattedDate + File.separator + uuid;
 
                 // 아래에서 출력되는 결과는 모두 database에 저장되야 한다.
                 // pk 값은 자동으로 생성되도록 한다.
@@ -65,27 +64,25 @@ public class FileContorller {
                 System.out.println("size : " + size);
                 System.out.println("saveFileName : " + saveFileName);
 
-                // 실제 파일을 저장함.
-                // try-with-resource 구문. close()를 할 필요가 없다. java 7 이상에서 가능
-                try(
-                        InputStream in = file.getInputStream();
-                        FileOutputStream fos = new FileOutputStream(saveFileName)){
+                try (InputStream in = file.getInputStream();
+                     FileOutputStream fos = new FileOutputStream(saveFileName)) {
+
                     int readCount = 0;
                     byte[] buffer = new byte[512];
-                    while((readCount = in.read(buffer)) != -1){
-                        fos.write(buffer,0,readCount);
+                    while ((readCount = in.read(buffer)) != -1) {
+                        fos.write(buffer, 0, readCount);
                     }
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            } // for
-        } // if
+            }
+        }
 
-        return "redirect:/files";
+        return new ModelAndView("redirect:/files");
     }
 
     @GetMapping("{id}")
-    public void downloadReservationUserCommentImage(@PathVariable(name="id") Integer id, HttpServletResponse response){
+    public void downloadReservationUserCommentImage(@PathVariable(name = "id") Integer id, HttpServletResponse response) {
         // id를 이용하여 파일의 정보를 읽어온다.
         // 이 부분은 원래 db에서 읽어오는 것인데 db부분은 생략했다.
         ImgFile addr = detailServiceImpl.getFileAddr(id);
@@ -93,7 +90,7 @@ public class FileContorller {
         String originalFilename = "원본파일명";
         String contentType = "image/jpeg";
         // 해당 파일이 이미 존재해야한다.
-        String saveFileName = baseDir+addr.getSave_file_name();
+        String saveFileName = addr.getSave_file_name();
 
         response.setHeader("Content-Disposition", "attachment; filename=\"" + originalFilename + "\";");
         response.setHeader("Content-Transfer-Encoding", "binary");
@@ -103,21 +100,21 @@ public class FileContorller {
         response.setHeader("Expires", "-1;");
 
         java.io.File readFile = new java.io.File(saveFileName);
-        if(!readFile.exists()){ // 파일이 존재하지 않다면
+        if (!readFile.exists()) { // 파일이 존재하지 않다면
             throw new RuntimeException("file not found");
         }
 
         FileInputStream fis = null;
-        try{
+        try {
             fis = new FileInputStream(readFile);
             FileCopyUtils.copy(fis, response.getOutputStream()); // 파일을 저장할때도 사용할 수 있다.
             response.getOutputStream().flush();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
-        }finally {
+        } finally {
             try {
                 fis.close();
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 // 아무것도 하지 않음 (필요한 로그를 남기는 정도의 작업만 함.)
             }
         }

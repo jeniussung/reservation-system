@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.or.connect.reservation.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class ReserveController {
 	ReserveService reserveServieImpl;
 	
 	@GetMapping("/top/{id}")
-	public List<ReserveInfo> getReserveInfo(@PathVariable Integer id, HttpServletRequest request) {
+	public List<ReserveInfo> getReserveInfo(@PathVariable Integer id) {
 		
 		return reserveServieImpl.getReserveInfo(id);
 		

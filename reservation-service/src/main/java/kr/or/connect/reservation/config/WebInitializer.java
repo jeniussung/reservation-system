@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.connect;
+package kr.or.connect.reservation.config;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
@@ -15,7 +15,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebInitializer implements WebApplicationInitializer {
-    private static final String CONFIG_LOCATION = "kr.or.connect.reservation.connect";
+    private static final String CONFIG_LOCATION = "kr.or.connect.reservation.config";
     private static final String MAPPING_URL = "/";
 
     public WebInitializer(){
@@ -27,7 +27,6 @@ public class WebInitializer implements WebApplicationInitializer {
 		WebApplicationContext context = getContext();
 
 
-        // encoding filter 설정
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
@@ -37,7 +36,6 @@ public class WebInitializer implements WebApplicationInitializer {
         FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
 
-        // dispatchder servlet 설정
         servletContext.addListener(new ContextLoaderListener(context));
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);
