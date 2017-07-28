@@ -14,18 +14,14 @@ public class MyReservationInfoDto {
     private Integer generalTicketCount;
     private Integer youthTicketCount;
     private Integer childTicketCount;
+    private Integer reservationType;
     private String reservationName;
     private String reservationTel;
     private String reservationEmail;
-
     private String observationTime;
     private String displayStart;
     private String displayEnd;
     private String placeName;
-
     private String name;
-
     private Long totalPrice;
-
-
 }

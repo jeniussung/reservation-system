@@ -33,7 +33,7 @@ public class NaverLoginServiceImpl {
 	String PROVIDER = "&service_provider=NAVER"; 
 	
 	
-	public Map<String, Object> getAcessToken(String token, String code){
+	public HashMap<String, Object> getAcessToken(String token, String code){
         try {
 	            String apiURL = GET_TOKEON_URL+token+"&code="+code;
 	            URL url = new URL(apiURL);
@@ -66,7 +66,7 @@ public class NaverLoginServiceImpl {
         }
 	}
 	
-	public Map<String, Object> reGetAcessToken(String token){
+	public HashMap<String, Object> reGetAcessToken(String token){
         try {
         			String accessToken = URLEncoder.encode(token, "UTF-8");
 	            String apiURL = REACCESS_TOKEN_URL + accessToken;
@@ -182,11 +182,11 @@ public class NaverLoginServiceImpl {
 	        return new BigInteger(130, random).toString(32);
 	    }
 	
-	public Map<String, Object> jsonToMap(String json){
+	public HashMap<String, Object> jsonToMap(String json){
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		Map<String, Object> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		
 		try {
 			return map = mapper.readValue(json, new TypeReference<Map<String, String>>(){});
@@ -235,7 +235,7 @@ public class NaverLoginServiceImpl {
 		return mTime;
 	}
 	
-	public User getUserDto(HashMap<String, String> profile) {
+	public User getUserDto(Map<String, String> profile) {
 		User user = new User();
 		user.setUsername(profile.get("name"));
 		user.setAdmin_flag(1);

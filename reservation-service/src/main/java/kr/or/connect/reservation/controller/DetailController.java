@@ -12,7 +12,7 @@ import kr.or.connect.reservation.domain.dto.CommentImage;
 import kr.or.connect.reservation.domain.dto.DetailBottom;
 import kr.or.connect.reservation.domain.dto.DetailTop;
 import kr.or.connect.reservation.domain.dto.UserCommentDto;
-
+import kr.or.connect.reservation.service.DetailService;
 import kr.or.connect.reservation.service.impl.DetailServiceImpl;
 
 @RestController

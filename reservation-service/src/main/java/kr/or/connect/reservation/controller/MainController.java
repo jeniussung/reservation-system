@@ -2,6 +2,7 @@ package kr.or.connect.reservation.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,15 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-<<<<<<< HEAD
-import kr.or.connect.reservation.dto.ImgFile;
-import kr.or.connect.reservation.dto.User;
-import kr.or.connect.reservation.service.DetailService;
-import kr.or.connect.reservation.service.impl.DetailServiceImpl;
-=======
 import kr.or.connect.reservation.domain.User;
->>>>>>> f1a1321489f012c212ccc6e622c0c1e355d25eb1
 import kr.or.connect.reservation.service.impl.NaverLoginServiceImpl;
 import kr.or.connect.reservation.service.impl.UserServiceImpl;
 
@@ -86,8 +79,8 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 	    		    return "mainpage"; //401 unauthorized
 	    		} else {
 	    			System.out.println("ok");
-	    			HashMap<String,Object> accessResult = naverLoginServiceImpl.getAcessToken(state, code);
-		    		HashMap<String, String> profile = naverLoginServiceImpl.getProfile((String) accessResult.get("access_token"));
+	    			Map<String,Object> accessResult = naverLoginServiceImpl.getAcessToken(state, code);
+	    			Map<String, String> profile = naverLoginServiceImpl.getProfile((String) accessResult.get("access_token"));
 		    		
 		    		if(profile == null) // 회원정보 받아오지 못하면 로그인 페이지로 리다이렉트, 접근 토큰은 1회성이기 때문.
 		    		{
@@ -99,7 +92,7 @@ import kr.or.connect.reservation.service.impl.UserServiceImpl;
 		    		
 		    		if(userProfile == null) {
 		    			userProfile = naverLoginServiceImpl.getUserDto(profile);
-		    			long id = userServiceImpl.addUser(userProfile); // 디비에 저장
+		    			Integer id = userServiceImpl.addUser(userProfile); // 디비에 저장
 		    			userProfile.setId(id);
 		    		}
 		    		

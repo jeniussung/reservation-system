@@ -30,9 +30,9 @@ public class UserDao {
                 .usingGeneratedKeyColumns("id"); // pk 칼럼을 지정
     }
     
-    public long insert(User user){
+    public Integer insert(User user){
         SqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        return insertAction.executeAndReturnKey(params).longValue();
+        return insertAction.executeAndReturnKey(params).intValue();
     }
     
     public User SelectUser(String id) {

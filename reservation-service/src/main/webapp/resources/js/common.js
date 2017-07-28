@@ -57,15 +57,6 @@ var AjaxProm = (function (option){
         });
 });
 
-var putParamAjax = (function (optoin){
-    return $.ajax({
-      url: option.url,
-      type: "PUT",
-      contentType:"application/json; charset=UTF-8",
-      dataType:"json",
-      data: JSON.stringify({"name":name, "id":id})});
-})
-
 var addCommaPrice = (function (){
 
     return function(price){

@@ -27,8 +27,8 @@ public class FileContorller {
     @Autowired
     DetailServiceImpl detailServiceImpl;
 
-    @Value("${spring.resources.file-location}")
-    private String baseDir;
+//    @Value("${spring.resources.file-location}")
+    private String baseDir = "/Users/seongjihyeon/Desktop/serverfile";
 
     @GetMapping()
     public ModelAndView fileform(){
