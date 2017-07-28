@@ -10,7 +10,39 @@
 		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/target/classes">
 		</dir>
 	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/config">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/controller">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/dao">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/dao/sqls">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/domain">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/domain/dto">
+		</dir>
+	</classpath>
 
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/interceptor">
+		</dir>
+	</classpath>
+	<classpath>
+		<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/java/kr/or/connect/reservation/service/impl">
+		</dir>
+	</classpath>
 	<web>
 		<link target="/">
 			<dir name="/Users/odol/Boost/gavas/reservation-system/reservation-service/src/main/webapp">

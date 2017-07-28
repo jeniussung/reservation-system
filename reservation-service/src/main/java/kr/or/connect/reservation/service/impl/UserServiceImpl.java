@@ -14,14 +14,12 @@ public class UserServiceImpl implements UserService {
 	UserDao userDao;
 	
 	@Override
-	public long addUser(User user) {
-		// TODO Auto-generated method stub
+	public Integer addUser(User user) {
 		return userDao.insert(user);
 	}
 
 	@Override
 	public User getUser(String id) {
-		// TODO Auto-generated method stub
-		return userDao.SelectUser(id);
+		return userDao.selectUser(id);
 	}
 }

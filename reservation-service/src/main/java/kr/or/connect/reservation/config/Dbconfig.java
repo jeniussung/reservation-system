@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.connect;
+package kr.or.connect.reservation.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;

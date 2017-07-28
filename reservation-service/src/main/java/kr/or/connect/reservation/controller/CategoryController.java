@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +35,7 @@ public class CategoryController {
         }
     
     @GetMapping
-	Collection<Category> readList() {
+    public List<Category> readList() {
 		return categoryService.getAll();
 	}
     

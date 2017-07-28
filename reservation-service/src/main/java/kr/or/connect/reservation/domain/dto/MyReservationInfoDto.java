@@ -17,7 +17,7 @@ public class MyReservationInfoDto {
     private String reservationName;
     private String reservationTel;
     private String reservationEmail;
-
+    private Integer reservationType;
     private String observationTime;
     private String displayStart;
     private String displayEnd;
