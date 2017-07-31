@@ -9,4 +9,5 @@ import java.util.List;
 public interface MyReservationInfoService {
     List<MyReservationInfoDto> getReservationInfoList(Integer id);
     Integer updateResrvationType(MyReservationInfo myReservationInfo);
+    Integer addReservationInfo(MyReservationInfo myReservationInfo);
 }

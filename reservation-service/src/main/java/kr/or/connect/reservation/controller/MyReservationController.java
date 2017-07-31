@@ -26,4 +26,11 @@ public class MyReservationController {
         return myReservationInfoService.updateResrvationType(myReservationInfo);
 
     }
+    
+    @PostMapping
+    public Integer create(@RequestBody MyReservationInfo myReservationInfo){
+    	
+    	return myReservationInfoService.addReservationInfo(myReservationInfo);
+    	
+    }
 }

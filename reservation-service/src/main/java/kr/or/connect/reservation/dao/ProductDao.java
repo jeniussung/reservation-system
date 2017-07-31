@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import kr.or.connect.reservation.dao.sqls.ProductSqls;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,13 +21,15 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.reservation.domain.Product;
 
 import static kr.or.connect.reservation.dao.sqls.ProductSqls.*;
-
+@PropertySource("classpath:/application.properties")
 @Repository
 public class ProductDao {
     private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert insertAction;
     private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
-
+    
+    @Value("${spring.resources.product-limit}")
+	private Long limit;
 
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -38,6 +43,7 @@ public class ProductDao {
             Map<String, Object> params = new HashMap<>();
             params.put("start", start);
             params.put("category_id", id);
+            params.put("limit", limit);
             return jdbc.query(SELECT_CATEGORY_ID, params, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -47,6 +53,7 @@ public class ProductDao {
     public List<Product> selectAll(Integer start) {
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
+        params.put("limit", limit);
         return jdbc.query(ProductSqls.SELECT_LIMIT, params, rowMapper);
     }
 

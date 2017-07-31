@@ -1,18 +1,20 @@
 package kr.or.connect.reservation.service.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kr.or.connect.reservation.dao.MyReservationInfoDao;
 import kr.or.connect.reservation.dao.ProductPriceDao;
 import kr.or.connect.reservation.domain.MyReservationInfo;
 import kr.or.connect.reservation.domain.ProductPrice;
 import kr.or.connect.reservation.domain.dto.MyReservationInfoDto;
 import kr.or.connect.reservation.service.MyReservationInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class MyReservationInfoServiceImpl implements MyReservationInfoService {
@@ -62,5 +64,17 @@ public class MyReservationInfoServiceImpl implements MyReservationInfoService {
             myReservationInfoDto.setTotalPrice(totalPrice.longValue());
         }
     }
+
+	@Override
+	@Transactional(readOnly = false)
+	public Integer addReservationInfo(MyReservationInfo myReservationInfo) {
+		Date currentDate = new Date();
+		myReservationInfo.setReservationDate(currentDate);
+		myReservationInfo.setCreateDate(currentDate);
+		myReservationInfo.setModifyDate(currentDate);
+		Integer insertId = myReservationInfoDao.insert(myReservationInfo);
+		return insertId;
+	}
+    
 }
 
