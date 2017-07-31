@@ -14,7 +14,7 @@ public class DetailSqls {
 											+ "display_info ON product.id = product_id WHERE product_id = :id)dis_info "
 											+ "ON product_image.product_id = dis_info.product_id)p_file ON file.id = p_file.file_id ORDER BY type desc";
 
-	public final static String SELECT_FILE_ADDR = "SELECT save_file_name FROM file WHERE id = :id";
+
 
 	public final static String SELECT_COMMENT_INFO = "SELECT comment_info.id , COUNT(comment_info.id) AS img_count ,nickname, product_id, user_id, MIN(file_id) AS file_id, score, comment, comment_info.create_date, comment_info.modify_date "
 												+ "FROM users "

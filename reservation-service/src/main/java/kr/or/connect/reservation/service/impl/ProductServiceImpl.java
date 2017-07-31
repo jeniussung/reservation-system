@@ -14,7 +14,7 @@ import kr.or.connect.reservation.service.ProductService;
 @Service
 public class ProductServiceImpl implements ProductService{
 	@Autowired
-    ProductDao productDao;
+    private ProductDao productDao;
 	
 	@Transactional(readOnly = true)
 	@Override

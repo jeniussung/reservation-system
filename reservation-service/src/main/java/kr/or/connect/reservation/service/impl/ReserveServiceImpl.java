@@ -18,7 +18,7 @@ import kr.or.connect.reservation.service.ReserveService;
 public class ReserveServiceImpl implements ReserveService{
 	
 	@Autowired
-	ReserveDao reserveDao;
+	private ReserveDao reserveDao;
 	
 
 	@Override
