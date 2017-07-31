@@ -1,8 +1,8 @@
 package kr.or.connect.reservation.dao.sqls;
 
 
+@PropertySource("classpath:/application.properties")
 public class ProductSqls {
-
 
     public final static String SELECT_COUNT = "select count(*) from product";
 

@@ -29,11 +29,4 @@ public class ReserveController {
 		
 	}
 	
-	@GetMapping("/middle")
-	public Map<String,Object> getReserverInfo(HttpServletRequest request) {
-		
-		return reserveServieImpl.getInfo(request);
-	}
-	
-	
 }

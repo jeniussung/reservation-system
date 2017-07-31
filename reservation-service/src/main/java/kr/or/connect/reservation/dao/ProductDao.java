@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.reservation.domain.Product;
 
 import static kr.or.connect.reservation.dao.sqls.ProductSqls.*;
-
+@PropertySource("classpath:/application.properties")
 @Repository
 @PropertySource("classpath:/application.properties")
 public class ProductDao {
@@ -30,7 +30,6 @@ public class ProductDao {
 
     @Value("${spring.resources.product-limit}")
     private String limit;
-
 
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);

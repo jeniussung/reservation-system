@@ -41,7 +41,8 @@ public class UserDao {
             params.put("id", id);
             return jdbc.queryForObject(UserSqls.SELECT_ID, params, rowMapper);
         } catch (EmptyResultDataAccessException e) {
-            throw new IllegalArgumentException();
+//            throw new IllegalArgumentException();
+        	return null;	//유저가 없는 경우 null 반환
         }
     }
 

@@ -214,15 +214,6 @@
         });
     })();
 
-    var GetReserverInfo = (function (){
-        selectParamAjax('./middle',getInfo);
-
-        function getInfo(data){
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-        }
-    })();
-
     var GoPage = (function (){
         $(document).on('click','.bk_btn',function(){
             if ($(this).closest('.bk_btn_wrap').hasClass("disable") === true) {
@@ -235,6 +226,41 @@
 
             } else {
                 console.log("can go")
+
+                //general_ticket_count, youth_ticket_count, child_ticket_count
+                $ticketElement = $(".ticket_body .count_control_input");
+                var tickets = [];
+                for(var i = 0; i < $ticketElement.length; i++){
+                    tickets[i] = parseInt($ticketElement[i].value);
+                }
+
+                var ticketsSum = 0;
+                for(var i = 0; i < tickets.length; i++) {
+                    ticketsSum += tickets[i];
+                }
+                if(ticketsSum === 0){
+                    alert("티켓을 1개 이상 구매해야 합니다.");
+                    $(".ticket_body").focus();
+                    return ;
+                }
+
+                var reservationInfoJson = JSON.stringify({
+                    productId : parseInt($(location).attr("pathname").slice(-1)),
+                    userId : parseInt($(".form_wrap").data("userid")),
+                    generalTicketCount : tickets[0],
+                    youthTicketCount : tickets[1],
+                    childTicketCount : tickets[2],
+                    reservationName : $("#name").val(),
+                    reservationTel : $("#tel").val(),
+                    reservationEmail : $("#email").val(),
+                    reservationType : 1     //타입 구분 필요
+                });
+
+                var ajaxCallback = AjaxProm({url : '/api/myreservations', type : "POST", data : reservationInfoJson});
+                ajaxCallback.then(function(response, status){
+                    location.href="/myreservation";
+                });
+                
             }
         });
     })();
