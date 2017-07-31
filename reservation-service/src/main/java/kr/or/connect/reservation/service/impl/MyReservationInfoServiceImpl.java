@@ -19,9 +19,9 @@ import kr.or.connect.reservation.service.MyReservationInfoService;
 @Service
 public class MyReservationInfoServiceImpl implements MyReservationInfoService {
     @Autowired
-    ProductPriceDao productPriceDao;
+    private ProductPriceDao productPriceDao;
     @Autowired
-    MyReservationInfoDao myReservationInfoDao;
+    private MyReservationInfoDao myReservationInfoDao;
 
     @Override
     public List<MyReservationInfoDto> getReservationInfoList(Integer id) {

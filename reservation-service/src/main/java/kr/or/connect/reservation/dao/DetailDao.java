@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import kr.or.connect.reservation.dao.sqls.DetailSqls;
+import kr.or.connect.reservation.domain.FileDomain;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.reservation.domain.dto.CommentImage;
 import kr.or.connect.reservation.domain.dto.DetailBottom;
 import kr.or.connect.reservation.domain.dto.DetailTop;
-import kr.or.connect.reservation.domain.dto.ImgFile;
 import kr.or.connect.reservation.domain.dto.UserCommentDto;
 
 @Repository
@@ -40,16 +40,6 @@ public class DetailDao {
         }
     }
 
-    public ImgFile selectFileAddr(Integer id) {
-        try {
-            RowMapper<ImgFile> rowMapper = BeanPropertyRowMapper.newInstance(ImgFile.class);
-            Map<String, Object> params = new HashMap<>();
-            params.put("id", id);
-            return jdbc.queryForObject(DetailSqls.SELECT_FILE_ADDR, params, rowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
 
     public List<UserCommentDto> selectComment(Integer id) {
         try {
