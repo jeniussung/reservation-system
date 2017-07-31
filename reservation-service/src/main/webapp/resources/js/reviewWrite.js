@@ -116,7 +116,7 @@ function writeReview(){
 	}
 
 	var request = new XMLHttpRequest();
-	request.open("POST", "/files");
+	request.open("POST", "/api/reviews");
 	request.send(formData);
 }
 
