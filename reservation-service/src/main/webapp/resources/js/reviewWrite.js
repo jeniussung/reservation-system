@@ -102,21 +102,39 @@ function writeReview(){
 		$(".review_contents").focus();
 		return ;
 	}
-
-	var reservationUserComment = {
-		"productId" : $(location).attr('pathname').slice(-1),
-		"userId" : $(".write_act").data("userid"),
-		"score" : score,
-		"comment" : comment
-	};
-
-	formData.append("reservationUserComment", reservationUserComment);
-	for(var i = 0; i<uploadFileList.length; i++){
-		formData.append("file", uploadFileList[i]);
+	var userId = $(".write_act").data("userid");
+	console.log(userId);
+	if(userId === ""){
+		alert("로그인 후에 리뷰를 등록 하실 수 있습니다.");
+		return;
 	}
 
+	var review = JSON.stringify({
+		"productId" : $(location).attr('pathname').slice(-1),
+		"userId" : userId,
+		"score" : score,
+		"comment" : comment
+	});
+
+	formData.append("review", review);
+	for(var i = 0; i<uploadFileList.length; i++){
+		formData.append("files", uploadFileList[i]);
+	}
+	console.log(formData);
 	var request = new XMLHttpRequest();
 	request.open("POST", "/api/reviews");
+
+	request.onload = function(){
+		console.log(request.readyState);
+		if(request.readyState === 4){
+			if(request.status === 200){
+				location.href="/reviews";
+			} else{
+				console.log("insert review fail");
+				location.href="/reviewWrite/"+$(location).attr('pathname').slice(-1);
+			}
+		}
+	}
 	request.send(formData);
 }
 

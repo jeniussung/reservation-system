@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.dao.sqls;
 
+import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("classpath:/application.properties")
 public class ProductSqls {

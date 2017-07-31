@@ -126,7 +126,7 @@ public class MainController {
         return "myreservation";
     }
     
-    @GetMapping("reviewWrite")
+    @GetMapping("reviewWrite/{id}")	//productId
     public String getreviewWrite(HttpServletRequest request) {
 
         return "reviewWrite";
