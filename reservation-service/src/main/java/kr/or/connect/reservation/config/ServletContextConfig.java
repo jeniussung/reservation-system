@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,8 @@ import kr.or.connect.reservation.interceptor.SessionInterceptor;
 @EnableWebMvc
 @ComponentScan(basePackages = {"kr.or.connect.reservation.controller"})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
-
+    @Value("${spring.resources.file-size}")
+    private long fileSize;
 
     @Bean
     public UrlBasedViewResolver viewResolver() {
@@ -50,7 +52,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MultipartResolver multipartResolver() {
         org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
+        multipartResolver.setMaxUploadSize(fileSize); // 1024 * 1024 * 10
         return multipartResolver;
     }
 }
