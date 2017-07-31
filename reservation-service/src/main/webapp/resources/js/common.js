@@ -1,6 +1,4 @@
 $.fn.goBefore = function (width) {
-    console.log(width);
-    console.log(this);
     this.animate({"left": "-=" + width + "px"}, "slow");
 
 }
@@ -14,6 +12,30 @@ $.fn.addCommentLi = function (source, context) {
 
     $(html).appendTo($element_ul);
 }
+
+function extend(superClass, def) {
+   var extendClass = function extendClass() {
+      // Call a parent constructor
+      superClass.apply(this, arguments);
+
+      // Call a child constructor
+      if (typeof def.init === "function") {
+         def.init.apply(this, arguments);
+      }
+   };
+
+   var ExtProto = function() {};
+   ExtProto.prototype = superClass.prototype;
+
+   var extProto = new ExtProto();
+   for (var i in def) {
+      extProto[i] = def[i];
+   }
+   extProto.constructor = extendClass;
+   extendClass.prototype = extProto;
+
+   return extendClass;
+};
 
 var GetProductId = (function () {
 
@@ -166,7 +188,6 @@ var Flicking = (function () {
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function (e) {
-        console.log("start");
         if (e.type === 'touchstart' && e.touches.length === 1) {
             this.touch_start_x = e.touches[0].pageX;
             this.touch_start_y = e.touches[0].pageY;
@@ -174,7 +195,6 @@ var Flicking = (function () {
     }
 
     Flicking.prototype.flickingMove = function (e) {
-        console.log("start");
         var drag_dist = 0;
         var scroll_dist = 0;
         this.curLiPosition = this.ele.closest("ul").position().left;
