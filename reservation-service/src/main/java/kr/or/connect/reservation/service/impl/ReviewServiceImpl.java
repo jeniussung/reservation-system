@@ -6,6 +6,8 @@ import kr.or.connect.reservation.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -14,7 +16,12 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewDao reviewDao;
 
     @Override
-    public Integer createReview(Review review) {
+    public Integer addReview(Review review) {
         return reviewDao.insert(review);
+    }
+
+    @Override
+    public Integer addReviewWithFiles(Review review, List<Integer> fileIdList) {
+        return reviewDao.insertWithFiles(review, fileIdList);
     }
 }

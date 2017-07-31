@@ -3,6 +3,7 @@ package kr.or.connect.reservation.domain;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,5 +16,6 @@ public class Review {
     Integer userId;
     BigDecimal score;
     String comment;
-
+    Date createDate;
+    Date modifyDate;
 }

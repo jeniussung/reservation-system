@@ -16,7 +16,7 @@ import kr.or.connect.reservation.service.CategoryService;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     @Transactional(readOnly = true)
 	public Category get(Long id) {
