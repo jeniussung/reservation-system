@@ -26,8 +26,10 @@ public class FileContorller {
 
     @Autowired
     DetailServiceImpl detailServiceImpl;
-    //    @Value("${spring.resources.file-location}")
     private String baseDir = "/Users/odol/Documents/Boost/gavas/files/";
+    
+    @Value("${spring.resources.file-location}")
+    private String DownLoadBaseDir;
 
     @GetMapping
     public ModelAndView fileForm() {
@@ -98,7 +100,7 @@ public class FileContorller {
         response.setHeader("Pragma", "no-cache;");
         response.setHeader("Expires", "-1;");
 
-        java.io.File readFile = new java.io.File(saveFileName);
+        java.io.File readFile = new java.io.File(DownLoadBaseDir+saveFileName);
         if (!readFile.exists()) { // 파일이 존재하지 않다면
             throw new RuntimeException("file not found");
         }

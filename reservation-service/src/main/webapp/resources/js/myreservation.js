@@ -1,6 +1,6 @@
 (function (){
 
-    var topTap = (function (){
+    var MyReservation = (function (){
 
         var id = 32;
 
@@ -15,36 +15,44 @@
 
         var cancelJsonData;
         var cancelTargetDiv;
+        var tapCount = [,0,0,0,0]
+        var cancelTap
+
         var TYPE_NUM = 4;
+        var CANCEL_BTN_TXT = '취소';
         var TAP_TYPE = {
             al : '전체',
             exp : '이용예정',
             fin : "이용완료",
             cancel : "취소·환불"};
-
-        var TAP_ROOT = [$('.card').eq(0),$('.card').eq(1),$('.card').eq(2),$('.card').eq(3)];
-
+        var TAP_ROOT = [
+            $('.card').eq(0),
+            $('.card').eq(1),
+            $('.card').eq(2),
+            $('.card').eq(3)];
         var CARD_TYPE = {
             reserveCancel : '예약 신청중',
             reservedCancel : '예약 확정',
             writeReview : '이용 완료',
             canceldReservation : "취소된 예약"};
-
         var TYPE_ROOT = [,
-        $('.card').eq(0).find('.link_booking_details').eq(0),
-        $('.card').eq(1).find('.link_booking_details').eq(0),
-        $('.card').eq(2).find('.link_booking_details').eq(0),
-        $('.card').eq(3).find('.link_booking_details').eq(0)];
+            $('.card').eq(0).find('.link_booking_details').eq(0),
+            $('.card').eq(1).find('.link_booking_details').eq(0),
+            $('.card').eq(2).find('.link_booking_details').eq(0),
+            $('.card').eq(3).find('.link_booking_details').eq(0)];
+        var PRICE_TYPE = [
+            '일반 : ',
+            '청소년 : ',
+            '어린이 : ',
+            "합계 : "];
+        var TEMPLATE_TYPE = [,
+            cardTemplate,
+            cardTemplate,
+            usedCardTemplate,
+            canceledCardTemplate];
 
-        var PRICE_TYPE = ['일반 : ','청소년 : ','어린이 : ', "합계 : "];
-
-        var TEMPLATE_TYPE = [,cardTemplate,cardTemplate,usedCardTemplate,canceledCardTemplate];
-
-        var CANCEL_BTN_TXT = '취소';
-
-        var getCardCallback = AjaxProm({url : '/api/myreservation/'+id, type : "GET"});
+        var getCardCallback = AjaxProm({url : '/api/myreservations/'+id, type : "GET"});
         getCardCallback.then(function(data){
-
             data.forEach(function(item){
             	var reservationType = item.reservationType;
                 var start = item.displayStart.split(' ');
@@ -65,24 +73,20 @@
                         company : item.placeName,
                         price : item.totalPrice
                     });
+
+                tapCount[reservationType]++;
             });
+
+            changeTabNum({
+                all : tapCount[1]+tapCount[2]+tapCount[3]+tapCount[4],
+                expe: tapCount[1]+tapCount[2],
+                fin :tapCount[3],
+                cancel : tapCount[4]});
 
             clickCancelBtn();
         });
 
-        changeTabNum({
-            all : 1,
-            expe: 3,
-            fin :5,
-            cancel : 7});
-
         bindClickingTab();
-
-        changeTabNum({
-            all : 1,
-            expe: 3,
-            fin :5,
-            cancel : 7});
 
         bindLayerBtn('.popup_booking_wrapper');
 
@@ -143,7 +147,7 @@
 
             var html = template(context);
 
-             root.show();
+            root.show();
 
             var $element_ul = parent.root;
 
@@ -161,11 +165,13 @@
 
                 if (type === CARD_TYPE.reserveCancel){
                     cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
+                    cancelTap = 1;
                     // $('.popup_booking_wrapper').data('id',id)
                     layerOpen('.popup_booking_wrapper',name,date);
                 }else if(type === CARD_TYPE.reservedCancel){
                     cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
-                    layerOpen('.popup_booking_wrapper',this);
+                    cancelTap = 2;
+                    layerOpen('.popup_booking_wrapper',name,date);
                 }else{
 
                 }
@@ -195,12 +201,20 @@
             })
 
             $(layer).find('.btn_green').on('click',function(){
-                var ajaxCallback = AjaxProm({url : './api/myreservation', type : "PUT", data : cancelJsonData});
+                var ajaxCallback = AjaxProm({url : './api/myreservations', type : "PUT", data : cancelJsonData});
                 ajaxCallback.then(function(data){
                     var clone = cancelTargetDiv.clone();
                     cancelTargetDiv.remove();
-                    
                     $('.card').eq(3).find('.link_booking_details').eq(0).after(clone);
+
+                    tapCount[cancelTap]--;
+                    tapCount[4]++;
+                    changeTabNum({
+                        all : tapCount[1]+tapCount[2]+tapCount[3]+tapCount[4],
+                        expe: tapCount[1]+tapCount[2],
+                        fin :tapCount[3],
+                        cancel : tapCount[4]});
+
                     $(layer).fadeOut();
                 })
             })

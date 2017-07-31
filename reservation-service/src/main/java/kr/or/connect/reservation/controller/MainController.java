@@ -94,7 +94,7 @@ public class MainController {
             session.setAttribute("name", profile.get("name"));
             session.setAttribute("email", profile.get("email"));
 
-            return url;
+            return "redirect:"+url;
         }
 
     }
@@ -128,6 +128,12 @@ public class MainController {
     public String getReserve(HttpServletRequest request) {
 
         return "myreservation";
+    }
+    
+    @GetMapping("reviewWrite")
+    public String getreviewWrite(HttpServletRequest request) {
+
+        return "reviewWrite";
     }
 
 
