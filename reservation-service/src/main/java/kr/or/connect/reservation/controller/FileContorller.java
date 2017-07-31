@@ -27,6 +27,7 @@ public class FileContorller {
     @Autowired
     DetailServiceImpl detailServiceImpl;
     private String baseDir = "/Users/odol/Documents/Boost/gavas/files/";
+    private String baseDir2 = "/Users/seongjihyeon/desktop/serverfile/s";
     
     @Value("${spring.resources.file-location}")
     private String DownLoadBaseDir;
@@ -41,7 +42,7 @@ public class FileContorller {
 
         if (files != null && files.length > 0) {
 
-            String formattedDate = baseDir + new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd").format(new Date());
+            String formattedDate = baseDir2 + new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd").format(new Date());
             File f = new File(formattedDate);
             if (!f.exists()) {
                 f.mkdirs();

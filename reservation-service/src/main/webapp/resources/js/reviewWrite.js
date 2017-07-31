@@ -1,3 +1,4 @@
+//별점 컴포넌트
 var Rating = extend(eg.Component,{
     ratingScore : 0,
 	totalStarCount : 0,
@@ -24,8 +25,6 @@ var Rating = extend(eg.Component,{
     }
 });
 
-//별점 (.rating)
-
 //review 입력
 (function controlReviewTxt(){
 	$(".review_contents").on("click", function(){
@@ -48,17 +47,39 @@ var Rating = extend(eg.Component,{
 	});
 
 	$eleFile.change(function(e){
-
         var fileList = this.files;
         var numFiles = fileList.length;
+        var curNumFiles = $('.item').length;
+        var formData;
+
+        if(numFiles > 5 || curNumFiles === 6){
+            alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
+        }
+        var formData = new FormData();
 
         for (var i = 0; i < numFiles; i++) {
-	        var file = this.files[i];
-	        var imageType = /^image\//;
 
-	        if (!imageType.test(file.type)) {
-	          continue;
+            if( curNumFiles === 6){
+                return;
+            }
+
+	        var file = this.files[i];
+	        var imageTypeJpeg = /^image\/jpeg/;
+            var imageTypePng = /^image\/png/;
+
+            if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
+                alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
+	            continue;
         	}
+
+            if (file.size > 1048576) {
+                alert("파일 사이즈는 1mb보다 작아야 합니다.")
+	            continue;
+        	}
+
+            // temp.push(this.files[i]);
+            formData.append("title","aaa");
+            formData.append("file",this.files[i]);
 
 	        var img = new Image();
 	        img.width = 130;
@@ -76,11 +97,16 @@ var Rating = extend(eg.Component,{
 	        };})(img);
 
 	        reader.readAsDataURL(file);
+
+            curNumFiles++;
       	}
+
+        // var request = new XMLHttpRequest();
+        // request.open("POST", "/files");
+        // request.send(formData);
+        // console.log("aa");
 	});
 })();
-
-//리뷰 등록
 
 $(function(){
     var rating = new Rating($(".rating"));

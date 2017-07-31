@@ -178,7 +178,7 @@
 </head>
 
 <body>
-    <div id="container">
+    <div id="container" data-userId="${sessionScope.user.id}">
         <div class="header">
             <header class="header_tit">
                 <h1 class="logo">

@@ -82,7 +82,7 @@ public class MainController {
             }
 
 
-            User userProfile = userService.getUser((String) profile.get("id"));
+            User userProfile = userService.getUser(profile.get("id"));
 
             if (userProfile == null) {
                 userProfile = loginService.getUserDto(profile);
@@ -90,6 +90,7 @@ public class MainController {
                 userProfile.setId(id);
             }
 
+            session.setAttribute("user", userProfile);
             session.setAttribute("user_id", profile.get("id"));
             session.setAttribute("name", profile.get("name"));
             session.setAttribute("email", profile.get("email"));
@@ -112,7 +113,7 @@ public class MainController {
     }
 
 
-    @GetMapping("reviews")
+    @GetMapping("api/reviews")
     public String getReview() {
 
         return "review";

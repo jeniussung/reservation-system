@@ -9,7 +9,31 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     <link href="/resources/css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
+    <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/lib/component.min.js"></script>    
 </head>
+
+<script id="comment-template" type="text/x-handlebars-template">
+    <li class="list_item" data-comment={{id}}>
+        <div>
+            <div class="review_area">
+                <div class="thumb_area">
+                    {{#if file_id}}
+                    <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="/files/{{file_id}}" alt="리뷰이미지"> </a> <span class="img_count">{{imgCount}}</span>                                                </div>
+                    {{else}}
+                    </div>
+                    {{/if}}
+                <h4 class="resoc_name">{{title}}</h4>
+                <p class="review">{{comment}}</p>
+            </div>
+            <div class="info_area">
+                <div class="review_info"> <span class="grade">{{score}}</span> <span class="name">{{nickname}}</span> <span class="date">{{day}} 방문</span> </div>
+            </div>
+        </div>
+    </li>
+</script>
 
 <body>
     <div id="container">
@@ -168,6 +192,9 @@
 	            <span class="copyright">© NAVER Corp.</span>
 	        </div>
 	    </footer>
+
+        <script type="text/javascript" src="/resources/js/common.js"></script>
+        <script type="text/javascript" src="/resources/js/review.js"></script>
 </body>
 
 </html>
