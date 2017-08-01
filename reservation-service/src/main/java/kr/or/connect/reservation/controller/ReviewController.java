@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -28,9 +29,12 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public List<UserCommentDto> getUserComments(@PathVariable Integer id)
+    public HashMap<String,Object> getUserComments(@PathVariable Integer id)
     {
-        return reviewService.getUserComment(id);
+        HashMap<String,Object> CommentInfo = new HashMap<>();
+        CommentInfo.put("CommentInfo",reviewService.getUserComment(id));
+        CommentInfo.put("CommentCountInfo",reviewService.getReviewCountInfo(id));
+        return CommentInfo;
     }
 
     @GetMapping("/image/{id}")

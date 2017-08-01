@@ -1,61 +1,47 @@
 (function () {
 
-var id = 2;
-
 var GetUserComment = (function () {
 
     var score = 0;
-    var per;
     var soruce = $("#comment-template").html();
     var template = Handlebars.compile(soruce);
+    var GetId = GetProductId();
+    var id = GetId.getQueryString("id",document.location);
 
-    var qu = getQueryStringObject("http://localhost/map.html?x=925641&y=1666020&level=10");
-    console.log(qu.x);
+    var ajaxCallback = AjaxProm({url : "/api/reviews/" + id, type : "GET"});
+    ajaxCallback.then(function(data){
+        if (data.length === 0) {
+        } else {
+            var date;
 
+            for (var i in data.CommentInfo) {
+                date = data.CommentInfo[i].createDate.split(' ');
+                addCommentLi({
+                    id : data.CommentInfo[i].id,
+                    title : data.CommentCountInfo.name,
+                    imgCount : data.CommentInfo[i].imgCount,
+                    file_id : data.CommentInfo[i].fileId,
+                    comment : data.CommentInfo[i].comment.replace(/\n/gi, '<br>'),
+                    score : data.CommentInfo[i].score,
+                    nickname : data.CommentInfo[i].nickname,
+                    day : date[0]
+                })
+            } // for
+        } // if
+    });
 
-
-    getComment(id);
-
-    function getComment(id) {
-        $.ajax({
-            url: "/api/reviews/" + id,
-            type: "GET",
-            contentType: "application/json; charset=UTF-8",
-            dataType: "json",
-            success: function (data) {
-
-                if (data.length === 0) {
-                } else {
-
-                    var date;
-
-                    // $('.graph_value').css('width', per + '%');
-                    // $('.text_value span').text(score.toFixed(1));
-                    // $('.green').text(data.length + '건');
-
-                    for (var i in data) {
-                        console.log(data);
-                        date = data[i].createDate.split(' ');
-                        addCommentLi(data[i].id, "title", data[i].imgCount, data[i].fileId, data[i].comment.replace(/\n/gi, '<br>'), data[i].score, data[i].nickname, date[0]);
-                        if (i == 2)
-                            break;
-                    } // for
-                } // if
-            } // success
-        }); // ajax
-    }
-
-    function addCommentLi(id, title, imgCount, file_id, comment, score, nickname, day) {
+    function addCommentLi(option) {
         var context = {
-            id: id,
-            title: title,
-            imgCount: imgCount,
-            file_id: file_id,
-            comment: comment,
-            score: score,
-            nickname: nickname,
-            day: day
+            id: option.id,
+            title: option.title,
+            imgCount: option.imgCount,
+            file_id: option.file_id,
+            comment: option.comment,
+            score: option.score,
+            nickname: option.nickname,
+            day: option.day
         };
+
         var html = template(context);
 
         $('.list_short_review').show();

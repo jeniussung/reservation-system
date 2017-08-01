@@ -3,6 +3,7 @@ package kr.or.connect.reservation.service.impl;
 import kr.or.connect.reservation.dao.ReviewDao;
 import kr.or.connect.reservation.domain.Review;
 import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.ReviewInfoDto;
 import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import kr.or.connect.reservation.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,8 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDao.selectCommentImg(id);
     }
 
-
+    @Override
+    public ReviewInfoDto getReviewCountInfo(Integer id) {
+        return reviewDao.selectCountInfo(id);
+    }
 }

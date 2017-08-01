@@ -4,6 +4,7 @@ import kr.or.connect.reservation.dao.sqls.DetailSqls;
 import kr.or.connect.reservation.dao.sqls.ReviewSqls;
 import kr.or.connect.reservation.domain.Review;
 import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.ReviewInfoDto;
 import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -53,10 +54,20 @@ public class ReviewDao {
             RowMapper<CommentImage> rowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
             Map<String, Object> params = new HashMap<>();
             params.put("id", id);
-            return jdbc.query(ReviewSqls.SELECT_REVIEWCOMMENT_IMAGE, params, rowMapper);
+            return jdbc.query(ReviewSqls.SELECT_REVIEW_COMMENT_IMAGE, params, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
+    public ReviewInfoDto selectCountInfo(Integer id) {
+        try {
+            RowMapper<ReviewInfoDto> rowMapper = BeanPropertyRowMapper.newInstance(ReviewInfoDto.class);
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            return jdbc.queryForObject(ReviewSqls.SELECT_REVIEW_COUNT_INFO, params, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 }

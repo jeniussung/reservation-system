@@ -45,6 +45,23 @@ var GetProductId = (function () {
         var returnValue;
 
         return {
+            getQueryString : function getQueryString(pName,query)
+            {
+                // String (document.location)
+                qS = query.toString().split ('?')[1];
+                if (!qS) return false;
+                qS = qS. split ('&');
+                for (var i = 0 ; i < qS.length; i++)
+                {
+                    var o = qS[i].split('=');
+                    if (pName == o[0])
+                    {
+                        returnValue = o[1]
+                    }
+                }
+                return returnValue;
+            },
+
             getProductId: function getProductId() {
                 querystring = location.toString().split('/')
                 returnValue = querystring[querystring.length - 1];
@@ -53,20 +70,6 @@ var GetProductId = (function () {
         }
     }
 })();
-
-function getQueryStringObject(querystring) {
-    var a = querystring.substr(1).split('&');
-    if (a == "") return {};
-    var b = {};
-    for (var i = 0; i < a.length; ++i) {
-        var p = a[i].split('=', 2);
-        if (p.length == 1)
-            b[p[0]] = "";
-        else
-            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-    }
-    return b;
-}
 
 var selectParamAjax = (function () {
 

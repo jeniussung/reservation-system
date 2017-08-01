@@ -12,7 +12,7 @@
 
     <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
-    <script type="text/javascript" src="/resources/lib/component.min.js"></script>    
+    <script type="text/javascript" src="/resources/lib/component.min.js"></script>
 </head>
 
 <script id="comment-template" type="text/x-handlebars-template">
