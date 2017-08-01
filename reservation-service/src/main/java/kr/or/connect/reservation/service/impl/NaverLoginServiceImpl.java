@@ -28,10 +28,10 @@ import kr.or.connect.reservation.domain.User;
 @Service
 public class NaverLoginServiceImpl implements LoginService{
 
-    String GET_TOKEON_URL = "https://nid.naver.com/oauth2.0/token?client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&grant_type=authorization_code&state=";
-    String REMOVE_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&access_token=";
-    String REACCESS_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&refresh_token=";
-    String PROVIDER = "&service_provider=NAVER";
+    private String GET_TOKEON_URL = "https://nid.naver.com/oauth2.0/token?client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&grant_type=authorization_code&state=";
+    private String REMOVE_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&access_token=";
+    private String REACCESS_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&refresh_token=";
+    private String PROVIDER = "&service_provider=NAVER";
 
 
     public Map<String, Object> getAcessToken(String token, String code) {

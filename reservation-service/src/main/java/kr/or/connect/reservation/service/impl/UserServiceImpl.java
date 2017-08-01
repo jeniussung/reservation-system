@@ -11,7 +11,7 @@ import kr.or.connect.reservation.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 	
 	@Override
 	public Integer addUser(User user) {

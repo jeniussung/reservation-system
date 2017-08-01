@@ -34,7 +34,7 @@
 					<h2><span class="title">클림트 인사이드</span></h2>
 				</div>
 				<!-- 리뷰 별점 -->
-				<div class="write_act">
+				<div class="write_act" data-userid="${sessionScope.user.id}">
 					<p class="title_star">별점과 이용경험을 남겨주세요.</p>
 					<div class="review_rating rating_point">
 						<div class="rating">
