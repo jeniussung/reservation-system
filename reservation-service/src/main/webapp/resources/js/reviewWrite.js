@@ -68,8 +68,6 @@ var uploadFileList = [];
 	        var imageTypeJpeg = /^image\/jpeg/;
             var imageTypePng = /^image\/png/;
 
-            uploadFileList.push(file);
-
             if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
                 alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
 	            continue;
@@ -79,6 +77,8 @@ var uploadFileList = [];
                 alert("파일 사이즈는 1mb보다 작아야 합니다.")
 	            continue;
         	}
+
+            uploadFileList.push(file);
 
 	        var img = new Image();
 	        img.width = 130;
