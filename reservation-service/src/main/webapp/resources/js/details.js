@@ -514,4 +514,11 @@
 
     })();
 
+    var GoReview = (function(){
+        var url = '/api/reviews?'
+        $('.btn_review_more').on('click',function(){
+            document.location.href = url+'id='+id;
+        })
+    })();
+
 })();

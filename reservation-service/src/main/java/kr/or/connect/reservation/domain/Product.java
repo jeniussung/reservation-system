@@ -20,6 +20,4 @@ public class Product {
 	private String createDate;
 	private String modifyDate;
 	private Integer fileId;
-	
-
 }

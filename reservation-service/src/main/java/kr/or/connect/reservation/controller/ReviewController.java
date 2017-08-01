@@ -1,19 +1,16 @@
 package kr.or.connect.reservation.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
+import kr.or.connect.reservation.domain.dto.CommentImage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import kr.or.connect.reservation.domain.Review;
 import kr.or.connect.reservation.service.FileService;
 import kr.or.connect.reservation.service.ReviewService;
@@ -29,7 +26,6 @@ public class ReviewController {
 
     @PostMapping
     public Integer createReview(@RequestParam("review") String reviewString, @RequestParam("files") MultipartFile[] files) {
-    	System.out.println("review : "+ reviewString);
     	Review review = null;
 		try {
 			review = new ObjectMapper().readValue(reviewString, Review.class);
@@ -42,6 +38,7 @@ public class ReviewController {
 		}
 		
     	Integer reviewId;
+
         if(files != null) {
             List<Integer> addedFileList = fileService.saveFiles(review.getUserId(), files);
             reviewId = reviewService.addReviewWithFiles(review, addedFileList);
@@ -52,5 +49,19 @@ public class ReviewController {
         return reviewId;
     }
 
+    @GetMapping("/{id}")
+    public HashMap<String,Object> getUserComments(@PathVariable Integer id)
+    {
+        HashMap<String,Object> CommentInfo = new HashMap<>();
+        CommentInfo.put("CommentInfo",reviewService.getUserComment(id));
+        CommentInfo.put("CommentCountInfo",reviewService.getReviewCountInfo(id));
+        return CommentInfo;
+    }
+
+    @GetMapping("/image/{id}")
+    public List<CommentImage> getCommentImage(@PathVariable Integer id)
+    {
+        return reviewService.getUserCommentImage(id);
+    }
 
 }

@@ -4,8 +4,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @PropertySource("classpath:/application.properties")
 public class ProductSqls {
-
-    public final static String SELECT_COUNT = "select count(*) from product";
+	public final static String SELECT_COUNT = "select count(*) from product";
 
     public final static String SELECT_COUNT_ID = "select count(*) from product where category_id = :category_id";
 
@@ -30,5 +29,4 @@ public class ProductSqls {
             + "INNER JOIN display_info "
             + "ON product.id = product_id WHERE product.category_id = :category_id)pro "
             + "ON pro.id = product_image.product_id WHERE type = 2 ORDER BY pro.id LIMIT :start, ";
-
 }

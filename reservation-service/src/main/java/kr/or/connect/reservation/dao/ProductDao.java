@@ -24,12 +24,11 @@ import static kr.or.connect.reservation.dao.sqls.ProductSqls.*;
 @Repository
 @PropertySource("classpath:/application.properties")
 public class ProductDao {
+    @Value("${spring.resources.product-limit}")
+    private String limit;
     private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert insertAction;
     private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
-
-    @Value("${spring.resources.product-limit}")
-    private String limit;
 
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);

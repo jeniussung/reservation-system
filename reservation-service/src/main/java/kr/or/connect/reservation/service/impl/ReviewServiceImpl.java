@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.ReviewDao;
 import kr.or.connect.reservation.domain.Review;
+import kr.or.connect.reservation.domain.dto.CommentImage;
+import kr.or.connect.reservation.domain.dto.ReviewInfoDto;
+import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import kr.or.connect.reservation.service.ReviewService;
 
 
@@ -23,6 +26,21 @@ public class ReviewServiceImpl implements ReviewService {
     	review.setCreateDate(currentDate);
     	review.setModifyDate(currentDate);
         return reviewDao.insert(review);
+    }
+
+    @Override
+    public List<UserCommentDto> getUserComment(Integer id) {
+        return reviewDao.selectComment(id);
+    }
+
+    @Override
+    public List<CommentImage> getUserCommentImage(Integer id) {
+        return reviewDao.selectCommentImg(id);
+    }
+
+    @Override
+    public ReviewInfoDto getReviewCountInfo(Integer id) {
+        return reviewDao.selectCountInfo(id);
     }
 
     @Override

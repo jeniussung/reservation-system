@@ -81,9 +81,9 @@ public class MainController {
                 return "redirect:/nlogin";
             }
 
-
             User userProfile = userService.getUser((String) profile.get("id"));
             System.out.println(userProfile);
+
             if (userProfile == null) {
                 userProfile = loginService.getUserDto(profile);
                 Integer id = userService.addUser(userProfile);
@@ -108,7 +108,7 @@ public class MainController {
     }
 
 
-    @GetMapping("reviews")
+    @GetMapping("api/reviews")
     public String getReview() {
 
         return "review";
