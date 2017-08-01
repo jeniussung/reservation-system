@@ -31,6 +31,8 @@ public class MainController {
 
     @Value("${open-api.naver.client-id}")
     private String clientId;
+    @Value("${open-api.naver.callback-url}")
+    private String callbackUrl;
 
     @GetMapping("index")
     public String index() {
@@ -57,7 +59,7 @@ public class MainController {
         session.setAttribute("state", state);
 
         try {
-            String encodeURL = URLEncoder.encode("://localhost:8080/callback", "UTF-8");
+            String encodeURL = URLEncoder.encode(callbackUrl, "UTF-8");
 
             return "redirect:" + naverLoginUrl + encodeURL + "&state=" + state + "&auth_type=reauthenticate";
         } catch (UnsupportedEncodingException e) {
