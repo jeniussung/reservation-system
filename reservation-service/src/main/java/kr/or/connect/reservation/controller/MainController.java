@@ -81,8 +81,8 @@ public class MainController {
                 return "redirect:/nlogin";
             }
 
-
-            User userProfile = userService.getUser(profile.get("id"));
+            User userProfile = userService.getUser((String) profile.get("id"));
+            System.out.println(userProfile);
 
             if (userProfile == null) {
                 userProfile = loginService.getUserDto(profile);
@@ -91,9 +91,6 @@ public class MainController {
             }
 
             session.setAttribute("user", userProfile);
-            session.setAttribute("user_id", profile.get("id"));
-            session.setAttribute("name", profile.get("name"));
-            session.setAttribute("email", profile.get("email"));
 
             return "redirect:"+url;
         }
@@ -105,9 +102,7 @@ public class MainController {
 
         HttpSession session = request.getSession();
 
-        session.removeAttribute("user_id");
-        session.removeAttribute("name");
-        session.removeAttribute("email");
+        session.removeAttribute("user");
 
         return "mainpage";
     }
@@ -131,7 +126,7 @@ public class MainController {
         return "myreservation";
     }
     
-    @GetMapping("reviewWrite")
+    @GetMapping("reviewWrite/{id}")	//productId
     public String getreviewWrite(HttpServletRequest request) {
 
         return "reviewWrite";

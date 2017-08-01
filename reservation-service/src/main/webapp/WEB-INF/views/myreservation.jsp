@@ -190,7 +190,7 @@
         </div>
         <hr>
         <div class="ct">
-            <div class="section_my">
+            <div class="section_my" data-userid="${sessionScope.user.id}">
                 <!-- 예약 현황 -->
                 <div class="my_summary">
                     <ul class="summary_board">

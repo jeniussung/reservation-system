@@ -2,7 +2,7 @@
 
     var MyReservation = (function (){
 
-        var id = $('#container').data('userid');        
+        var id = $(".section_my").data("userid");
 
         var cardSoruce = $("#card-template").html();
         var cardTemplate = Handlebars.compile(cardSoruce);

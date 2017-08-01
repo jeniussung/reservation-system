@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.reservation.domain.Product;
 
 import static kr.or.connect.reservation.dao.sqls.ProductSqls.*;
-
+@PropertySource("classpath:/application.properties")
 @Repository
 @PropertySource("classpath:/application.properties")
 public class ProductDao {
@@ -29,7 +29,6 @@ public class ProductDao {
     private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert insertAction;
     private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
-
 
     public ProductDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -43,7 +42,7 @@ public class ProductDao {
             Map<String, Object> params = new HashMap<>();
             params.put("start", start);
             params.put("category_id", id);
-            return jdbc.query(SELECT_CATEGORY_ID+limit, params, rowMapper);
+            return jdbc.query(SELECT_CATEGORY_ID + limit, params, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -52,7 +51,7 @@ public class ProductDao {
     public List<Product> selectAll(Integer start) {
         Map<String, Object> params = new HashMap<>();
         params.put("start", start);
-        return jdbc.query(ProductSqls.SELECT_LIMIT+limit, params, rowMapper);
+        return jdbc.query(ProductSqls.SELECT_LIMIT + limit, params, rowMapper);
     }
 
     public int selectCount() {

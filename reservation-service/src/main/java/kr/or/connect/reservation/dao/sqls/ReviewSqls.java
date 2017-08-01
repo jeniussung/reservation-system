@@ -1,7 +1,6 @@
 package kr.or.connect.reservation.dao.sqls;
 
 public class ReviewSqls {
-
     public final static String SELECT_REVIEW_COMMENT_INFO =
             "SELECT comment_info.id , COUNT(comment_info.id) AS img_count ,nickname, product_id, user_id, MIN(file_id) AS file_id, score, comment, comment_info.create_date, comment_info.modify_date "
             + "FROM users "

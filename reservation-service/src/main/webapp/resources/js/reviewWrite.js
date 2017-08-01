@@ -38,11 +38,14 @@ var Rating = extend(eg.Component,{
 	});
 })();
 
+var uploadFileList = [];
 //upload 리뷰 사진 미리보기
 (function previewReviewImg(){
 	var $eleFile = $("#reviewImageFileOpenInput");
 
 	$(".lst_thumb").on("click",".ico_del",function(){
+		var deleteFileIndex = $(".ico_del").index(this)-1;
+		uploadFileList.splice(deleteFileIndex,1);
 		this.closest(".item").remove();
 	});
 
@@ -50,12 +53,10 @@ var Rating = extend(eg.Component,{
         var fileList = this.files;
         var numFiles = fileList.length;
         var curNumFiles = $('.item').length;
-        var formData;
 
         if(numFiles > 5 || curNumFiles === 6){
             alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
         }
-        var formData = new FormData();
 
         for (var i = 0; i < numFiles; i++) {
 
@@ -67,6 +68,8 @@ var Rating = extend(eg.Component,{
 	        var imageTypeJpeg = /^image\/jpeg/;
             var imageTypePng = /^image\/png/;
 
+            uploadFileList.push(file);
+
             if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
                 alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
 	            continue;
@@ -76,10 +79,6 @@ var Rating = extend(eg.Component,{
                 alert("파일 사이즈는 1mb보다 작아야 합니다.")
 	            continue;
         	}
-
-            // temp.push(this.files[i]);
-            formData.append("title","aaa");
-            formData.append("file",this.files[i]);
 
 	        var img = new Image();
 	        img.width = 130;
@@ -100,13 +99,55 @@ var Rating = extend(eg.Component,{
 
             curNumFiles++;
       	}
-
-        // var request = new XMLHttpRequest();
-        // request.open("POST", "/files");
-        // request.send(formData);
-        // console.log("aa");
 	});
 })();
+
+//리뷰 등록
+function writeReview(){
+	var formData = new FormData();
+	var score = $(".first_star").val();
+	var comment = $("textarea").val();
+
+	if(comment === ""){
+		alert("리뷰 내용을 확인해 주세요.");
+		$(".review_contents").focus();
+		return ;
+	}
+	var userId = $(".write_act").data("userid");
+	console.log(userId);
+	if(userId === ""){
+		alert("로그인 후에 리뷰를 등록 하실 수 있습니다.");
+		return;
+	}
+
+	var review = JSON.stringify({
+		"productId" : $(location).attr('pathname').slice(-1),
+		"userId" : userId,
+		"score" : score,
+		"comment" : comment
+	});
+
+	formData.append("review", review);
+	for(var i = 0; i<uploadFileList.length; i++){
+		formData.append("files", uploadFileList[i]);
+	}
+	
+	var request = new XMLHttpRequest();
+	request.open("POST", "/api/reviews");
+
+	request.onload = function(){
+		console.log(request.readyState);
+		if(request.readyState === 4){
+			if(request.status === 200){
+				console.log("insert success");
+			} else{
+				console.log("insert review fail");
+				location.href="/reviewWrite/"+$(location).attr('pathname').slice(-1);
+			}
+		}
+	}
+	request.send(formData);
+}
 
 $(function(){
     var rating = new Rating($(".rating"));
@@ -115,4 +156,6 @@ $(function(){
 		$(".rating").find(".star_rank").text(e.ratingScore);
 		$(".rating").find(".first_star").val(e.ratingScore);
 	});
+
+	$(".box_bk_btn").on('click', writeReview);
 });

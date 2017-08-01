@@ -3,6 +3,7 @@ package kr.or.connect.reservation.dao;
 import kr.or.connect.reservation.dao.sqls.DetailSqls;
 import kr.or.connect.reservation.dao.sqls.ReviewSqls;
 import kr.or.connect.reservation.domain.Review;
+import kr.or.connect.reservation.domain.ReviewImage;
 import kr.or.connect.reservation.domain.dto.CommentImage;
 import kr.or.connect.reservation.domain.dto.ReviewInfoDto;
 import kr.or.connect.reservation.domain.dto.UserCommentDto;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class ReviewDao {
     private NamedParameterJdbcTemplate jdbc;
     private SimpleJdbcInsert simpleJdbcInsert;
+    private SimpleJdbcInsert simpleJdbcInsertImageTable;
     private RowMapper<Review> rowMapper = BeanPropertyRowMapper.newInstance(Review.class);
 
     public ReviewDao(DataSource dataSource) {
@@ -31,6 +33,10 @@ public class ReviewDao {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment")
                 .usingGeneratedKeyColumns("id");
+        this.simpleJdbcInsertImageTable = new SimpleJdbcInsert(dataSource)
+                .withTableName("reservation_user_comment_image")
+                .usingGeneratedKeyColumns("id");
+
     }
 
     public Integer insert(Review review) {
@@ -69,5 +75,18 @@ public class ReviewDao {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public Integer insertWithFiles(Review review, List<Integer> fileIdList) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(review);
+        Integer reviewId = simpleJdbcInsert.executeAndReturnKey(parameterSource).intValue();
+        for(Integer fileId : fileIdList) {
+            ReviewImage reviewImage = new ReviewImage();
+            reviewImage.setReservationUserCommentId(reviewId);
+            reviewImage.setFileId(fileId);
+            SqlParameterSource reviewImageParam = new BeanPropertySqlParameterSource(reviewImage);
+            simpleJdbcInsertImageTable.execute(reviewImageParam);
+        }
+        return reviewId;
     }
 }

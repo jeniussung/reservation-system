@@ -16,7 +16,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter  {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("user_id")!=null) {
+		if(session.getAttribute("user")!=null) {
 			
 			session.setAttribute("URL",request.getServletPath());
 			

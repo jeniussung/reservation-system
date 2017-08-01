@@ -19,6 +19,7 @@ import kr.or.connect.reservation.interceptor.SessionInterceptor;
 
 @Configuration
 @EnableWebMvc
+@PropertySource("classpath:/application.properties")
 @ComponentScan(basePackages = {"kr.or.connect.reservation.controller"})
 @PropertySource("classpath:/application.properties")
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
