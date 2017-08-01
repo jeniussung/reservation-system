@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import kr.or.connect.reservation.service.LoginService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -24,19 +24,24 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.connect.reservation.domain.User;
+import kr.or.connect.reservation.service.LoginService;
 
 @Service
 public class NaverLoginServiceImpl implements LoginService{
 
-    private String GET_TOKEON_URL = "https://nid.naver.com/oauth2.0/token?client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&grant_type=authorization_code&state=";
-    private String REMOVE_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&access_token=";
-    private String REACCESS_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id=ealZ_klxUlkCLBWYXd1P&client_secret=torwUYuKZq&refresh_token=";
+	@Value("${open-api.naver.client-id}")
+	private String clientId;
+	@Value("${open-api.naver.client-secret}")
+	private String clientSecret;
+	
+    private String REACCESS_TOKEN_URL = "https://nid.naver.com/oauth2.0/token?grant_type=refresh_token&client_id="+ clientId +"&client_secret="+ clientSecret +"&refresh_token=";
     private String PROVIDER = "&service_provider=NAVER";
 
 
     public Map<String, Object> getAcessToken(String token, String code) {
+    	String tokenGetUrl = "https://nid.naver.com/oauth2.0/token?client_id="+ clientId +"&client_secret="+ clientSecret +"&grant_type=authorization_code&state=";
         try {
-            String apiURL = GET_TOKEON_URL + token + "&code=" + code;
+            String apiURL = tokenGetUrl + token + "&code=" + code;
             URL url = new URL(apiURL);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -106,9 +111,10 @@ public class NaverLoginServiceImpl implements LoginService{
     }
 
     public Map<String, Object> removeToken(String token) {
+    	String tokenRemoveUrl = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id="+ clientId +"&client_secret="+ clientSecret +"&access_token=";
         try {
             String accessToken = URLEncoder.encode(token, "UTF-8");
-            String apiURL = REMOVE_TOKEN_URL + accessToken + PROVIDER;
+            String apiURL = tokenRemoveUrl + accessToken + PROVIDER;
 
             URL url = new URL(apiURL);
 
