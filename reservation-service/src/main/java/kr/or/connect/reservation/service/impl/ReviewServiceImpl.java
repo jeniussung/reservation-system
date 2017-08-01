@@ -45,6 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Integer addReviewWithFiles(Review review, List<Integer> fileIdList) {
+    	Date currentDate = new Date();
+    	review.setCreateDate(currentDate);
+    	review.setModifyDate(currentDate);
         return reviewDao.insertWithFiles(review, fileIdList);
     }
 }

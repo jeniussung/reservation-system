@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService {
                     FileDomain fileDomain = new FileDomain();
                     fileDomain.setUserId(userId);
                     fileDomain.setFileName(originalFilename);
-                    fileDomain.setSaveFileName(simpleDateFormat + uuid);
+                    fileDomain.setSaveFileName(simpleDateFormat + separator + uuid);
                     fileDomain.setFileLength(size);
                     fileDomain.setContentType(contentType);
                     fileDomain.setDeleteFlag(1);
