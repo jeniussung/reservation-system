@@ -3,16 +3,22 @@ package kr.or.connect.reservation.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import kr.or.connect.reservation.service.LoginService;
-import kr.or.connect.reservation.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import kr.or.connect.reservation.domain.User;
 
+import kr.or.connect.reservation.domain.User;
+import kr.or.connect.reservation.service.LoginService;
+import kr.or.connect.reservation.service.UserService;
+
+@PropertySource("classpath:/application.properties")
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -23,8 +29,8 @@ public class MainController {
     @Autowired
     UserService userService;
 
-
-    private String NAVER_LOGIN_URL = "https://nid.naver.com/oauth2.0/authorize?client_id=ealZ_klxUlkCLBWYXd1P&response_type=code&redirect_uri=http";
+    @Value("${open-api.naver.client-id}")
+    private String clientId;
 
     @GetMapping("index")
     public String index() {
@@ -45,15 +51,15 @@ public class MainController {
     public String goNlogin(HttpServletRequest request) {
 
         String state = loginService.generateState();
-
         HttpSession session = request.getSession();
+        String naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize?client_id="+ clientId +"&response_type=code&redirect_uri=http";
 
         session.setAttribute("state", state);
 
         try {
             String encodeURL = URLEncoder.encode("://localhost:8080/callback", "UTF-8");
 
-            return "redirect:" + NAVER_LOGIN_URL + encodeURL + "&state=" + state + "&auth_type=reauthenticate";
+            return "redirect:" + naverLoginUrl + encodeURL + "&state=" + state + "&auth_type=reauthenticate";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return "redirect:/nlogin";
