@@ -1,6 +1,6 @@
 (function (){
 
-    var GetId = GetProductId(document.location);
+    var GetId = GetProductId();
     var id = GetId.getProductId();
 
     var ReserveInfo = (function (){

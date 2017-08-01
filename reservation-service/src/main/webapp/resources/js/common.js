@@ -45,6 +45,23 @@ var GetProductId = (function () {
         var returnValue;
 
         return {
+            getQueryString : function getQueryString(pName,query)
+            {
+                // String (document.location)
+                qS = query.toString().split ('?')[1];
+                if (!qS) return false;
+                qS = qS. split ('&');
+                for (var i = 0 ; i < qS.length; i++)
+                {
+                    var o = qS[i].split('=');
+                    if (pName == o[0])
+                    {
+                        returnValue = o[1]
+                    }
+                }
+                return returnValue;
+            },
+
             getProductId: function getProductId() {
                 querystring = location.toString().split('/')
                 returnValue = querystring[querystring.length - 1];

@@ -1,3 +1,4 @@
+//별점 컴포넌트
 var Rating = extend(eg.Component,{
     ratingScore : 0,
 	totalStarCount : 0,
@@ -24,8 +25,6 @@ var Rating = extend(eg.Component,{
     }
 });
 
-//별점 (.rating)
-
 //review 입력
 (function controlReviewTxt(){
 	$(".review_contents").on("click", function(){
@@ -51,42 +50,54 @@ var uploadFileList = [];
 	});
 
 	$eleFile.change(function(e){
-
         var fileList = this.files;
         var numFiles = fileList.length;
+        var curNumFiles = $('.item').length;
+
+        if(numFiles > 5 || curNumFiles === 6){
+            alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
+        }
 
         for (var i = 0; i < numFiles; i++) {
+
+            if( curNumFiles === 6){
+                return;
+            }
+
 	        var file = this.files[i];
-	        if(uploadFileList.length >= 5){
-	        	alert("사진은 5장까지 첨부 할 수 있습니다.");
-	        	return ;
-	        }
+	        var imageTypeJpeg = /^image\/jpeg/;
+            var imageTypePng = /^image\/png/;
 
-	        if(file.size <= 1000000) {
-		        uploadFileList.push(file);
-		        var imageType = /^image\//;
+            uploadFileList.push(file);
 
-		        if (!imageType.test(file.type)) {
-		          continue;
-	        	}
+            if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
+                alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
+	            continue;
+        	}
 
-		        var img = new Image();
-		        img.width = 130;
-		        img.alt = "";
-		        img.file = file;
-		        $(img).addClass("item_thumb");
+            if (file.size > 1048576) {
+                alert("파일 사이즈는 1mb보다 작아야 합니다.")
+	            continue;
+        	}
 
-		        var reader = new FileReader();
+	        var img = new Image();
+	        img.width = 130;
+	        img.alt = "";
+	        img.file = file;
+	        $(img).addClass("item_thumb");
 
-		        reader.onload = (function(aImg) { return function(e) {
-		            aImg.src = e.target.result;
-		            var html = $(".item").clone();
-		            html.find("a").after(aImg);
-		            $(html.get(0)).appendTo(".lst_thumb");
-		        };})(img);
+	        var reader = new FileReader();
 
-		        reader.readAsDataURL(file);
-	        }
+	        reader.onload = (function(aImg) { return function(e) {
+	            aImg.src = e.target.result;
+	            var html = $(".item").clone();
+	            html.find("a").after(aImg);
+	            $(html.get(0)).appendTo(".lst_thumb");
+	        };})(img);
+
+	        reader.readAsDataURL(file);
+
+            curNumFiles++;
       	}
 	});
 })();
@@ -120,7 +131,7 @@ function writeReview(){
 	for(var i = 0; i<uploadFileList.length; i++){
 		formData.append("files", uploadFileList[i]);
 	}
-	console.log(formData);
+	
 	var request = new XMLHttpRequest();
 	request.open("POST", "/api/reviews");
 
@@ -128,7 +139,7 @@ function writeReview(){
 		console.log(request.readyState);
 		if(request.readyState === 4){
 			if(request.status === 200){
-				location.href="/reviews";
+				console.log("insert success");
 			} else{
 				console.log("insert review fail");
 				location.href="/reviewWrite/"+$(location).attr('pathname').slice(-1);
