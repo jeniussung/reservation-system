@@ -25,6 +25,12 @@
             exp : '이용예정',
             fin : "이용완료",
             cancel : "취소·환불"};
+        var TAP_TOGGLE = {
+            "전체" : [true,true,true,true],
+            "이용예정" : [true,true,false,false],
+            "이용완료" : [false,false,true,false],
+            "취소·환불" : [false,false,false,true]
+        }
         var TAP_ROOT = [
             $('.card').eq(0),
             $('.card').eq(1),
@@ -65,6 +71,7 @@
 
             	addArticle(TYPE_ROOT[reservationType],TEMPLATE_TYPE[reservationType],
                     {
+                        productId : item.productId,
                         no : item.id,
                         name : item.name,
                         date : date,
@@ -73,7 +80,6 @@
                         company : item.placeName,
                         price : item.totalPrice
                     });
-
                 tapCount[reservationType]++;
             });
 
@@ -84,6 +90,8 @@
                 cancel : tapCount[4]});
 
             clickCancelBtn();
+
+            clickReviewWriteBtn();
         });
 
         bindClickingTab();
@@ -97,27 +105,10 @@
 
                 var type = $(this).find('.tit').text();
 
-                if (type === TAP_TYPE.al){
-                    TAP_ROOT[0].css("display","");
-                    TAP_ROOT[1].css("display","");
-                    TAP_ROOT[2].css("display","");
-                    TAP_ROOT[3].css("display","");
-                } else if ( type === TAP_TYPE.exp){
-                    TAP_ROOT[0].css("display","");
-                    TAP_ROOT[1].css("display","");
-                    TAP_ROOT[2].css("display","none");
-                    TAP_ROOT[3].css("display","none");
-                } else if ( type === TAP_TYPE.fin){
-                    TAP_ROOT[0].css("display","none");
-                    TAP_ROOT[1].css("display","none");
-                    TAP_ROOT[2].css("display","");
-                    TAP_ROOT[3].css("display","none");
-                } else if ( type === TAP_TYPE.cancel){
-                    TAP_ROOT[0].css("display","none");
-                    TAP_ROOT[1].css("display","none");
-                    TAP_ROOT[2].css("display","none");
-                    TAP_ROOT[3].css("display","");
-                }
+                TAP_ROOT.forEach(function($tab,i){
+                    var display = TAP_TOGGLE[type][i];
+                    $tab.toggle(display);
+                })
             });
         }
 
@@ -137,19 +128,21 @@
         function addArticle(root,template,option){
             // console.log(root);
             var context = {
+                productId : option.productId,
                 no : option.no,
                 name : option.name,
                 date : option.date,
                 content : option.content,
                 product : option.product,
                 company : option.company,
-                price :option.price};
+                price :option.price
+                };
 
             var html = template(context);
 
             root.show();
 
-            var $element_ul = parent.root;
+            var $element_ul = root;
 
             root.after($(html));
         }
@@ -161,20 +154,17 @@
                 var name = $(this).closest('.card_detail').find('.tit').text();
                 var date = $(this).closest('.card_detail').find('ul li .item_dsc').eq(0).text();
                 var type = $(this).closest('.card').find('.link_booking_details .tit').eq(0).text();
-                cancelTargetDiv = $(this).closest('.card_item')
+                cancelTargetDiv = $(this).closest('.card_item');
 
                 if (type === CARD_TYPE.reserveCancel){
                     cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
                     cancelTap = 1;
-                    // $('.popup_booking_wrapper').data('id',id)
                     layerOpen('.popup_booking_wrapper',name,date);
                 }else if(type === CARD_TYPE.reservedCancel){
                     cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
                     cancelTap = 2;
                     layerOpen('.popup_booking_wrapper',name,date);
-                }else{
-
-                }
+                }else{}
             });
         }
 
@@ -209,6 +199,7 @@
 
                     tapCount[cancelTap]--;
                     tapCount[4]++;
+                    
                     changeTabNum({
                         all : tapCount[1]+tapCount[2]+tapCount[3]+tapCount[4],
                         expe: tapCount[1]+tapCount[2],
@@ -220,6 +211,12 @@
             })
         }
 
-    })();
+        function clickReviewWriteBtn(){
+            $('.finished article .btn').on('click',function(){
+                var productId = $(this).data("productid");
+                location.href = '/reviewWrite/'+productId;
+            });
+        }
 
+    })();
 })();

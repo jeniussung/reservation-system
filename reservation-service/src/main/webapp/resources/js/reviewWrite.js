@@ -5,7 +5,7 @@ var Rating = extend(eg.Component,{
     $eleRoot : '',
     $eleStar : '',
 
-    "init" : function($eleRoot){
+    init : function($eleRoot){
 	            this.$eleRoot = $eleRoot;
 				this.$eleStar = $eleRoot.find(".rating_rdo").not(".first_star");
 				this.totalStarCount = this.$eleStar.length;
@@ -20,8 +20,8 @@ var Rating = extend(eg.Component,{
 	        	});
         	},
 
-    "score" : function(){
-		return this.currentScore;
+    score : function(){
+		return this.ratingScore;
     }
 });
 
@@ -68,8 +68,6 @@ var uploadFileList = [];
 	        var imageTypeJpeg = /^image\/jpeg/;
             var imageTypePng = /^image\/png/;
 
-            uploadFileList.push(file);
-
             if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
                 alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
 	            continue;
@@ -79,6 +77,8 @@ var uploadFileList = [];
                 alert("파일 사이즈는 1mb보다 작아야 합니다.")
 	            continue;
         	}
+
+            uploadFileList.push(file);
 
 	        var img = new Image();
 	        img.width = 130;
@@ -113,8 +113,9 @@ function writeReview(){
 		$(".review_contents").focus();
 		return ;
 	}
+
 	var userId = $(".write_act").data("userid");
-	console.log(userId);
+
 	if(userId === ""){
 		alert("로그인 후에 리뷰를 등록 하실 수 있습니다.");
 		return;
@@ -131,12 +132,11 @@ function writeReview(){
 	for(var i = 0; i<uploadFileList.length; i++){
 		formData.append("files", uploadFileList[i]);
 	}
-	
+
 	var request = new XMLHttpRequest();
 	request.open("POST", "/api/reviews");
 
 	request.onload = function(){
-		console.log(request.readyState);
 		if(request.readyState === 4){
 			if(request.status === 200){
 				console.log("insert success");

@@ -44,11 +44,12 @@ public class ReviewDao {
         return simpleJdbcInsert.executeAndReturnKey(parameterSource).intValue();
     }
 
-    public List<UserCommentDto> selectComment(Integer id) {
+    public List<UserCommentDto> selectComment(Integer id, Integer start) {
         try {
             RowMapper<UserCommentDto> rowMapper = BeanPropertyRowMapper.newInstance(UserCommentDto.class);
             Map<String, Object> params = new HashMap<>();
             params.put("id", id);
+            params.put("start", start);
             return jdbc.query(ReviewSqls.SELECT_REVIEW_COMMENT_INFO, params, rowMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;

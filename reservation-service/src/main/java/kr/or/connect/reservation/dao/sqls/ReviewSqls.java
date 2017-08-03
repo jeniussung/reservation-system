@@ -9,7 +9,7 @@ public class ReviewSqls {
             + "FROM reservation_user_comment "
             + "LEFT OUTER JOIN "
             + "reservation_user_comment_image ON reservation_user_comment.id = reservation_user_comment_id "
-            + "WHERE product_id = :id)comment_info ON users.id = comment_info.user_id GROUP BY comment_info.id LIMIT 0 ,10";
+            + "WHERE product_id = :id)comment_info ON users.id = comment_info.user_id GROUP BY comment_info.id LIMIT :start,10";
 
     public final static String SELECT_REVIEW_COMMENT_IMAGE =
             "SELECT FILE_ID.id AS commentId , file.id as fileId "

@@ -29,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<UserCommentDto> getUserComment(Integer id) {
-        return reviewDao.selectComment(id);
+    public List<UserCommentDto> getUserComment(Integer id, Integer start) {
+        return reviewDao.selectComment(id,start);
     }
 
     @Override
@@ -45,6 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Integer addReviewWithFiles(Review review, List<Integer> fileIdList) {
+        Date currentDate = new Date();
+        review.setCreateDate(currentDate);
+        review.setModifyDate(currentDate);
         return reviewDao.insertWithFiles(review, fileIdList);
     }
 }

@@ -94,7 +94,7 @@
 		  	var name = $(this).closest("tr").find(".up > input").val();
 		  	updateCategory(name,id);
 		  	$(this).closest("tr").find(".name").text(name);
-		  });
+	  });
 
 </script>
 

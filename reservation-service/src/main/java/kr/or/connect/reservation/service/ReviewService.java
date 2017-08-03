@@ -7,7 +7,7 @@ import kr.or.connect.reservation.domain.dto.UserCommentDto;
 import java.util.List;
 
 public interface ReviewService {
-    List<UserCommentDto> getUserComment(Integer id);
+    List<UserCommentDto> getUserComment(Integer id, Integer start);
     List<CommentImage> getUserCommentImage(Integer id);
     ReviewInfoDto getReviewCountInfo(Integer id);
     Integer addReview(Review review);

@@ -1,16 +1,13 @@
-requirejs.config( {
-       baseUrl: '/resources'
-   });
-
 (function () {
+
     var id;
 
     var BOTTOM_TAP = ['상세정보','예매하기']
 
     var GetProductId = (function () {
-        var querystring = [];
+        var qu_erystring = [];
         var qS;
-        var returnValue;
+        var return_value;
         var id;
 
         return {
@@ -42,28 +39,19 @@ requirejs.config( {
 
         /*
             플리킹 컴포넌트 구현 적용
-            RequireJs 동적 로딩
         */
+        var ee = new Flicking($('.visual_img'));
 
-        require([
-            'js/requireTest'
-        ], function (requireTest) {
+        ee.init($('.visual_img').get(0), 'topFlickingEnd');
 
-            var Flicking = requireTest.flicking();
+        ee.on('topFlickingEnd', function (curNum) {
+            $('.figure_pagination > span:first').text(curNum.curDisplayNum);
 
-            var ee = new Flicking($('.visual_img'));
-
-            ee.init($('.visual_img').get(0), 'topFlickingEnd');
-
-            ee.on('topFlickingEnd', function (curNum) {
-                $('.figure_pagination > span:first').text(curNum.curDisplayNum);
-
-                if (curNum.curDisplayNum === 1) {
-                    $('.visual_txt_inn').eq(0).css('display', '')
-                } else {
-                    $('.visual_txt_inn').css('display', 'none');
-                }
-            });
+            if (curNum.curDisplayNum === 1) {
+                $('.visual_txt_inn').eq(0).css('display', '')
+            } else {
+                $('.visual_txt_inn').css('display', 'none');
+            }
         });
 
         return {
@@ -465,18 +453,12 @@ requirejs.config( {
             플리킹 컴포넌트 구현 적용
         */
         function addFlickingComponent() {
-            require([
-                'js/requireTest'
-            ], function (requireTest) {
-                var ele = $('.detail_img').get(0);
+            var ele = $('.detail_img').get(0);
+            ee = new Flicking($('.detail_img'));
 
-                var Flicking = requireTest.flicking();
-
-                ee = new Flicking($('.detail_img'));
-
-                ee.init(ele);
-            });
+            ee.init(ele);
         }
+
     })();
 
     var DetailBottomContent = (function () {

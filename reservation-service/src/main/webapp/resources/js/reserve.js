@@ -1,12 +1,64 @@
 (function (){
-
     var GetId = GetProductId();
     var id = GetId.getProductId();
 
+    /*
+        티켓 레이팅 컴포넌트
+    */
+    var TicketRating = extend(eg.Component,{
+    	init : function(id,option){
+            this.rootEle = id;
+    		this.setDefaultOption(option);
+    		this.countEle = id.find('.count_control_input');
+            id.find('.ico_plus3').on("click",this.plus.bind(this));
+    		id.find('.ico_minus3').on("click",this.minus.bind(this));
+    	},
+    	setDefaultOption : function(option){
+    		option = option||{};
+    		this.option = {
+    			"price" : 1000
+    		};
+    		if(option.price !== undefined){
+    			this.option.price = option.price
+    		}
+    	},
+    	plus : function(e){
+    		var amount = this.getAmount()+1;
+    		this.countEle.val(amount);
+    		this.trigger("change",{
+    			"amount" : amount,
+                "rootEle" : this.rootEle
+    		})
+    	},
+    	minus : function(e){
+            var amount = this.getAmount()-1;
+
+            if(amount > -1){
+        		this.countEle.val(amount);
+        		this.trigger("change",{
+        			"amount" : amount,
+                    "rootEle" : this.rootEle
+        		})
+            }
+    	},
+    	getAmount:function(){
+    		return parseInt(this.countEle.val(),10);
+    	},
+    	getTotalPrice:function(){
+    		return this.getAmount() * this.option.price;
+    	}
+    });
+
     var ReserveInfo = (function (){
-        var price="";
         var soruce = $("#price-template").html();
         var template = Handlebars.compile(soruce);
+        var priceType=[];
+        var tickets = [];
+        var PRICE_TYPE = [
+            {label : "성인(만 19 ~ 64세)", type : "성인"},
+            {label : "청소년(만 13 ~ 18세)", type : "청소년"},
+            {label : "어린이(만 4 ~ 12세)", type : "어린이"},
+            {label : "국가유공자, 장애인, 65세 이상", type : "국가유공자, 장애인, 65세 이상"}];
 
         selectParamAjax('./top/'+id,getInfo);
 
@@ -25,25 +77,34 @@
             $('.dsc').eq(1).html(data[0].observationTime);
             $('.inline_txt .display_term').text(disStart[0]+"~"+disEnd[0]+" ");
 
-            for(var i = 0; i < data.length ; i++){
-                if(data[i].priceType === 1){
-                    price += "성인(만 19 ~ 64세)"+addCommaPrice(data[i].price)+"원";
-                    addPrcieInfo("성인", addCommaPrice(data[i].price), addCommaPrice(data[i].price*(1-data[i].discountRate)), data[i].discountRate*100);
-                }else if(data[i].priceType === 2){
-                    price += "/ 청소년(만 13 ~ 18세)"+addCommaPrice(data[i].price)+"원";
-                    addPrcieInfo("청소년", addCommaPrice(data[i].price), addCommaPrice(data[i].price*(1-data[i].discountRate)), data[i].discountRate*100);
-                }else if(data[i].priceType === 3){
-                    price += "/ 어린인(만 4 ~ 12세)"+addCommaPrice(data[i].price)+"원";
-                    addPrcieInfo("어린이", addCommaPrice(data[i].price), addCommaPrice(data[i].price*(1-data[i].discountRate)), data[i].discountRate*100);
-                }else if(data[i].priceType === 4){
-                    price += "/ 국가유공자, 장애인, 65세 이상"+addCommaPrice(data[i].price)+"원";
-                    addPrcieInfo("국가유공자, 장애인, 65세 이상",addCommaPrice(data[i].price), addCommaPrice(data[i].price*(1-data[i].discountRate)), data[i].discountRate*100);
-                }
-            }
+            data.forEach(function(item,i){
+                priceType.push(PRICE_TYPE[item.priceType].label+addCommaPrice(item.price)+"원");
 
-            $('.dsc').eq(2).text(price);
+                addPrcieInfo(
+                    PRICE_TYPE[item.priceType].type,
+                    addCommaPrice(item.price),
+                    addCommaPrice(item.price*(1-item.discountRate)), item.discountRate*100);
 
-            bindPriceTab();
+                var ticket = new TicketRating($('.qty').eq(i));
+
+        		tickets.push(ticket);
+
+        		ticket.on("change",function(e){
+        			var totalAmount  = 0;
+                    var curRoot = e.rootEle;
+                    var ticketAmount = e.amount;
+                    var price = e.rootEle.find('.dsc_price').text();
+
+        			tickets.forEach(function(ticket){
+        				totalAmount += ticket.getAmount();
+        			});
+
+                    $('.inline_txt .count').text(totalAmount);
+                    curRoot.find('.total_price').text(ticketAmount * parseInt(removeCommaPrice(price), 10));
+        		});
+            })
+
+            $('.dsc').eq(2).text(priceType.join('/'));
         }
 
         function addPrcieInfo(priceType, price, discountPrice, discountRate){
@@ -52,79 +113,15 @@
 
             $('.ticket_body').show();
 
-            var $element_ul = parent.$('.ticket_body');
+            var $element_ul = $('.ticket_body');
 
             $(html).appendTo($element_ul);
-        }
-
-        function bindPriceTab()
-        {
-            var ee = new Observer();
-
-            ee.on("pricePlus",function(e){
-
-                $(e.ele).closest('.clearfix').find('.ico_minus3').removeClass("disabled");
-                $(e.ele).closest('.clearfix').find('.count_control_input').removeClass("disabled");
-
-                var price = removeCommaPrice($(e.ele).closest('.qty').find('.dsc_price').text());
-                var curPrice = removeCommaPrice($(e.ele).closest('.count_control').find('.total_price').text());
-                var sum = price+curPrice;
-                $(e.ele).closest('.count_control').find('.total_price').text(addCommaPrice(sum));
-            })
-
-            ee.on("priceMinus",function(e){
-                var price = removeCommaPrice($(e.ele).closest('.qty').find('.dsc_price').text());
-                var curPrice = removeCommaPrice($(e.ele).closest('.count_control').find('.total_price').text());
-                var sum = curPrice - price;
-
-                if(sum >= 0){
-                    $(e.ele).closest('.count_control').find('.total_price').text(addCommaPrice(sum));
-
-                    if(sum === 0){
-                        $(e.ele).closest('.clearfix').find('.ico_minus3').addClass("disabled");
-                        $(e.ele).closest('.clearfix').find('.count_control_input').addClass("disabled");
-                    }
-                }
-            })
-
-            ee.on("ticketPlus",function(e){
-                var sumTicketCount = $('.inline_txt .count').text()*1;
-                sumTicketCount += 1;
-                $('.inline_txt .count').text(sumTicketCount);
-
-                var curTicektCount = $(e.ele).closest('.clearfix').find('.count_control_input').val()*1;
-                $(e.ele).closest('.clearfix').find('.count_control_input').val(curTicektCount+1);
-            })
-
-            ee.on("ticketMinus",function(e){
-                var curTicektCount = $(e.ele).closest('.clearfix').find('.count_control_input').val()*1;
-                var sumTicketCount = $('.inline_txt .count').text()*1;
-
-                if(curTicektCount != 0){
-                    $(e.ele).closest('.clearfix').find('.count_control_input').val(curTicektCount-1);
-
-                    if(sumTicketCount !== 0 ){
-                        sumTicketCount -= 1;
-                        $('.inline_txt .count').text(sumTicketCount);
-                    }
-                }
-            })
-
-            $(document).on('click','.ico_plus3',function (){
-                ee.pricePlus(this);
-                ee.ticketPlus(this);
-            })
-
-            $(document).on('click','.ico_minus3',function (){
-                ee.priceMinus(this);
-                ee.ticketMinus(this);
-            })
         }
     })();
 
     var ReserverInfo = (function (){
 
-        var ee = new Observer();
+        var ee = new ValidateReserve();
 
         ee.on("validate",function(){
              var name = isName();
@@ -190,7 +187,6 @@
             } else{
                 return false;
             }
-
         }
 
         function sumValid(isName, isTel, isEmail, isChk){
@@ -217,17 +213,12 @@
     var GoPage = (function (){
         $(document).on('click','.bk_btn',function(){
             if ($(this).closest('.bk_btn_wrap').hasClass("disable") === true) {
-                console.log("cat't go")
-                // {url : './top/'+id, type : "GET"}
                 var ajaxCallback = AjaxProm({url : './top/'+id, type : "GET"});
                 ajaxCallback.then(function(data){
                         console.log(data);
                 });
 
             } else {
-                console.log("can go")
-
-                //general_ticket_count, youth_ticket_count, child_ticket_count
                 $ticketElement = $(".ticket_body .count_control_input");
                 var tickets = [];
                 for(var i = 0; i < $ticketElement.length; i++){
@@ -235,9 +226,11 @@
                 }
 
                 var ticketsSum = 0;
+
                 for(var i = 0; i < tickets.length; i++) {
                     ticketsSum += tickets[i];
                 }
+
                 if(ticketsSum === 0){
                     alert("티켓을 1개 이상 구매해야 합니다.");
                     $(".ticket_body").focus();
@@ -260,7 +253,6 @@
                 ajaxCallback.then(function(response, status){
                     location.href="/myreservation";
                 });
-                
             }
         });
     })();

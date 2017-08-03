@@ -12,7 +12,6 @@
 
     <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
-    <script type="text/javascript" src="/resources/lib/component.min.js"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eyic9Dq0EOsvUuWK7SHA&submodules=geocoder"></script>
 </head>
 
@@ -342,6 +341,6 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/resources/js/common.js"></script>
+<script type="text/javascript" src="/resources/lib/require.js"></script>
 <script type="text/javascript" src="/resources/js/details.js"></script>
 </html>

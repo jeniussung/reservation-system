@@ -13,8 +13,8 @@
 
   <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
   <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="/resources/lib/require.js"></script>
   <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-
 
   <script id="entry-template" type="text/x-handlebars-template">
     <li class="item" data-product={{id}}>
