@@ -19,12 +19,6 @@
         var cancelTap
 
         var TYPE_NUM = 4;
-        var CANCEL_BTN_TXT = '취소';
-        var TAP_TYPE = {
-            al : '전체',
-            exp : '이용예정',
-            fin : "이용완료",
-            cancel : "취소·환불"};
         var TAP_TOGGLE = {
             "전체" : [true,true,true,true],
             "이용예정" : [true,true,false,false],
@@ -64,9 +58,9 @@
                 var start = item.displayStart.split(' ');
                 var end = item.displayEnd.split(' ');
                 var date = start[0] + ' ~ ' + end[0];
-                var generalTicketCount = item.generalTicketCount;
-                var youthTicketCount = item.youthTicketCount;
-                var childTicketCount = item.childTicketCount;
+                var generalTicketCount = isTicketNull(item.generalTicketCount);
+                var youthTicketCount = isTicketNull(item.youthTicketCount);
+                var childTicketCount = isTicketNull(item.childTicketCount);
                 var totalCount = generalTicketCount + youthTicketCount + childTicketCount;
 
             	addArticle(TYPE_ROOT[reservationType],TEMPLATE_TYPE[reservationType],
@@ -98,6 +92,15 @@
 
         bindLayerBtn('.popup_booking_wrapper');
 
+        function isTicketNull(ticket){
+            if(ticket !== null)
+            {
+                return ticket;
+            } else{
+                return 0;
+            }
+        }
+
         function bindClickingTab(){
             $('.summary_board li').on('click',function(){
                 $('.summary_board li').find('.link_summary_board').removeClass('on');
@@ -119,14 +122,7 @@
             $('.summary_board .figure').eq(3).text(option.cancel);
         }
 
-        function removeCard(type)
-        {
-            $('.card').eq(0).find('.card_item').remove();
-            $('.card').eq(0).remove();
-        }
-
         function addArticle(root,template,option){
-            // console.log(root);
             var context = {
                 productId : option.productId,
                 no : option.no,
@@ -142,14 +138,11 @@
 
             root.show();
 
-            var $element_ul = root;
-
             root.after($(html));
         }
 
         function clickCancelBtn(){
             $('.card_item .booking_cancel').on('click',function(){
-                var btnTxt = $(this).find('button').text();
                 var id = $(this).closest('.card_detail').find('.booking_number span').text();
                 var name = $(this).closest('.card_detail').find('.tit').text();
                 var date = $(this).closest('.card_detail').find('ul li .item_dsc').eq(0).text();
@@ -193,8 +186,11 @@
             $(layer).find('.btn_green').on('click',function(){
                 var ajaxCallback = AjaxProm({url : './api/myreservations', type : "PUT", data : cancelJsonData});
                 ajaxCallback.then(function(data){
+                    cancelTargetDiv.find('.booking_cancel').css("display","none");
+
                     var clone = cancelTargetDiv.clone();
                     cancelTargetDiv.remove();
+
                     $('.card').eq(3).find('.link_booking_details').eq(0).after(clone);
 
                     tapCount[cancelTap]--;

@@ -11,7 +11,7 @@
     <link href="../resources/css/style.css" rel="stylesheet">
 
     <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
-    <%-- <script type="text/javascript" src="/resources/lib/jquery.min.js"></script> --%>
+     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/lib/component.min.js"></script>
 
 <script id="card-template" type="text/x-handlebars-template">

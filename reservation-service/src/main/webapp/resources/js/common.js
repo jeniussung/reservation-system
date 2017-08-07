@@ -173,7 +173,6 @@ var Flicking = (function () {
     Flicking.prototype.constructor = Flicking;
 
     Flicking.prototype.flickingStart = function (e) {
-        console.log(this.num);
         if (e.type === 'touchstart' && e.touches.length === 1) {
             this.touch_start_x = e.touches[0].pageX;
             this.touch_start_y = e.touches[0].pageY;
@@ -329,7 +328,6 @@ var Flicking = (function () {
         this.touch_start_y = 0;
         this.touch_start_x = 0;
         this.save_x = 0;
-        this.save_y = 0;
         this.move_dx = 0;
         this.move_sum = 0;
     }

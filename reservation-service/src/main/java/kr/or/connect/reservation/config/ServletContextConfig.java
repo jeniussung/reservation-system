@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.config;
 
 import kr.or.connect.reservation.argument.AuthUserWebArgumentResolver;
+import kr.or.connect.reservation.interceptor.LoggingHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import kr.or.connect.reservation.interceptor.SessionInterceptor;
 
 import java.util.List;
-
-
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:/application.properties")
@@ -43,6 +42,8 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     public SessionInterceptor sessionInterceptor() {
         return new SessionInterceptor();
     }
+    @Bean
+    public LoggingHandlerInterceptor loggingHandlerInterceptor() {return new LoggingHandlerInterceptor(); }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
@@ -53,6 +54,7 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         // TODO Auto-generated method stub
         registry.addInterceptor(sessionInterceptor()).addPathPatterns("/myreservation").addPathPatterns("/reserve/*");
+//        registry.addInterceptor(loggingHandlerInterceptor()).addPathPatterns("/*");
         super.addInterceptors(registry);
     }
 

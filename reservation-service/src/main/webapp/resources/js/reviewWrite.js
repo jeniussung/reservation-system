@@ -1,161 +1,161 @@
-//별점 컴포넌트
-var Rating = extend(eg.Component,{
-    ratingScore : 0,
-	totalStarCount : 0,
-    $eleRoot : '',
-    $eleStar : '',
+	//별점 컴포넌트
+	var Rating = extend(eg.Component,{
+		ratingScore : 0,
+		totalStarCount : 0,
+		$eleRoot : '',
+		$eleStar : '',
 
-    init : function($eleRoot){
-	            this.$eleRoot = $eleRoot;
-				this.$eleStar = $eleRoot.find(".rating_rdo").not(".first_star");
-				this.totalStarCount = this.$eleStar.length;
+		init : function($eleRoot){
+					this.$eleRoot = $eleRoot;
+					this.$eleStar = $eleRoot.find(".rating_rdo").not(".first_star");
+					this.totalStarCount = this.$eleStar.length;
 
-				var curThis = this;
+					var curThis = this;
 
-	            this.$eleRoot.on('click','.rating_rdo',function(e){
-					curThis.ratingScore = this.value;
-					curThis.$eleStar.prop("checked", false);
-					curThis.$eleStar.slice(0,curThis.ratingScore).prop("checked", true);
-	                curThis.trigger("change",{ratingScore : curThis.ratingScore});
-	        	});
-        	},
+					this.$eleRoot.on('click','.rating_rdo',function(e){
+						curThis.ratingScore = this.value;
+						curThis.$eleStar.prop("checked", false);
+						curThis.$eleStar.slice(0,curThis.ratingScore).prop("checked", true);
+						curThis.trigger("change",{ratingScore : curThis.ratingScore});
+					});
+				},
 
-    score : function(){
-		return this.ratingScore;
-    }
-});
-
-//review 입력
-(function controlReviewTxt(){
-	$(".review_contents").on("click", function(){
-		$(this).find(".review_write_info").hide();
-		$("textarea").show().focus();
-	});
-	$("textarea").on("focusout", function(){
-		if($(this).val() === ""){
-			$(".review_contents .review_write_info").show();
+		score : function(){
+			return this.ratingScore;
 		}
 	});
-})();
 
-var uploadFileList = [];
-//upload 리뷰 사진 미리보기
-(function previewReviewImg(){
-	var $eleFile = $("#reviewImageFileOpenInput");
+	//review 입력
+	(function controlReviewTxt(){
+		$(".review_contents").on("click", function(){
+			$(this).find(".review_write_info").hide();
+			$("textarea").show().focus();
+		});
+		$("textarea").on("focusout", function(){
+			if($(this).val() === ""){
+				$(".review_contents .review_write_info").show();
+			}
+		});
+	})();
 
-	$(".lst_thumb").on("click",".ico_del",function(){
-		var deleteFileIndex = $(".ico_del").index(this)-1;
-		uploadFileList.splice(deleteFileIndex,1);
-		this.closest(".item").remove();
-	});
+	var uploadFileList = [];
+	//upload 리뷰 사진 미리보기
+	(function previewReviewImg(){
+		var $eleFile = $("#reviewImageFileOpenInput");
 
-	$eleFile.change(function(e){
-        var fileList = this.files;
-        var numFiles = fileList.length;
-        var curNumFiles = $('.item').length;
+		$(".lst_thumb").on("click",".ico_del",function(){
+			var deleteFileIndex = $(".ico_del").index(this)-1;
+			uploadFileList.splice(deleteFileIndex,1);
+			this.closest(".item").remove();
+		});
 
-        if(numFiles > 5 || curNumFiles === 6){
-            alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
-        }
+		$eleFile.change(function(e){
+			var fileList = this.files;
+			var numFiles = fileList.length;
+			var curNumFiles = $('.item').length;
 
-        for (var i = 0; i < numFiles; i++) {
+			if(numFiles > 5 || curNumFiles === 6){
+				alert("이미지는 최대 5장까지 업로드할 수 있습니다.");
+			}
 
-            if( curNumFiles === 6){
-                return;
-            }
+			for (var i = 0; i < numFiles; i++) {
 
-	        var file = this.files[i];
-	        var imageTypeJpeg = /^image\/jpeg/;
-            var imageTypePng = /^image\/png/;
+				if( curNumFiles === 6){
+					return;
+				}
 
-            if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
-                alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
-	            continue;
-        	}
+				var file = this.files[i];
+				var imageTypeJpeg = /^image\/jpeg/;
+				var imageTypePng = /^image\/png/;
 
-            if (file.size > 1048576) {
-                alert("파일 사이즈는 1mb보다 작아야 합니다.")
-	            continue;
-        	}
+				if (!imageTypeJpeg.test(file.type) && !imageTypePng.test(file.type)) {
+					alert("이미지 확장자는 .png, .jpeg만 가능합니다.")
+					continue;
+				}
 
-            uploadFileList.push(file);
+				if (file.size > 1048576) {
+					alert("파일 사이즈는 1mb보다 작아야 합니다.")
+					continue;
+				}
 
-	        var img = new Image();
-	        img.width = 130;
-	        img.alt = "";
-	        img.file = file;
-	        $(img).addClass("item_thumb");
+				uploadFileList.push(file);
 
-	        var reader = new FileReader();
+				var img = new Image();
+				img.width = 130;
+				img.alt = "";
+				img.file = file;
+				$(img).addClass("item_thumb");
 
-	        reader.onload = (function(aImg) { return function(e) {
-	            aImg.src = e.target.result;
-	            var html = $(".item").clone();
-	            html.find("a").after(aImg);
-	            $(html.get(0)).appendTo(".lst_thumb");
-	        };})(img);
+				var reader = new FileReader();
 
-	        reader.readAsDataURL(file);
+				reader.onload = (function(aImg) { return function(e) {
+					aImg.src = e.target.result;
+					var html = $(".item").clone();
+					html.find("a").after(aImg);
+					$(html.get(0)).appendTo(".lst_thumb");
+				};})(img);
 
-            curNumFiles++;
-      	}
-	});
-})();
+				reader.readAsDataURL(file);
 
-//리뷰 등록
-function writeReview(){
-	var formData = new FormData();
-	var score = $(".first_star").val();
-	var comment = $("textarea").val();
+				curNumFiles++;
+			}
+		});
+	})();
 
-	if(comment === ""){
-		alert("리뷰 내용을 확인해 주세요.");
-		$(".review_contents").focus();
-		return ;
-	}
+	//리뷰 등록
+	function writeReview(){
+		var formData = new FormData();
+		var score = $(".first_star").val();
+		var comment = $("textarea").val();
 
-	var userId = $(".write_act").data("userid");
+		if(comment === ""){
+			alert("리뷰 내용을 확인해 주세요.");
+			$(".review_contents").focus();
+			return ;
+		}
 
-	if(userId === ""){
-		alert("로그인 후에 리뷰를 등록 하실 수 있습니다.");
-		return;
-	}
+		var userId = $(".write_act").data("userid");
 
-	var review = JSON.stringify({
-		"productId" : $(location).attr('pathname').slice(-1),
-		"userId" : userId,
-		"score" : score,
-		"comment" : comment
-	});
+		if(userId === ""){
+			alert("로그인 후에 리뷰를 등록 하실 수 있습니다.");
+			return;
+		}
 
-	formData.append("review", review);
-	for(var i = 0; i<uploadFileList.length; i++){
-		formData.append("files", uploadFileList[i]);
-	}
+		var review = JSON.stringify({
+			"productId" : $(location).attr('pathname').slice(-1),
+			"userId" : userId,
+			"score" : score,
+			"comment" : comment
+		});
 
-	var request = new XMLHttpRequest();
-	request.open("POST", "/api/reviews");
+		formData.append("review", review);
+		for(var i = 0; i<uploadFileList.length; i++){
+			formData.append("files", uploadFileList[i]);
+		}
 
-	request.onload = function(){
-		if(request.readyState === 4){
-			if(request.status === 200){
-				console.log("insert success");
-			} else{
-				console.log("insert review fail");
-				location.href="/reviewWrite/"+$(location).attr('pathname').slice(-1);
+		var request = new XMLHttpRequest();
+		request.open("POST", "/api/reviews");
+
+		request.onload = function(){
+			if(request.readyState === 4){
+				if(request.status === 200){
+					console.log("insert success");
+				} else{
+					console.log("insert review fail");
+					location.href="/reviewWrite/"+$(location).attr('pathname').slice(-1);
+				}
 			}
 		}
+		request.send(formData);
 	}
-	request.send(formData);
-}
 
-$(function(){
-    var rating = new Rating($(".rating"));
+	$(function(){
+		var rating = new Rating($(".rating"));
 
-	rating.on('change',function(e){
-		$(".rating").find(".star_rank").text(e.ratingScore);
-		$(".rating").find(".first_star").val(e.ratingScore);
+		rating.on('change',function(e){
+			$(".rating").find(".star_rank").text(e.ratingScore);
+			$(".rating").find(".first_star").val(e.ratingScore);
+		});
+
+		$(".box_bk_btn").on('click', writeReview);
 	});
-
-	$(".box_bk_btn").on('click', writeReview);
-});

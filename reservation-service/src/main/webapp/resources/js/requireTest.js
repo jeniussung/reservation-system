@@ -2,7 +2,7 @@ define([
     'lib/defineTest',    
     'lib/component.min',
     'lib/eg.pkgd.min'
-], function (defineTest) {
+], function () {
 
     return {
         testLog : function($aa){
@@ -11,6 +11,36 @@ define([
 
         testAlert : function(){
             alert("hi");
+        },
+
+        getProductId : function () {
+
+            var querystring = new Array;
+            var returnValue;
+
+            return {
+                getQueryString : function getQueryString(pName,query)
+                {
+                    var qS = query.toString().split ('?')[1];
+                    if (!qS) return false;
+                    qS = qS. split ('&');
+                    for (var i = 0 ; i < qS.length; i++)
+                    {
+                        var o = qS[i].split('=');
+                        if (pName == o[0])
+                        {
+                            returnValue = o[1]
+                        }
+                    }
+                    return returnValue;
+                },
+
+                getProductId: function getProductId() {
+                    querystring = location.toString().split('/')
+                    returnValue = querystring[querystring.length - 1];
+                    return returnValue;
+                }
+            }
         },
 
         flicking : function () {
@@ -34,7 +64,6 @@ define([
             Flicking.prototype.constructor = Flicking;
 
             Flicking.prototype.flickingStart = function (e) {
-                console.log(this.num);
                 if (e.type === 'touchstart' && e.touches.length === 1) {
                     this.touch_start_x = e.touches[0].pageX;
                     this.touch_start_y = e.touches[0].pageY;
