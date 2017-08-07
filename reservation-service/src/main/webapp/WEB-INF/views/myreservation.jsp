@@ -11,11 +11,11 @@
     <link href="../resources/css/style.css" rel="stylesheet">
 
     <script type="text/javascript" src="/resources/lib/handlebars.min.js"></script>
-    <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
+     <script type="text/javascript" src="/resources/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/lib/component.min.js"></script>
 
 <script id="card-template" type="text/x-handlebars-template">
-    <article class="card_item">
+    <article class="card_item" data-productId="{{productId}}">
         <a href="#" class="link_booking_details">
             <div class="card_body">
                 <div class="left"></div>
@@ -41,7 +41,7 @@
                                 </em>
                             </li>
                             <li class="item">
-                                <span class="item_tit">업체</span>
+                                <span class="item_tit">장소</span>
                                 <em class="item_dsc">
                                     {{company}}
                                 </em>
@@ -73,7 +73,7 @@
 </script>
 
 <script id="canceledCard-template" type="text/x-handlebars-template">
-    <article class="card_item">
+    <article class="card_item" data-productId="{{productId}}">
         <a href="#" class="link_booking_details">
             <div class="card_body">
                 <div class="left"></div>
@@ -99,7 +99,7 @@
                                 </em>
                             </li>
                             <li class="item">
-                                <span class="item_tit">업체</span>
+                                <span class="item_tit">장소</span>
                                 <em class="item_dsc">
                                     {{company}}
                                 </em>
@@ -148,7 +148,7 @@
                                 <em class="item_dsc">{{product}}</em>
                             </li>
                             <li class="item">
-                                <span class="item_tit">업체</span>
+                                <span class="item_tit">장소</span>
                                 <em class="item_dsc">{{company}}</em>
                             </li>
                         </ul>
@@ -160,7 +160,7 @@
                             </em>
                         </div>
                     <div class="booking_cancel">
-                        <button class="btn"><span>예매자 리뷰 남기기</span></button>
+                        <button class="btn" data-productid="{{productId}}"><span>예매자 리뷰 남기기</span></button>
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
 	                                <div class="right"></div>
 	                            </div>
 							</div>
-                            <article class="card_item">
+                            <%-- <article class="card_item">
 	                            <a href="#" class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
@@ -345,7 +345,7 @@
 	                            </a>
 								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 							</article>
-                        </li>
+                        </li> --%>
                         <li class="card confirmed">
                             <div class="link_booking_details">
                                 <div class="card_header">
@@ -358,7 +358,7 @@
                                     <div class="right"></div>
                                 </div>
 							</div>
-							<article class="card_item">
+							<%-- <article class="card_item">
 								<a href="#" class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
@@ -472,9 +472,9 @@
 	                                </div>
 	                            </a>
 								<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
-							</article>
+							</article> --%>
                         </li>
-                        <li class="card used">
+                        <li class="card used finished">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -486,7 +486,7 @@
                                     <div class="right"></div>
                                 </div>
 							</div>
-							<article class="card_item">
+							<%-- <article class="card_item">
 								<a href="#" class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
@@ -592,9 +592,9 @@
 										<div class="right"></div>
 									</div>
 								</a>
-							</article>
+							</article> --%>
                         </li>
-                        <li class="card used">
+                        <li class="card used canceled">
                             <div class="link_booking_details">
                                 <div class="card_header">
                                     <div class="left"></div>
@@ -606,7 +606,7 @@
                                     <div class="right"></div>
                                 </div>
 							</div>
-							<article class="card_item">
+							<%-- <article class="card_item">
 								<a href="#" class="link_booking_details">
 	                                <div class="card_body">
 	                                    <div class="left"></div>
@@ -709,7 +709,7 @@
 	                                    <div class="right"></div>
 	                                </div>
 	                            </a>
-							</article>
+							</article> --%>
                         </li>
                     </ul>
                 </div>
