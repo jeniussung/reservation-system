@@ -1,16 +1,15 @@
-requirejs.config( {
-       baseUrl: '/resources'
-   });
-
 (function () {
+
     var id;
 
     var BOTTOM_TAP = ['상세정보','예매하기']
+
     var GetProductId = (function () {
         var querystring = [];
+        var qS;
         var returnValue;
         var id;
-
+        
         return {
             getProductId: function getProductId() {
                 querystring = document.location.toString().split('/')
@@ -24,32 +23,35 @@ requirejs.config( {
     id = GetProductId.getProductId();
 
     var SlideImage = (function () {
+        var slide_width = $('.visual_img > li').outerWidth();
         var slide_count = $('.visual_img > li').length;
+        var cur_dist = slide_width;
+        var el = $('.visual_img').get(0);
+        var curImgnum = 1;
+        var num = 1;
+        var touch_start_y = 0;
+        var touch_start_x = 0;
+        var save_x = 0;
+        var save_y = 0;
+        var move_dx = 0;
+        var move_sum = 0;
+        var curLiPosition;
 
         /*
             플리킹 컴포넌트 구현 적용
-            RequireJs 동적 로딩
         */
+        var ee = new Flicking($('.visual_img'));
 
-        require([
-            'js/requireTest'
-        ], function (requireTest) {
+        ee.init($('.visual_img').get(0), 'topFlickingEnd');
 
-            var Flicking = requireTest.flicking();
+        ee.on('topFlickingEnd', function (curNum) {
+            $('.figure_pagination > span:first').text(curNum.curDisplayNum);
 
-            var ee = new Flicking($('.visual_img'));
-
-            ee.init($('.visual_img').get(0), 'topFlickingEnd');
-
-            ee.on('topFlickingEnd', function (curNum) {
-                $('.figure_pagination > span:first').text(curNum.curDisplayNum);
-
-                if (curNum.curDisplayNum === 1) {
-                    $('.visual_txt_inn').eq(0).css('display', '')
-                } else {
-                    $('.visual_txt_inn').css('display', 'none');
-                }
-            });
+            if (curNum.curDisplayNum === 1) {
+                $('.visual_txt_inn').eq(0).css('display', '')
+            } else {
+                $('.visual_txt_inn').css('display', 'none');
+            }
         });
 
         return {
@@ -350,6 +352,8 @@ requirejs.config( {
     })();
 
     var ShowDetailImage = (function () {
+
+        var commentId = $(this).closest('li').data('comment');
         var soruce = $("#commentImage-template").html();
         var template = Handlebars.compile(soruce);
         var cur_num = 1;
@@ -365,8 +369,8 @@ requirejs.config( {
         })
 
         $(document).on('click', '.btn-r .cbtn', function () {
+
             isOpen = 0;
-            cur_num = 1;
             ee.flush();
             $('.detail_img li').remove();
             $('#photoviwer').fadeOut();
@@ -449,18 +453,12 @@ requirejs.config( {
             플리킹 컴포넌트 구현 적용
         */
         function addFlickingComponent() {
-            require([
-                'js/requireTest'
-            ], function (requireTest) {
-                var ele = $('.detail_img').get(0);
+            var ele = $('.detail_img').get(0);
+            ee = new Flicking($('.detail_img'));
 
-                var Flicking = requireTest.flicking();
-
-                ee = new Flicking($('.detail_img'));
-
-                ee.init(ele);
-            });
+            ee.init(ele);
         }
+
     })();
 
     var DetailBottomContent = (function () {

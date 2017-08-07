@@ -49,11 +49,11 @@ public class ReviewController {
         return reviewId;
     }
 
-    @GetMapping("/{id}")
-    public HashMap<String,Object> getUserComments(@PathVariable Integer id)
+    @GetMapping("/{id}/{start}")
+    public HashMap<String,Object> getUserComments(@PathVariable Integer id, @PathVariable Integer start)
     {
         HashMap<String,Object> CommentInfo = new HashMap<>();
-        CommentInfo.put("CommentInfo",reviewService.getUserComment(id));
+        CommentInfo.put("CommentInfo",reviewService.getUserComment(id, start));
         CommentInfo.put("CommentCountInfo",reviewService.getReviewCountInfo(id));
         return CommentInfo;
     }

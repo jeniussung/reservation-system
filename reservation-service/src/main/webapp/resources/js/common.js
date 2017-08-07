@@ -1,18 +1,3 @@
-$.fn.goBefore = function (width) {
-    this.animate({"left": "-=" + width + "px"}, "slow");
-
-}
-
-$.fn.addCommentLi = function (source, context) {
-    template = Handlebars.compile(soruce);
-    var html = template(context);
-
-    this.show();
-    var $element_ul = parent.this;
-
-    $(html).appendTo($element_ul);
-}
-
 function extend(superClass, def) {
    var extendClass = function extendClass() {
       // Call a parent constructor
@@ -47,8 +32,7 @@ var GetProductId = (function () {
         return {
             getQueryString : function getQueryString(pName,query)
             {
-                // String (document.location)
-                qS = query.toString().split ('?')[1];
+                var qS = query.toString().split ('?')[1];
                 if (!qS) return false;
                 qS = qS. split ('&');
                 for (var i = 0 ; i < qS.length; i++)
@@ -95,15 +79,15 @@ var AjaxProm = (function (option) {
     });
 });
 
-var putParamAjax = (function (optoin) {
-    return $.ajax({
-        url: option.url,
-        type: "PUT",
-        contentType: "application/json; charset=UTF-8",
-        dataType: "json",
-        data: JSON.stringify({"name": name, "id": id})
-    });
-})
+// var putParamAjax = (function (optoin) {
+//     return $.ajax({
+//         url: option.url,
+//         type: "PUT",
+//         contentType: "application/json; charset=UTF-8",
+//         dataType: "json",
+//         data: JSON.stringify({"name": name, "id": id})
+//     });
+// })
 
 var addCommaPrice = (function () {
     return function (price) {
@@ -153,43 +137,27 @@ var removeCommaPrice = (function () {
     }
 })();
 
-var Observer = (function () {
+var ValidateReserve = (function () {
 
-    function Observer() {
+    function ValidateReserve() {
     };
 
-    Observer.prototype = new eg.Component();
-    Observer.prototype.constructor = Observer;
+    ValidateReserve.prototype = new eg.Component();
+    ValidateReserve.prototype.constructor = ValidateReserve;
 
-    Observer.prototype.pricePlus = function (ele) {
-        this.trigger("pricePlus", {ele: ele});
-    }
-
-    Observer.prototype.priceMinus = function (ele) {
-        this.trigger("priceMinus", {ele: ele});
-    }
-
-    Observer.prototype.ticketPlus = function (ele) {
-        this.trigger("ticketPlus", {ele: ele});
-    }
-
-    Observer.prototype.ticketMinus = function (ele) {
-        this.trigger("ticketMinus", {ele: ele});
-    }
-
-    Observer.prototype.validate = function () {
+    ValidateReserve.prototype.validate = function () {
         this.trigger("validate");
     }
 
-    return Observer;
+    return ValidateReserve;
 })();
 
-var Flicking = (function () {
 
+var Flicking = (function () {
     function Flicking(ele) {
-        this.ele = ele;
+        this.ele = ele.find('li');
         this.num = 1;
-        this.slide_width = $(this.ele).outerWidth();
+        this.slide_width = this.ele.outerWidth();
         this.slide_count = this.ele.length;
         this.touch_start_y = 0;
         this.touch_start_x = 0;
@@ -209,6 +177,7 @@ var Flicking = (function () {
             this.touch_start_x = e.touches[0].pageX;
             this.touch_start_y = e.touches[0].pageY;
         }
+        e.preventDefault();
     }
 
     Flicking.prototype.flickingMove = function (e) {
@@ -352,6 +321,16 @@ var Flicking = (function () {
             this.trigger(topFlickingEnd, {curDisplayNum: this.num});
         }.bind(this), false);
     };
+
+    Flicking.prototype.flush = function(){
+        this.ele.closest("ul").animate({"left": "0px"}, "fast");
+        this.num = 1;
+        this.touch_start_y = 0;
+        this.touch_start_x = 0;
+        this.save_x = 0;
+        this.move_dx = 0;
+        this.move_sum = 0;
+    }
 
     return Flicking;
 })();

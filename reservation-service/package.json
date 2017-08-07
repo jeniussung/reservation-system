@@ -18,7 +18,12 @@
   "homepage": "https://github.com/jeniussung/reservation-system#readme",
   "dependencies": {
     "@egjs/component": "^2.0.0-rc",
+    "gulp-eslint": "^4.0.0",
+    "gulp-if": "^2.0.2",
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }

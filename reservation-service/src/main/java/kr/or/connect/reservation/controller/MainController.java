@@ -5,8 +5,10 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.connect.reservation.annotation.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -138,6 +140,16 @@ public class MainController {
     public String getreviewWrite(HttpServletRequest request) {
 
         return "reviewWrite";
+    }
+
+    @GetMapping("argument")	// argumentResorver test
+    public String argument(@AuthUser String value) {
+
+        System.out.println("----------------------------------------------------------");
+        System.out.println("ArgumentResolver에서 넘긴 이름 : " + value);
+        System.out.println("----------------------------------------------------------");
+
+        return "mainpage";
     }
 
 
