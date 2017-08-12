@@ -6,3 +6,4 @@ target
 *.iml
 /.metadata/
 node_modules/
+public/

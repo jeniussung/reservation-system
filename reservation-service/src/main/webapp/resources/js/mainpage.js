@@ -18,125 +18,125 @@
         getList();
         getMorelistAll(0);
 
-            $(document).on('click',".nxt_e" ,function() {
+        $(document).on('click',".nxt_e" ,function() {
 
-              if($( ".visual_img").is(":animated"))
-              return false;
+          if($( ".visual_img").is(":animated"))
+          return false;
 
-              clearInterval(set_interval);
-              clearTimeout(set_time_out);
-              set_interval = null;
-              set_time_out = null;
+          clearInterval(set_interval);
+          clearTimeout(set_time_out);
+          set_interval = null;
+          set_time_out = null;
 
-              set_time_out = setTimeout(goInterval,4000);
+          set_time_out = setTimeout(goInterval,4000);
 
-                 if(num === slide_count-1)
-                 {
-                        $( ".visual_img" ).css({ "left": "+="+(slide_count-2)*slide_width+"px" });
-                        num=1;
-                 }
+             if(num === slide_count-1)
+             {
+                    $( ".visual_img" ).css({ "left": "+="+(slide_count-2)*slide_width+"px" });
+                    num=1;
+             }
 
-                 if(num!=slide_count)
-                 {
-                   $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "normal" );
-                  num++;
+             if(num!=slide_count)
+             {
+               $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "normal" );
+              num++;
 
-                 }
+             }
 
-              });
+          });
 
-            $(document).on('click', ".prev_e" ,function() {
+        $(document).on('click', ".prev_e" ,function() {
 
-              if($( ".visual_img").is(":animated"))
-              return false;
+          if($( ".visual_img").is(":animated"))
+          return false;
 
-              clearInterval(set_interval);
-              clearTimeout(set_time_out);
-              set_interval = null;
-              set_time_out = null;
+          clearInterval(set_interval);
+          clearTimeout(set_time_out);
+          set_interval = null;
+          set_time_out = null;
 
-              set_time_out = setTimeout(goInterval,4000);
+          set_time_out = setTimeout(goInterval,4000);
 
-                if(num === 1)
-                {
-                     $( ".visual_img" ).css({ "left": "-="+(slide_count-2)*slide_width+"px" });
-                     num=slide_count-1;
+            if(num === 1)
+            {
+                 $( ".visual_img" ).css({ "left": "-="+(slide_count-2)*slide_width+"px" });
+                 num=slide_count-1;
+            }
+
+            if(num!=1)
+            {
+                 $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "normal" );
+
+                 num--;
+            }
+          });
+
+         $(document).on('mouseenter', ".movebtn" ,function() {
+
+               if(!auto) return false;
+
+               clearInterval(set_interval);
+               set_interval = null;
+               auto = false;
+
+                if(set_time_out === null){
+                 set_time_out = setTimeout(goInterval,4000);
                 }
 
-                if(num!=1)
-                {
-                     $( ".visual_img" ).animate({ "left": "+="+slide_width+"px" }, "normal" );
+           });
 
-                     num--;
+            $(document).on('click','.more',function(){
+
+                if(cat_num === 0){
+
+                    getMorelistAll(cur_display_num);
+                }else{
+
+                    getMorelistCategory(cur_display_num,cat_num);
                 }
-              });
+            });
 
-             $(document).on('mouseenter', ".movebtn" ,function() {
+          function goInterval(){
 
-                   if(!auto) return false;
+            clearTimeout(set_time_out);
+            set_time_out = null;
+            set_interval = setInterval(autoRightMove, 2000);
+            auto = true;
+          }
 
-                   clearInterval(set_interval);
-                   set_interval = null;
-                   auto = false;
+          function autoRightMove(){
 
-                    if(set_time_out === null){
-                     set_time_out = setTimeout(goInterval,4000);
-                    }
+            if($( ".visual_img").is(":animated"))
+                return false;
 
-               });
-
-              function goInterval(){
-
-                clearTimeout(set_time_out);
-                set_time_out = null;
-                set_interval = setInterval(autoRightMove, 2000);
-                auto = true;
+              if(num === slide_count-1)
+              {
+                     $( ".visual_img" ).css({ "left": "+="+(slide_count-2)*slide_width+"px" });
+                     num=1;
               }
 
-              function autoRightMove(){
+              if(num!=slide_count)
+              {
+                $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
+               num++;
 
-                if($( ".visual_img").is(":animated"))
-                    return false;
-
-                  if(num === slide_count-1)
-                  {
-                         $( ".visual_img" ).css({ "left": "+="+(slide_count-2)*slide_width+"px" });
-                         num=1;
-                  }
-
-                  if(num!=slide_count)
-                  {
-                    $( ".visual_img" ).animate({ "left": "-="+slide_width+"px" }, "slow" );
-                   num++;
-
-                  }
               }
+          }
 
-               $(document).on('click','.more',function(){
+           $(function(){
+               $(window).scroll(function(){
+                   if ($(window).scrollTop() === $(document).height() - $(window).height()) {
 
-                 if(cat_num === 0){
+                       if(cat_num === 0){
 
-                   getMorelistAll(cur_display_num);
-                 }else{
+                         getMorelistAll(cur_display_num);
+                       }else{
 
-                   getMorelistCategory(cur_display_num,cat_num);
-                 }
-               });
-
-               $(function(){
-                   $(window).scroll(function(){
-                       if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-
-                           if(cat_num === 0){
-
-                             getMorelistAll(cur_display_num);
-                           }else{
-
-                             getMorelistCategory(cur_display_num,cat_num);
-                           }
+                         getMorelistCategory(cur_display_num,cat_num);
                        }
-                   });
+                   }
                });
+           });
 
 
         var goDetail = (function (){  // 디테일 페이지로 넘어가는 기능 모듈화

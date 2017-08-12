@@ -72,7 +72,6 @@
 </script>
 
 <body>
-
     <div id="container">
         <div class="header fade">
             <header class="header_tit">

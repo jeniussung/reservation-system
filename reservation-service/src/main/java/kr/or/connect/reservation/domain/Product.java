@@ -17,7 +17,7 @@ public class Product {
 	private String salesEnd;
 	private Integer salesFlag;
 	private String event;
+	private Integer fileId;
 	private String createDate;
 	private String modifyDate;
-	private Integer fileId;
 }

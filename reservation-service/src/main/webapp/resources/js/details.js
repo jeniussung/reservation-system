@@ -32,16 +32,16 @@ requirejs.config( {
         */
 
         require([
-            'js/requireTest'
-        ], function (requireTest) {
+            'js/requireFlicking'
+        ], function (requireFlicking) {
 
-            var Flicking = requireTest.flicking();
+            var Flicking = requireFlicking.flicking();
 
-            var ee = new Flicking($('.visual_img'));
+            var flickingModule = new Flicking($('.visual_img'));
 
-            ee.init($('.visual_img').get(0), 'topFlickingEnd');
+            flickingModule.init('topFlickingEnd');
 
-            ee.on('topFlickingEnd', function (curNum) {
+            flickingModule.on('topFlickingEnd', function (curNum) {
                 $('.figure_pagination > span:first').text(curNum.curDisplayNum);
 
                 if (curNum.curDisplayNum === 1) {
@@ -73,6 +73,8 @@ requirejs.config( {
         var currentMinute = now.getMinutes() > 9 ? now.getMinutes() : '0' + now.getMinutes();
         var currentSeconds = now.getSeconds() > 9 ? now.getSeconds() : '0' + now.getSeconds();
         var cur_time = chan_val + ' ' + currentHours + ':' + currentMinute + ':' + currentSeconds;
+
+        console.log(cur_time);
 
         return {
 
@@ -115,7 +117,7 @@ requirejs.config( {
 
                     changeBkBtn(data[0].saleFlag, data[0].salesEnd); // 예매 가능 여부 체크 후 예매하기 버튼 변경
 
-                    addEvent(data[0].event.replace(/\n/gi, '<br>')); // 이벤트 정보 삽입
+                    addEvent(data[0].event.replace(/\n/g, '<br>')); // 이벤트 정보 삽입
 
                     GetMap.showMap(data[0].placeStreet);
                     GetMap.setPlace(data[0].name, data[0].placeStreet, data[0].placeLot, data[0].placeName, data[0].tel);
@@ -254,7 +256,7 @@ requirejs.config( {
 
             $(html).appendTo($element_ul);
 
-            $('.review').eq(commentLiNum).html(comment.replace(/\n/gi, '<br>'));
+            $('.review').eq(commentLiNum).html(comment.replace(/\n/g, '<br>'));
 
             commentLiNum++
         }
@@ -356,7 +358,7 @@ requirejs.config( {
         var slide_width;
         var slide_count;
         var isOpen = 0;
-        var ee;
+        var flickingModule;
         $(document).on('click', '.thumb_area', function () {
 
             var commentId = $(this).closest('li').data('comment');
@@ -367,7 +369,7 @@ requirejs.config( {
         $(document).on('click', '.btn-r .cbtn', function () {
             isOpen = 0;
             cur_num = 1;
-            ee.flush();
+            flickingModule.flush();
             $('.detail_img li').remove();
             $('#photoviwer').fadeOut();
         })
@@ -450,15 +452,13 @@ requirejs.config( {
         */
         function addFlickingComponent() {
             require([
-                'js/requireTest'
-            ], function (requireTest) {
-                var ele = $('.detail_img').get(0);
+                'js/requireFlicking'
+            ], function (requireFlicking) {
+                var Flicking = requireFlicking.flicking();
 
-                var Flicking = requireTest.flicking();
+                flickingModule = new Flicking($('.detail_img'));
 
-                ee = new Flicking($('.detail_img'));
-
-                ee.init(ele);
+                flickingModule.init();
             });
         }
     })();
@@ -475,7 +475,7 @@ requirejs.config( {
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
                 success: function (data) {
-                    $('.detail_info_group > li > .in_dsc').text(data.content.replace(/\n/gi, '<br>'));
+                    $('.detail_info_group > li > .in_dsc').text(data.content.replace(/\n/g, '<br>'));
                 }
             });
         }
@@ -518,8 +518,6 @@ requirejs.config( {
             cur = $('.bk_btn > span').text();
 
             if (cur === BOTTOM_TAP[1]) {
-                console.log(cur);
-
                 document.location.href = url + id;
             } else {
                 console.log(cur);

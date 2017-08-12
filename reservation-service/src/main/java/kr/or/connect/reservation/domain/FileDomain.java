@@ -20,6 +20,4 @@ public class FileDomain {
     private Integer deleteFlag;
     private Date createDate;
     private Date modifyDate;
-
-
 }
