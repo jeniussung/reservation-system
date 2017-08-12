@@ -18,7 +18,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter  {
 		
 		if(session.getAttribute("user")!=null) {
 			
-			session.setAttribute("URL",request.getServletPath());
+//			session.setAttribute("URL",request.getServletPath());
 			
 			return true;
 			

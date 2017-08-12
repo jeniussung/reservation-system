@@ -31,10 +31,6 @@ public class FileServiceImpl implements FileService {
     @Value("${spring.resources.file-location}")
     private String baseDir;
 
-    public FileDomain getFileLocationById(Integer id) {
-        return fileDao.selectFileAddr(id);
-    }
-
     @Override
     public List<Integer> saveFiles(Integer userId, MultipartFile[] files) {
         List<Integer> createdFileIdList = new ArrayList<>();
@@ -78,6 +74,11 @@ public class FileServiceImpl implements FileService {
             }
         }
         return createdFileIdList;
+    }
+
+    @Override
+    public FileDomain getFileLocationById(Integer id) {
+        return fileDao.selectFileAddr(id);
     }
 }
 

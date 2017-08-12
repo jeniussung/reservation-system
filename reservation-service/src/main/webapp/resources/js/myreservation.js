@@ -58,9 +58,9 @@
                 var start = item.displayStart.split(' ');
                 var end = item.displayEnd.split(' ');
                 var date = start[0] + ' ~ ' + end[0];
-                var generalTicketCount = isTicketNull(item.generalTicketCount);
-                var youthTicketCount = isTicketNull(item.youthTicketCount);
-                var childTicketCount = isTicketNull(item.childTicketCount);
+                var generalTicketCount = getTicketCount(item.generalTicketCount);
+                var youthTicketCount = getTicketCount(item.youthTicketCount);
+                var childTicketCount = getTicketCount(item.childTicketCount);
                 var totalCount = generalTicketCount + youthTicketCount + childTicketCount;
 
             	addArticle(TYPE_ROOT[reservationType],TEMPLATE_TYPE[reservationType],
@@ -83,16 +83,16 @@
                 fin :tapCount[3],
                 cancel : tapCount[4]});
 
-            clickCancelBtn();
+            bindOnCancelBtn();
 
-            clickReviewWriteBtn();
+            bindOnClickReviewWriteBtn();
         });
 
         bindClickingTab();
 
         bindLayerBtn('.popup_booking_wrapper');
 
-        function isTicketNull(ticket){
+        function getTicketCount(ticket){
             if(ticket !== null)
             {
                 return ticket;
@@ -141,7 +141,7 @@
             root.after($(html));
         }
 
-        function clickCancelBtn(){
+        function bindOnCancelBtn(){
             $('.card_item .booking_cancel').on('click',function(){
                 var id = $(this).closest('.card_detail').find('.booking_number span').text();
                 var name = $(this).closest('.card_detail').find('.tit').text();
@@ -157,7 +157,7 @@
                     cancelJsonData = JSON.stringify({'id' : id, 'reservationType' : TYPE_NUM});
                     cancelTap = 2;
                     layerOpen('.popup_booking_wrapper',name,date);
-                }else{}
+                }
             });
         }
 
@@ -186,7 +186,8 @@
             $(layer).find('.btn_green').on('click',function(){
                 var ajaxCallback = AjaxProm({url : './api/myreservations', type : "PUT", data : cancelJsonData});
                 ajaxCallback.then(function(data){
-                    cancelTargetDiv.find('.booking_cancel').css("display","none");
+                    cancelTargetDiv.find('.booking_cancel').hide();
+                    // css("display","none");
 
                     var clone = cancelTargetDiv.clone();
                     cancelTargetDiv.remove();
@@ -207,12 +208,11 @@
             })
         }
 
-        function clickReviewWriteBtn(){
+        function bindOnClickReviewWriteBtn(){
             $('.finished article .btn').on('click',function(){
                 var productId = $(this).data("productid");
                 location.href = '/reviewWrite/'+productId;
             });
         }
-
     })();
 })();

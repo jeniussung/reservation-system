@@ -7,6 +7,7 @@ import kr.or.connect.reservation.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,10 @@ public class FileContorller {
 
     @GetMapping
     public ModelAndView fileForm() {
-        return new ModelAndView("files");
+        ModelAndView modelAndView = new ModelAndView("files");
+        modelAndView.addObject("a","abc");
+
+        return modelAndView;
     }
 
     @PostMapping

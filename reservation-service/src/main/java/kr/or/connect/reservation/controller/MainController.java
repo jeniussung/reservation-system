@@ -152,5 +152,11 @@ public class MainController {
         return "mainpage";
     }
 
+    @GetMapping("testmap")	//productId
+    public String testmap(HttpServletRequest request) {
+
+        return "testmap";
+    }
+
 
 }

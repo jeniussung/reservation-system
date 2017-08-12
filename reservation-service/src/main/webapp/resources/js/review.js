@@ -8,11 +8,10 @@ requirejs.config( {
         var template = Handlebars.compile(soruce);
         var GetId = GetProductId();
         var id= GetId.getQueryString("id",document.location);
-
-        var i = 0;
         var curLiNum = 0
+        var i = 0;
 
-        getCommentLi(id, curLiNum);
+        getCommentLi();
 
         function getCommentLi(){
             var ajaxCallback = AjaxProm({url : "/api/reviews/" + id +'/'+ curLiNum, type : "GET"});
@@ -55,13 +54,13 @@ requirejs.config( {
             var $element_ul = $('.list_short_review');
             $(html).appendTo($element_ul);
 
-            $('.review').eq(i).html(option.comment.replace(/\n/gi, '<br>'));
+            $('.review').eq(i).html(option.comment.replace(/\n/g, '<br>'));
             i++
         }
 
         $(window).scroll(function(){
             if ($(window).scrollTop() === $(document).height() - $(window).height()) {
-                getCommentLi(id, 10);
+                getCommentLi();
             }
         });
     })();
@@ -73,7 +72,7 @@ requirejs.config( {
         var slide_width;
         var slide_count;
         var isOpen = 0;
-        var ee;
+        var flickingModule;
 
         $(document).on('click', '.thumb_area', function () {
             var commentId = $(this).closest('li').data('comment');
@@ -84,7 +83,7 @@ requirejs.config( {
         $(document).on('click', '.btn-r .cbtn', function () {
             isOpen = 0;
             cur_num = 1;
-            ee.flush();
+            flickingModule.flush();
             $('.detail_img li').remove();
             $('#photoviwer').fadeOut();
         })
@@ -160,14 +159,13 @@ requirejs.config( {
         */
         function addFlickingComponent() {
             require([
-                'js/requireTest'
-            ], function (requireTest) {
-                var Fliking = requireTest.flicking();
-                var ele = $('.detail_img').get(0);
+                'js/requireFlicking'
+            ], function (requireFlicking) {
+                var Fliking = requireFlicking.flicking();
 
-                ee = new Fliking($('.detail_img'));
+                flickingModule = new Fliking($('.detail_img'));
 
-                ee.init(ele);
+                flickingModule.init();
             });
         }
     })();

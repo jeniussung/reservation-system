@@ -104,7 +104,7 @@
 
 	//리뷰 등록
 	function writeReview(){
-		var formData = new FormData();
+		var formDatfa = new FormData();
 		var score = $(".first_star").val();
 		var comment = $("textarea").val();
 

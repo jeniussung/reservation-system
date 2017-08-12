@@ -155,6 +155,7 @@ var ValidateReserve = (function () {
 
 var Flicking = (function () {
     function Flicking(ele) {
+        this.root = ele;
         this.ele = ele.find('li');
         this.num = 1;
         this.slide_width = this.ele.outerWidth();
@@ -279,7 +280,7 @@ var Flicking = (function () {
 
     }
 
-    Flicking.prototype.init = function (el, topFlickingEnd) {
+    Flicking.prototype.init = function (topFlickingEnd) {
         $(document).on('click', '.btn_prev', function () {
 
             if (this.num !== 1) {
@@ -307,15 +308,15 @@ var Flicking = (function () {
             this.trigger(topFlickingEnd, {curDisplayNum: this.num});
         }.bind(this))
 
-        el.addEventListener('touchstart', function (e) {
+        this.root.get(0).addEventListener('touchstart', function (e) {
             this.flickingStart(e);
         }.bind(this), false);
 
-        el.addEventListener('touchmove', function (e) {
+        this.root.get(0).addEventListener('touchmove', function (e) {
             this.flickingMove(e)
         }.bind(this), false);
 
-        el.addEventListener('touchend', function (e) {
+        this.root.get(0).addEventListener('touchend', function (e) {
             this.flickingEnd(e);
 
             this.trigger(topFlickingEnd, {curDisplayNum: this.num});
