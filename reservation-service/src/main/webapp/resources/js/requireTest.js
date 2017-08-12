@@ -1,4 +1,4 @@
-define([
+qdefine([
     'lib/defineTest',    
     'lib/component.min',
     'lib/eg.pkgd.min'
